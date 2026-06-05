@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoEats — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div id="page-app">
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo-icon">🍃</div>
+      <div class="sb-header-text">
+        <div class="sb-name">EcoEats</div>
+        <div id="sb-role-label">Mitra Merchant</div>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-footer">
+      <button class="sb-item" onclick="logout()">
+        <span class="sb-item-icon">🚪</span> Keluar
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Area -->
+  <div id="main-area">
+    <div class="topbar">
+      <div class="topbar-titles">
+        <div id="topbar-title">Dashboard</div>
+        <div id="topbar-sub">Ringkasan aktivitas usaha Anda</div>
+      </div>
+      <button id="topbar-action" class="hide" onclick="topbarAction()"></button>
+      <div class="topbar-avatar" id="topbar-avatar">🏪</div>
+    </div>
+    <div class="main-scroll" id="main-scroll"></div>
+  </div>
+</div>
+
+<script src="../javascript/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const savedRole = localStorage.getItem('userRole');
+  if (!savedRole) {
+    window.location.href = 'login.html';
+    return;
+  }
+  APP.role = savedRole;
+  buildSidebar();
+  navigate('dashboard');
+});
+
+function logout() {
+  localStorage.removeItem('userRole');
+  window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>

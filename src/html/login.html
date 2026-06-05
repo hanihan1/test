@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoEats — Masuk ke Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- ════════════════ PAGE: LOGIN ════════════════ -->
+<div id="page-auth">
+  <div class="logo-area">
+    <div class="logo-icon">🍃</div>
+    <div class="logo-word">EcoEats</div>
+    <div class="logo-tag">Makanan Surplus, Harga Ramah</div>
+  </div>
+
+  <div class="auth-card" id="auth-card">
+    <!-- Merchant -->
+    <div id="auth-merchant">
+      <span class="role-pill">PORTAL MITRA MERCHANT</span>
+      <h1>Portal Mitra Merchant</h1>
+      <p>Kelola makanan surplus dan pesanan dari pelanggan Anda.</p>
+      <form class="auth-form" onsubmit="handleMerchantLogin(event)">
+        <label>Email Bisnis</label>
+        <input type="email" placeholder="toko@emailbisnis.com" required>
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required>
+        <div class="check-wrap"><input type="checkbox" id="rem"> <label for="rem">Ingat saya</label></div>
+        <button type="submit" class="auth-btn">Masuk ke Portal Merchant</button>
+      </form>
+      <div class="info-box">
+        <strong>Belum terdaftar sebagai mitra?</strong>
+        Hubungi tim EcoEats untuk mendaftarkan usaha Anda sebagai mitra merchant.
+      </div>
+    </div>
+    
+    <!-- Admin -->
+    <div id="auth-admin" class="hide">
+      <span class="role-pill admin">PORTAL ADMIN</span>
+      <h1>Portal Admin</h1>
+      <p>Masuk ke panel administrator untuk mengelola platform EcoEats.</p>
+      <form class="auth-form" onsubmit="handleAdminLogin(event)">
+        <label>Email Admin</label>
+        <input type="email" placeholder="admin@ecoeats.id" required>
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required>
+        <button type="submit" class="auth-btn blu">Masuk ke Portal Admin</button>
+      </form>
+      <div class="info-box admin-info">
+        <strong>Akses terbatas</strong>
+        Hanya akun administrator resmi yang dapat mengakses panel ini.
+      </div>
+    </div>
+  </div>
+
+  <div class="role-switch">
+    <span>Login sebagai:</span>
+    <div class="pills-wrap">
+      <button class="pill active" onclick="switchRole('merchant',this)">Merchant</button>
+      <button class="pill" onclick="switchRole('admin',this)">Admin</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentRole = 'merchant';
+
+function switchRole(role, btn) {
+  currentRole = role;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('auth-merchant').classList.toggle('hide', role !== 'merchant');
+  document.getElementById('auth-admin').classList.toggle('hide', role !== 'admin');
+  const card = document.getElementById('auth-card');
+  card.style.transform = 'scale(.985)';
+  setTimeout(() => { card.style.transform = 'scale(1)'; }, 150);
+}
+
+function handleMerchantLogin(event) {
+  event.preventDefault();
+  localStorage.setItem('userRole', 'merchant');
+  window.location.href = 'dashboard.html';
+}
+
+function handleAdminLogin(event) {
+  event.preventDefault();
+  localStorage.setItem('userRole', 'admin');
+  window.location.href = 'dashboard.html';
+}
+</script>
+
+</body>
+</html>
