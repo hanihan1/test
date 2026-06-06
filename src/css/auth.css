@@ -120,7 +120,7 @@
 .auth-form input[type=password] {
   width: 100%;
   padding: 11px 14px;
-  background: var(--inp);
+  background: #FEFAE0;
   border: 1.5px solid transparent;
   border-radius: 8px;
   font-family: 'DM Sans', sans-serif;
@@ -129,6 +129,17 @@
   outline: none;
   transition: all .2s;
   margin-bottom: 14px;
+}
+
+/* Override browser autofill blue/yellow background */
+.auth-form input:-webkit-autofill,
+.auth-form input:-webkit-autofill:hover,
+.auth-form input:-webkit-autofill:focus,
+.auth-form input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 999px #FEFAE0 inset !important;
+  box-shadow: 0 0 0 999px #FEFAE0 inset !important;
+  -webkit-text-fill-color: #503321 !important;
+  caret-color: #503321;
 }
 .auth-form input:focus {
   border-color: var(--btn);
@@ -159,10 +170,10 @@
   font-weight: 700;
   color: #FEFAE0;
   cursor: pointer;
-  background: #3B1F0E;          /* dark brown */
+  background: #503321;          /* dark brown */
   transition: all .2s;
 }
-.auth-btn:hover  { background: #2A1508; }
+.auth-btn:hover  { background: #3B1F0E; }
 .auth-btn:active { transform: scale(.984); }
 
 /* Admin button — dark olive (unchanged feel) */
