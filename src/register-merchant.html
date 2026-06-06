@@ -1128,7 +1128,7 @@
     }).addTo(map);
 
     // Custom green marker icon
-    const greenIcon = L.divIcon({
+    const customIcon = L.divIcon({
       className: '',
       html: `<div style="
         width:36px; height:36px;
@@ -1152,12 +1152,11 @@
     });
 
     // If previously set, restore pin
-    if (selectedLat && selectedLng) {
-      placePin(selectedLat, selectedLng);
-    }
+    if (initialLat && initialLng) placePin(initialLat, initialLng);
+    else if (selectedLat && selectedLng) placePin(selectedLat, selectedLng); // Jika ada dari form sebelumnya
 
     // Store icon ref
-    map._greenIcon = greenIcon;
+    map._customIcon = customIcon;
   }
 
   function placePin(lat, lng) {
@@ -1170,7 +1169,7 @@
     if (marker) {
       marker.setLatLng([lat, lng]);
     } else {
-      marker = L.marker([lat, lng], { icon: map._greenIcon, draggable: true }).addTo(map);
+      marker = L.marker([lat, lng], { icon: map._customIcon, draggable: true }).addTo(map);
       marker.bindPopup('<b>📍 Lokasi Toko</b><br>Drag untuk memindahkan').openPopup();
 
       // Allow dragging

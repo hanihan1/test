@@ -311,9 +311,7 @@
   /* ────────────────────────────────
      READ REGISTRATION DATA
   ──────────────────────────────── */
-  function loadData() {
-    // Baca dari localStorage (dikirim oleh register.html saat submit)
-    const reg = JSON.parse(localStorage.getItem('ecoeats_reg') || '{}');
+  function loadData(reg = {}) { // Menerima data registrasi sebagai parameter atau default kosong
 
     if (reg.nama)     document.getElementById('d-nama').textContent     = reg.nama;
     if (reg.email)    document.getElementById('d-email').textContent    = reg.email;
@@ -322,8 +320,6 @@
     if (reg.kategori) document.getElementById('d-kategori').textContent = reg.kategori;
     if (reg.alamat)   document.getElementById('d-alamat').textContent   = reg.alamat;
     if (reg.waktu)    document.getElementById('d-waktu').textContent    = reg.waktu;
-    if (reg.ref)      document.getElementById('d-ref').textContent      = reg.ref;
-
   }
 
   /* ────────────────────────────────
@@ -334,32 +330,33 @@
      STATUS STATES
   ──────────────────────────────── */
   function setStatus(status) {
-    const badge       = document.getElementById('status-badge');
-    const badgeDot    = document.getElementById('status-dot');
-    const badgeText   = document.getElementById('status-badge-text');
+    const statusText  = document.getElementById('status-text');
     const heroTitle   = document.getElementById('hero-title');
     const heroSubtitle= document.getElementById('hero-subtitle');
 
     if (status === 'waiting') {
-      badgeDot.style.background = '#ffd166';
-      badgeDot.style.animation = 'pulse 1.8s ease-in-out infinite';
-      badgeText.textContent = 'Menunggu Verifikasi';
+      statusText.textContent = 'Pending';
+      statusText.style.background = 'var(--warning-pale)';
+      statusText.style.color = 'var(--warning)';
+      statusText.style.borderColor = 'rgba(230,126,34,0.2)';
       heroTitle.textContent = 'Pendaftaran Berhasil! 🎉';
       heroSubtitle.textContent = 'Dokumen kamu sedang ditinjau oleh tim EcoEats. Kami akan menghubungi lewat email setelah proses selesai.';
     }
 
     else if (status === 'verified') {
-      badgeDot.style.background = '#27ae60';
-      badgeDot.style.animation = 'none';
-      badgeText.textContent = 'Terverifikasi ✓';
+      statusText.textContent = 'Terverifikasi';
+      statusText.style.background = '#e9f7ef';
+      statusText.style.color = '#27ae60';
+      statusText.style.borderColor = 'rgba(39,174,96,0.2)';
       heroTitle.textContent = 'Selamat, Akunmu Aktif! 🚀';
       heroSubtitle.textContent = 'Toko kamu sudah berhasil diverifikasi. Mulai jual produkmu sekarang dan bergabung dengan gerakan anti food waste!';
     }
 
     else if (status === 'rejected') {
-      badgeDot.style.background = '#e74c3c';
-      badgeDot.style.animation = 'none';
-      badgeText.textContent = 'Perlu Perbaikan';
+      statusText.textContent = 'Ditolak';
+      statusText.style.background = '#fdedec';
+      statusText.style.color = '#e74c3c';
+      statusText.style.borderColor = 'rgba(231,76,60,0.2)';
       heroTitle.textContent = 'Dokumen Perlu Diperbarui';
       heroSubtitle.textContent = 'Beberapa dokumen yang kamu submit memerlukan perbaikan. Silakan cek email untuk detail dan upload ulang dokumen yang sesuai.';
     }
@@ -368,21 +365,22 @@
   /* ────────────────────────────────
      SET REGISTRATION TIME
   ──────────────────────────────── */
-  function setRegistrationMeta() {
-    const reg = JSON.parse(localStorage.getItem('ecoeats_reg') || '{}');
-    if (!reg.waktu) {
-      const now = new Date();
-      document.getElementById('d-waktu').textContent =
-        now.toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric' })
-        + ', ' + now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' }) + ' WIB';
-    }
+  function setRegistrationMeta(reg = {}) {
+    // Jika waktu belum ada di data registrasi, set waktu saat ini
+    // Ini hanya untuk demo, di produksi waktu akan dari backend
+    if (!reg.waktu) return;
+    document.getElementById('d-waktu').textContent = reg.waktu;
   }
 
   /* ────────────────────────────────
      INIT
   ──────────────────────────────── */
-  loadData();
-  setRegistrationMeta();
+  document.addEventListener('DOMContentLoaded', function() {
+    const regData = JSON.parse(localStorage.getItem('ecoeats_reg') || '{}');
+    loadData(regData);
+    setRegistrationMeta(regData);
+    setStatus('waiting'); // Default status saat pertama kali masuk
+  });
 </script>
 </body>
 </html>
