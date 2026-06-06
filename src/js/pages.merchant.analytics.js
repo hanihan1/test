@@ -75,26 +75,8 @@ function renderMerchantAnalytics() {
     </div>
   </div>
 
-  <!-- Food waste & environmental impact -->
-  // <div class="grid-2 mb-20">
-  //   <div class="card2">
-  //     <div class="card-head">Dampak Lingkungan Anda</div>
-  //     <div class="card-body">
-  //       <div class="mb-16">
-  //         <div style="font-size:12px;color:var(--sub);margin-bottom:4px">MAKANAN DICEGAH TERBUANG</div>
-  //         <div class="impact-num">127 porsi</div>
-  //         <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara dengan 24 kg sampah organik</div>
-  //       </div>
-  //       <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-  //       <div>
-  //         <div style="font-size:12px;color:var(--sub);margin-bottom:4px">CO₂ YANG DICEGAH</div>
-  //         <div class="impact-num" style="font-size:24px">54 kg</div>
-  //         <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara perjalanan mobil 135 km</div>
-  //       </div>
-  //     </div>
-  //   </div>
-
-    <!-- Sales by category -->
+  <!-- Penjualan per Kategori -->
+  <div class="mb-20">
     <div class="card2">
       <div class="card-head">Penjualan per Kategori</div>
       <div class="card-body">
@@ -118,31 +100,6 @@ function renderMerchantAnalytics() {
             <span style="font-weight:600">25%</span>
           </div>
           <div class="prog-wrap"><div class="prog-fill" style="width:25%;background:var(--btn)"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Customer satisfaction -->
-  <div class="card2">
-    <div class="card-head">Tingkat Kepuasan Customer</div>
-    <div class="card-body">
-      <div class="grid-4">
-        <div style="text-align:center">
-          <div style="font-size:24px;font-weight:700;color:var(--grn);margin-bottom:4px">92%</div>
-          <div style="font-size:11px;color:var(--sub)">Puas (4-5★)</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:24px;font-weight:700;color:var(--btn);margin-bottom:4px">6%</div>
-          <div style="font-size:11px;color:var(--sub)">Netral (3★)</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:24px;font-weight:700;color:var(--red);margin-bottom:4px">2%</div>
-          <div style="font-size:11px;color:var(--sub)">Tidak Puas (1-2★)</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:24px;font-weight:700;color:var(--sub);margin-bottom:4px">4.7★</div>
-          <div style="font-size:11px;color:var(--sub)">Rating Rata-rata</div>
         </div>
       </div>
     </div>
@@ -196,24 +153,7 @@ function renderAdminPlatformAnalytics() {
       </div>
     </div>
 
-    <!-- Environmental impact -->
-  //   <div class="card2">
-  //     <div class="card-head">Dampak Platform Keseluruhan</div>
-  //     <div class="card-body">
-  //       <div class="mb-16">
-  //         <div style="font-size:12px;color:var(--sub);margin-bottom:4px">MAKANAN DICEGAH TERBUANG</div>
-  //         <div class="impact-num" style="font-size:28px">42.8K porsi</div>
-  //         <div style="font-size:12px;color:var(--sub);margin-top:4px">≈ 8.1 ton sampah organik</div>
-  //       </div>
-  //       <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-  //       <div>
-  //         <div style="font-size:12px;color:var(--sub);margin-bottom:4px">CO₂ YANG DICEGAH</div>
-  //         <div class="impact-num" style="font-size:28px;color:var(--grn)">18.2 ton</div>
-  //         <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara 45,500 km berkendara</div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>
+  </div>
 
   <!-- Top metrics -->
   <div class="grid-3">
