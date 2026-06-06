@@ -12,7 +12,6 @@ function renderAdminDashboard() {
   const labels = days.map(d => `<span>${d}</span>`).join('');
 
   return `
-  <!-- KPI stat cards — TODO: populate from /api/admin/stats -->
   <div class="grid-4 mb-20">
     <div class="stat-card" style="border-top-color:var(--blu)">
       <div class="st-label">Total Pengguna</div>
@@ -37,7 +36,6 @@ function renderAdminDashboard() {
   </div>
 
   <div class="grid-2 mb-20">
-    <!-- Platform orders chart -->
     <div class="card2">
       <div class="card-head">Pesanan 7 Hari Terakhir</div>
       <div class="card-body">
@@ -46,8 +44,6 @@ function renderAdminDashboard() {
         <div style="margin-top:12px;font-size:12px;color:var(--sub)" id="admin-orders-summary">—</div>
       </div>
     </div>
-
-    <!-- Verification queue preview -->
     <div class="card2">
       <div class="card-head">
         Antrian Verifikasi
@@ -55,7 +51,6 @@ function renderAdminDashboard() {
       </div>
       <div class="card-body" style="padding:0">
         <div id="verif-queue-list">
-          <!-- TODO: populate from /api/merchant-verifications?status=pending -->
           <div style="padding:16px;color:var(--sub);font-size:13px">Memuat antrian...</div>
         </div>
         <div style="padding:12px 16px">
@@ -70,33 +65,20 @@ function renderAdminDashboard() {
   </div>
 
   <div class="grid-2">
-    <!-- Platform environmental impact -->
     <div class="card2">
       <div class="card-head">Dampak Lingkungan Platform</div>
       <div class="card-body">
-        <div class="grid-2" id="admin-impact-grid">
-          <!-- TODO: populate from /api/admin/impact-stats -->
-        </div>
+        <div class="grid-2" id="admin-impact-grid"></div>
       </div>
     </div>
-
-    <!-- Active violation reports -->
     <div class="card2">
       <div class="card-head">
         Laporan Pelanggaran
         <span class="badge badge-red" id="laporan-count-badge">—</span>
       </div>
       <div class="card-body">
-        <div class="alert alert-red mb-16" id="laporan-alert">
-          Memuat laporan...
-        </div>
-        <div id="laporan-preview">
-          <!-- TODO: populate from /api/reports?status=open&limit=2 -->
-        </div>
-        <button class="btn btn-red btn-sm" style="margin-top:12px"
-                onclick="navigate('laporan')">
-          Tinjau Laporan &rarr;
-        </button>
+        <div class="alert alert-red mb-16" id="laporan-alert">Memuat laporan...</div>
+        <div id="laporan-preview"></div>
       </div>
     </div>
   </div>`;
@@ -116,32 +98,18 @@ function toggleUser(userId, action) {
     btnEl.textContent  = 'Blokir';
     btnEl.setAttribute('onclick', `toggleUser('${userId}','block')`);
   }
-  // TODO: PATCH /api/users/:userId { status: action === 'block' ? 'blocked' : 'active' }
-}
-
-function takedownListing(listingId) {
-  if (confirm('Yakin ingin men-takedown listing ini?')) {
-    // TODO: PATCH API call
-    alert('Listing telah di-takedown.');
-  }
 }
 
 function verifAction(verifId, action) {
-  const card      = document.getElementById('vcard-' + verifId);
-  const approveBtn= document.getElementById('vbtn-approve-' + verifId);
-  const rejectBtn = document.getElementById('vbtn-reject-' + verifId);
+  const card       = document.getElementById('vcard-' + verifId);
+  const approveBtn = document.getElementById('vbtn-approve-' + verifId);
+  const rejectBtn  = document.getElementById('vbtn-reject-' + verifId);
   card.classList.add('done');
   approveBtn.textContent = action === 'approve' ? 'Disetujui' : 'Setujui';
   rejectBtn.textContent  = action === 'reject'  ? 'Ditolak'   : 'Tolak';
   alert(action === 'approve'
     ? 'Merchant berhasil diverifikasi.'
     : 'Merchant ditolak. Notifikasi telah dikirim.');
-}
-
-function violAction(reportId, action) {
-  const card = document.getElementById('viol-' + reportId);
-  card.classList.add('done');
-  alert(action === 'takedown' ? 'Konten telah di-takedown.' : 'Laporan diabaikan.');
 }
 
 /* ── Verifikasi Merchant ── */
@@ -158,7 +126,6 @@ function renderVerifikasi() {
       <option value="rejected">Ditolak</option>
     </select>
   </div>
-  <!-- TODO: populate from /api/merchant-verifications?status=pending -->
   <div id="verif-list">
     <p class="color-sub">Memuat antrian verifikasi...</p>
   </div>`;
