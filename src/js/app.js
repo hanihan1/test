@@ -90,7 +90,8 @@ function render(page) {
     'order-detail':     () => APP.pages.orderDetail.render({ orderId: 'ORD-20240612-001' }),
     'history':          renderHistory,
     'profile':          renderProfile,
-    'verif-status':     renderVerifStatus,
+    // 'verif-status':  renderVerifStatus,
+
     'verifikasi':       renderVerifikasi,
     // Merchant analytics
     'analytics':        () => APP.role === 'merchant' ? renderMerchantAnalytics() : renderAdminPlatformAnalytics(),

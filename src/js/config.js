@@ -22,7 +22,7 @@ const MENUS = {
     { id: 'history',      icon: 'list',     label: 'Riwayat Pesanan' },
     { section: 'Akun' },
     { id: 'profile',      icon: 'store',    label: 'Profil Usaha' },
-    { id: 'verif-status', icon: 'check',    label: 'Status Verifikasi' },
+    // { id: 'verif-status', icon: 'check',    label: 'Status Verifikasi' },
   ],
   admin: [
     { section: 'Overview' },
@@ -58,7 +58,8 @@ const TOPBAR = {
     'orders-ready':     ['Siap Diambil',        'Pesanan yang menunggu diambil pelanggan'],
     'history':      ['Riwayat Pesanan',         'Semua transaksi yang telah selesai'],
     'profile':      ['Profil Usaha',            'Informasi lengkap usaha Anda'],
-    'verif-status': ['Status Verifikasi',       'Status pendaftaran mitra merchant'],
+    // 'verif-status': ['Status Verifikasi',    'Status pendaftaran mitra merchant'],
+
   },
   admin: {
     'dashboard':        ['Dashboard Admin',       'Ikhtisar platform EcoEats'],
