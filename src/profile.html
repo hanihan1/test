@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoEats — Profil Usaha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div id="page-app">
+
+  <!-- Sidebar (shared structure) -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+      </div>
+      <div class="sb-header-text">
+        <div class="sb-name">EcoEats</div>
+        <div id="sb-role-label">Mitra Merchant</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav" id="sb-nav"></nav>
+
+    <div class="sb-footer">
+      <button class="sb-item" onclick="logout()">
+        <span class="sb-item-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </span>
+        Keluar
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main area -->
+  <div id="main-area">
+    <div class="topbar">
+      <div class="topbar-titles">
+        <div id="topbar-title">Profil Usaha</div>
+        <div id="topbar-sub">Informasi lengkap usaha Anda</div>
+      </div>
+      <button id="topbar-action" class="hide" onclick="topbarAction()"></button>
+      <div class="topbar-avatar" id="topbar-avatar">M</div>
+    </div>
+    <div class="main-scroll" id="main-scroll"></div>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/pages.merchant.js"></script>
+<script src="js/pages.admin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedRole = localStorage.getItem('userRole');
+    if (!savedRole) {
+      window.location.href = 'login.html';
+      return;
+    }
+    APP.role = savedRole;
+    buildSidebar();
+    navigate('profile');
+  });
+</script>
+
+</body>
+</html>

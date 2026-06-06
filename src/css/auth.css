@@ -1,0 +1,209 @@
+/* ============================================================
+   auth.css — Login / auth page styles
+   ============================================================ */
+
+/* Page container */
+#page-auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  gap: 20px;
+}
+
+/* Ambient background gradient */
+#page-auth::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(90,138,74,.10) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 85% 75%, rgba(160,120,80,.10) 0%, transparent 70%);
+}
+
+/* Logo block */
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 1;
+}
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2A5A3A, #1A4A2A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(42,90,58,.3);
+}
+.logo-word {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--lbl);
+  line-height: 1;
+}
+.logo-tag {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sub);
+  font-weight: 500;
+}
+
+/* Auth card */
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  border-radius: 20px;
+  padding: 32px 36px;
+  box-shadow: var(--shadow);
+  z-index: 1;
+  transition: transform .15s ease;
+}
+.auth-card.bounce { animation: bounce .15s ease; }
+
+/* Role pill label */
+.role-pill {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--brd);
+  background: var(--inp);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-bottom: 14px;
+}
+.role-pill.admin {
+  border-color: #C8D8E4;
+  background: #EEF4F8;
+  color: #4A6A7A;
+}
+
+/* Card headings */
+.auth-card h1 { font-size: 28px; color: var(--lbl); margin-bottom: 6px; }
+.auth-card > div > p { font-size: 14px; color: var(--sub); margin-bottom: 22px; }
+
+/* Form fields */
+.auth-form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 5px;
+}
+.auth-form input[type=email],
+.auth-form input[type=password] {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--inp);
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--lbl);
+  outline: none;
+  transition: all .2s;
+  margin-bottom: 14px;
+}
+.auth-form input:focus {
+  border-color: var(--btn);
+  box-shadow: 0 0 0 3px rgba(160,120,80,.12);
+}
+.auth-form .check-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: var(--sub);
+}
+.auth-form .check-wrap input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--btn);
+}
+
+/* Login button */
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  background: var(--btn);
+  transition: all .2s;
+}
+.auth-btn:hover  { background: var(--bth); }
+.auth-btn:active { transform: scale(.984); }
+.auth-btn.blu    { background: var(--blu); }
+.auth-btn.blu:hover { background: #3A5A7A; }
+
+/* Info box below form */
+.info-box {
+  background: var(--inf);
+  border: 1px solid var(--ibd);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--sub);
+}
+.info-box.admin-info { background: #EEF4F8; border-color: #C8D8E4; }
+.info-box strong { display: block; color: var(--lbl); margin-bottom: 4px; font-size: 13px; }
+
+/* Role switcher (Merchant / Admin toggle) */
+.role-switch {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--sub);
+}
+.pills-wrap {
+  display: inline-flex;
+  background: rgba(255,255,255,.6);
+  padding: 5px;
+  border-radius: 99px;
+  border: 1px solid var(--brd);
+  gap: 2px;
+}
+.pill {
+  padding: 6px 18px;
+  border-radius: 99px;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--sub);
+  transition: all .2s;
+}
+.pill:hover { background: rgba(61,48,37,.06); color: var(--lbl); }
+.pill.active {
+  background: var(--lbl);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}

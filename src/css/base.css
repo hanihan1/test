@@ -1,0 +1,59 @@
+/* ============================================================
+   base.css — Reset, CSS variables, typography, animations
+   ============================================================ */
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Design tokens */
+:root {
+  --bg:      #F5F0DC;
+  --card:    #fff;
+  --lbl:     #3D3025;
+  --sub:     #8C7B6A;
+  --inp:     #F0EBD8;
+  --brd:     #E0D8C4;
+  --btn:     #A07850;
+  --bth:     #8A6640;
+  --grn:     #5A8A4A;
+  --blu:     #4A6A8A;
+  --red:     #C04040;
+  --org:     #C4781A;
+  --shadow:  0 2px 4px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.07);
+  --inf:     #F8F4EB;
+  --ibd:     #E8DFC8;
+}
+
+/* Body */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--lbl);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Typography helpers */
+h1, h2, h3, h4, .playfair { font-family: 'Playfair Display', serif; }
+.mono { font-family: 'DM Mono', monospace; }
+.hide { display: none !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background: var(--brd); border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(.985); }
+}
+.fade-in { animation: fadeUp .3s ease both; }
