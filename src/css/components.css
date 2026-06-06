@@ -327,3 +327,82 @@
 .color-sub { color: var(--sub); }
 .color-grn { color: var(--grn); }
 .color-red { color: var(--red); }
+
+/* ── Shopping Cart & Checkout ── */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--lbl);
+}
+.summary-row .lbl { font-weight: 500; }
+.summary-row .val { text-align: right; }
+
+/* ── Payment Methods ── */
+.payment-methods { display: flex; flex-direction: column; gap: 10px; }
+.payment-method-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid var(--brd);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.payment-method-item:hover { border-color: var(--btn); background: #FAFAF5; }
+.payment-method-item input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: var(--btn);
+}
+.payment-method-item input[type="radio"]:checked ~ .pmi-content {
+  color: var(--btn);
+}
+.pmi-content { flex: 1; }
+.pmi-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+.pmi-sub { font-size: 11px; color: var(--sub); }
+
+/* ── User Addresses ── */
+.address-modal-item {
+  padding: 12px 14px;
+  border: 1px solid var(--brd);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all .2s;
+}
+.address-modal-item:hover { border-color: var(--btn); background: #FAFAF5; }
+.address-modal-item input[type="radio"] {
+  margin-right: 8px;
+  accent-color: var(--btn);
+  cursor: pointer;
+}
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.hide { display: none; }
+.modal-overlay .card2 {
+  background: white;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,.15);
+}
+
+/* ── Info rows in detail view ── */
+.info-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+.info-row .lbl { color: var(--sub); font-weight: 500; }
+.info-row .val { font-weight: 600; color: var(--lbl); text-align: right; }

@@ -11,6 +11,7 @@ const MENUS = {
   merchant: [
     { section: 'Overview' },
     { id: 'dashboard',    icon: 'chart',    label: 'Dashboard' },
+    { id: 'analytics',    icon: 'trend',    label: 'Analitik & Laporan' },
     { section: 'Menu Surplus' },
     { id: 'add-listing',  icon: 'plus',     label: 'Tambah Listing' },
     { id: 'listings',     icon: 'box',      label: 'Kelola Listing' },
@@ -24,38 +25,57 @@ const MENUS = {
   admin: [
     { section: 'Overview' },
     { id: 'dashboard',       icon: 'chart',   label: 'Dashboard' },
-    { id: 'analytics',       icon: 'trend',   label: 'Analitik' },
+    { id: 'analytics',       icon: 'trend',   label: 'Analitik Platform' },
     { section: 'Manajemen' },
     { id: 'users',           icon: 'users',   label: 'Kelola Pengguna' },
     { id: 'admin-merchants', icon: 'store',   label: 'Kelola Merchant' },
     { id: 'admin-listings',  icon: 'box',     label: 'Kelola Listing' },
     { id: 'admin-orders',    icon: 'cart',    label: 'Kelola Pesanan' },
-    { section: 'Verifikasi' },
+    { section: 'Verifikasi & Laporan' },
     { id: 'verifikasi',      icon: 'check',   label: 'Verifikasi Merchant', badge: '5' },
     { id: 'laporan',         icon: 'alert',   label: 'Laporan Pelanggaran', badge: '2' },
+  ],
+  customer: [
+    { section: 'Belanja' },
+    { id: 'listings',     icon: 'box',      label: 'Jelajahi Menu' },
+    { id: 'cart',         icon: 'cart',     label: 'Keranjang', badge: '2', badgeClass: 'org' },
+    { section: 'Pesanan' },
+    { id: 'orders',       icon: 'list',     label: 'Pesanan Saya' },
+    { section: 'Akun' },
+    { id: 'user-addresses', icon: 'map',    label: 'Alamat Pengiriman' },
+    { id: 'profile',      icon: 'user',     label: 'Profil Saya' },
   ]
 };
 
 /** Topbar title/subtitle per role and page */
 const TOPBAR = {
   merchant: {
-    'dashboard':    ['Dashboard',          'Ringkasan aktivitas usaha Anda'],
-    'add-listing':  ['Tambah Listing',     'Daftarkan makanan surplus baru'],
-    'listings':     ['Kelola Listing',     'Kelola menu surplus Anda'],
-    'orders':       ['Pesanan Masuk',      'Pesanan yang perlu dikonfirmasi'],
-    'history':      ['Riwayat Pesanan',    'Semua transaksi yang telah selesai'],
-    'profile':      ['Profil Usaha',       'Informasi lengkap usaha Anda'],
-    'verif-status': ['Status Verifikasi',  'Status pendaftaran mitra merchant'],
+    'dashboard':    ['Dashboard',               'Ringkasan aktivitas usaha Anda'],
+    'analytics':    ['Analitik & Laporan',      'Statistik penjualan dan dampak lingkungan'],
+    'add-listing':  ['Tambah Listing',          'Daftarkan makanan surplus baru'],
+    'listings':     ['Kelola Listing',          'Kelola menu surplus Anda'],
+    'orders':       ['Pesanan Masuk',           'Pesanan yang perlu dikonfirmasi'],
+    'history':      ['Riwayat Pesanan',         'Semua transaksi yang telah selesai'],
+    'profile':      ['Profil Usaha',            'Informasi lengkap usaha Anda'],
+    'verif-status': ['Status Verifikasi',       'Status pendaftaran mitra merchant'],
   },
   admin: {
     'dashboard':        ['Dashboard Admin',       'Ikhtisar platform EcoEats'],
-    'analytics':        ['Analitik',              'Data dan tren platform'],
-    'users':            ['Kelola Pengguna',        'Manajemen akun pengguna'],
-    'admin-merchants':  ['Kelola Merchant',        'Daftar seluruh merchant terdaftar'],
-    'admin-listings':   ['Kelola Listing',         'Pantau semua listing aktif'],
-    'admin-orders':     ['Kelola Pesanan',         'Monitor semua transaksi'],
-    'verifikasi':       ['Verifikasi Merchant',    'Tinjau pengajuan merchant baru'],
-    'laporan':          ['Laporan Pelanggaran',    'Tinjau laporan pengguna'],
+    'analytics':        ['Analitik Platform',     'Data dan dampak keseluruhan'],
+    'users':            ['Kelola Pengguna',       'Manajemen akun pengguna'],
+    'admin-merchants':  ['Kelola Merchant',       'Daftar seluruh merchant terdaftar'],
+    'admin-listings':   ['Kelola Listing',        'Pantau semua listing aktif'],
+    'admin-orders':     ['Kelola Pesanan',        'Monitor semua transaksi'],
+    'verifikasi':       ['Verifikasi Merchant',   'Tinjau pengajuan merchant baru'],
+    'laporan':          ['Laporan Pelanggaran',   'Tinjau laporan pengguna'],
+  },
+  customer: {
+    'listings':         ['Jelajahi Menu',         'Cari makanan surplus berkualitas'],
+    'cart':             ['Keranjang Belanja',     'Periksa item sebelum checkout'],
+    'checkout':         ['Pembayaran',            'Selesaikan transaksi Anda'],
+    'orders':           ['Pesanan Saya',          'Pantau status pesanan aktif'],
+    'user-addresses':   ['Alamat Pengiriman',     'Kelola alamat pengiriman Anda'],
+    'profile':          ['Profil Saya',           'Informasi akun dan preferensi'],
   }
 };
 
@@ -73,4 +93,6 @@ const ICONS = {
   alert:  `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
   logout: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
   leaf:   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`,
+  map:    `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  user:   `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
 };
