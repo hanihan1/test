@@ -88,7 +88,8 @@ function render(page) {
     'order-detail':     () => renderOrderDetail('ORD-20240612-001'),
     'history':          renderHistory,
     'profile':          renderProfile,
-    'verif-status':     renderVerifStatus,
+    // 'verif-status':  renderVerifStatus,
+
     'verifikasi':       renderVerifikasi,
     // Merchant analytics
     'analytics':        () => APP.role === 'merchant' ? renderMerchantAnalytics() : renderAdminPlatformAnalytics(),
