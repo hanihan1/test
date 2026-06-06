@@ -145,6 +145,11 @@ function bindPageEvents(page) {
       modal.addEventListener('click', closeAddressModal);
     }
   }
+
+  // Init peta jika sedang berada di halaman profil
+  if (page === 'profile') {
+    initProfileMap();
+  }
 }
 
 /** Session logout — clear role and redirect to login */
