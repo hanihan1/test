@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Merchant – EcoEats</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <!-- Leaflet.js for map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
   <style>
     :root {
       --green-deep:   #1a3c2e;
@@ -40,7 +42,6 @@
       flex-direction: column;
     }
 
-    /* ── BACKGROUND DECORATION ── */
     body::before {
       content: '';
       position: fixed;
@@ -427,31 +428,6 @@
       padding: 0 0 0 2px;
     }
 
-    /* ── LOGO UPLOAD (avatar style) ── */
-    .logo-upload-wrap {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo-preview {
-      width: 80px; height: 80px;
-      border-radius: 16px;
-      border: 2px dashed var(--cream-dark);
-      background: var(--cream);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      overflow: hidden;
-      flex-shrink: 0;
-      transition: border-color .2s;
-    }
-
-    .logo-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-    .logo-upload-btn {
-      flex: 1;
-    }
-
     /* ── CHECKBOX ── */
     .check-group {
       display: flex;
@@ -515,6 +491,128 @@
       letter-spacing: .08em;
       margin-bottom: 12px;
     }
+
+    /* ── MAP SECTION ── */
+    .map-section {
+      border: 1.5px solid var(--cream-dark);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+
+    .map-section:focus-within,
+    .map-section.has-pin {
+      border-color: var(--green-fresh);
+    }
+
+    .map-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--cream-dark);
+      gap: 10px;
+    }
+
+    .map-search-wrap {
+      flex: 1;
+      display: flex;
+      gap: 6px;
+    }
+
+    .map-search-wrap input {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 6px;
+      border: 1.5px solid var(--cream-dark);
+      background: var(--white);
+    }
+
+    .map-search-wrap input:focus {
+      border-color: var(--green-fresh);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(82,183,136,.15);
+    }
+
+    .btn-map-search {
+      padding: 8px 14px;
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+
+    .btn-map-search:hover { background: var(--green-deep); }
+
+    .btn-my-loc {
+      padding: 8px 12px;
+      background: var(--white);
+      color: var(--green-mid);
+      border: 1.5px solid var(--green-light);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+
+    .btn-my-loc:hover { background: var(--green-pale); border-color: var(--green-fresh); }
+
+    #map-container {
+      width: 100%;
+      height: 280px;
+      position: relative;
+    }
+
+    .map-hint {
+      text-align: center;
+      padding: 8px 14px;
+      background: var(--green-pale);
+      font-size: 12px;
+      color: var(--green-mid);
+      font-weight: 500;
+      border-top: 1px solid var(--green-light);
+    }
+
+    .map-coords-strip {
+      padding: 8px 14px;
+      background: var(--cream);
+      border-top: 1px solid var(--cream-dark);
+      font-size: 12px;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .map-coords-strip .coords-val {
+      font-family: monospace;
+      color: var(--green-mid);
+      font-weight: 600;
+    }
+
+    .map-coords-strip .clear-pin {
+      background: none;
+      border: none;
+      color: var(--error);
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: none;
+    }
+
+    .map-coords-strip .clear-pin.show { display: inline; }
 
     /* ── NAVIGATION BUTTONS ── */
     .form-nav {
@@ -584,49 +682,6 @@
       margin-left: auto;
     }
 
-    /* ── SUCCESS SCREEN ── */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-      animation: fadeIn .4s ease;
-    }
-
-    .success-screen.show { display: block; }
-
-    .success-icon {
-      width: 80px; height: 80px;
-      background: linear-gradient(135deg, var(--green-mid), var(--green-fresh));
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 20px;
-      box-shadow: 0 8px 24px rgba(45,106,79,.3);
-    }
-
-    .success-screen h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--green-deep);
-      margin-bottom: 8px;
-    }
-
-    .success-screen p {
-      font-size: 14px;
-      color: var(--text-soft);
-      line-height: 1.6;
-      max-width: 380px;
-      margin: 0 auto 28px;
-    }
-
-    .success-screen .btn-primary {
-      max-width: 100%;
-      justify-content: center;
-      text-decoration: none;
-      display: inline-flex;
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .topbar { padding: 0 20px; }
@@ -635,9 +690,10 @@
       .card-body { padding: 24px 24px 32px; }
       .form-grid { grid-template-columns: 1fr; }
       .form-grid .full { grid-column: 1; }
-      .logo-upload-wrap { flex-direction: column; align-items: flex-start; }
       .card-header::after { display: none; }
       .btn-primary { max-width: 100%; }
+      #map-container { height: 220px; }
+      .map-toolbar { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -704,7 +760,7 @@
           <div class="form-group">
             <label for="no_hp">No. HP / WhatsApp <span class="req">*</span></label>
             <input type="tel" id="no_hp" placeholder="08xxxxxxxxxx">
-            <span class="field-error" id="err-no_hp">Nomor HP wajib diisi</span>
+            <span class="field-error" id="err-no_hp">Nomor HP tidak valid (awali 08)</span>
           </div>
           <div class="form-group full">
             <label for="email">Email <span class="req">*</span></label>
@@ -748,21 +804,6 @@
 
         <div class="section-label">Identitas Toko</div>
 
-        <!-- LOGO UPLOAD -->
-        <div class="form-group" style="margin-bottom:16px">
-          <label>Logo / Foto Toko <span class="opt">(opsional)</span></label>
-          <div class="logo-upload-wrap">
-            <div class="logo-preview" id="logoPreview">🏪</div>
-            <div class="logo-upload-btn">
-              <div class="upload-zone" style="padding:16px 14px; text-align:left;">
-                <input type="file" id="logo_toko" accept="image/*" onchange="previewLogo(this)">
-                <p>📷 Upload logo / foto toko</p>
-                <small>JPG, PNG, WebP • Maks. 5 MB</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="form-grid">
           <div class="form-group full">
             <label for="nama_toko">Nama Toko <span class="req">*</span></label>
@@ -778,8 +819,8 @@
             <select id="kategori">
               <option value="" disabled selected>Pilih kategori</option>
               <option>Makanan Berat</option>
-              <option>Makanan Ringan & Snack</option>
-              <option>Kue & Roti</option>
+              <option>Makanan Ringan &amp; Snack</option>
+              <option>Kue &amp; Roti</option>
               <option>Minuman</option>
               <option>Makanan Sehat</option>
               <option>Makanan Tradisional</option>
@@ -831,6 +872,42 @@
           </div>
         </div>
 
+        <!-- ── MAP PIN SECTION ── -->
+        <div class="divider"></div>
+        <div class="section-label">Titik Lokasi di Peta</div>
+
+        <div class="info-box" style="margin-bottom:14px">
+          <span class="icon">📍</span>
+          <span>Tandai lokasi toko kamu di peta agar pembeli bisa menemukan kamu dengan mudah. Klik di peta atau gunakan tombol "Lokasiku" untuk titik GPS.</span>
+        </div>
+
+        <div class="map-section" id="map-section">
+          <!-- Toolbar -->
+          <div class="map-toolbar">
+            <div class="map-search-wrap">
+              <input type="text" id="map-search-input" placeholder="Cari alamat atau nama tempat..." onkeydown="if(event.key==='Enter'){searchMap()}">
+              <button class="btn-map-search" onclick="searchMap()">🔍 Cari</button>
+            </div>
+            <button class="btn-my-loc" onclick="useMyLocation()">📍 Lokasiku</button>
+          </div>
+
+          <!-- Map -->
+          <div id="map-container"></div>
+
+          <!-- Hint -->
+          <div class="map-hint">Klik di peta untuk menentukan titik lokasi toko kamu</div>
+
+          <!-- Coords strip -->
+          <div class="map-coords-strip">
+            <span id="coords-label">Titik belum dipilih</span>
+            <button class="clear-pin" id="clear-pin-btn" onclick="clearPin()">✕ Hapus pin</button>
+          </div>
+        </div>
+
+        <!-- Hidden inputs for lat/lng -->
+        <input type="hidden" id="lat" value="">
+        <input type="hidden" id="lng" value="">
+
         <div class="form-nav">
           <button class="btn btn-ghost" onclick="goStep(1)">← Kembali</button>
           <button class="btn btn-primary" onclick="goStep(3)">Lanjut →</button>
@@ -839,7 +916,7 @@
 
       <!-- ══ STEP 3: DOKUMEN ══ -->
       <div class="step-panel" id="panel-3">
-        <div class="step-title">Verifikasi & Dokumen Legal</div>
+        <div class="step-title">Verifikasi &amp; Dokumen Legal</div>
         <div class="step-subtitle">Diperlukan untuk memverifikasi legalitas usaha kamu</div>
 
         <div class="info-box" style="margin-bottom:20px">
@@ -869,7 +946,7 @@
             <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)" ondrop="dropFile(event,'halal_cert',this)">
               <input type="file" id="halal_cert" accept=".pdf,.jpg,.jpeg,.png" onchange="addFile(this,'halal_cert')">
               <div class="upload-icon">📄</div>
-              <p>Drag & drop atau klik untuk upload</p>
+              <p>Drag &amp; drop atau klik untuk upload</p>
               <small>PDF, JPG, PNG • Maks. 10 MB</small>
             </div>
             <div class="upload-preview" id="preview-halal_cert"></div>
@@ -903,7 +980,7 @@
             <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)" ondrop="dropFile(event,'izin_usaha',this)">
               <input type="file" id="izin_usaha" accept=".pdf,.jpg,.jpeg,.png" onchange="addFile(this,'izin_usaha')">
               <div class="upload-icon">📋</div>
-              <p>Drag & drop atau klik untuk upload</p>
+              <p>Drag &amp; drop atau klik untuk upload</p>
               <small>PDF, JPG, PNG • Maks. 10 MB</small>
             </div>
             <div class="upload-preview" id="preview-izin_usaha"></div>
@@ -941,7 +1018,7 @@
 
       <!-- ══ STEP 4: REVIEW ══ -->
       <div class="step-panel" id="panel-4">
-        <div class="step-title">Review & Konfirmasi</div>
+        <div class="step-title">Review &amp; Konfirmasi</div>
         <div class="step-subtitle">Periksa kembali data yang kamu masukkan sebelum mendaftar</div>
 
         <div id="review-content" style="margin-bottom:24px"></div>
@@ -951,11 +1028,11 @@
         <label class="check-group">
           <input type="checkbox" id="agree_tos">
           <div class="check-group-label">
-            <strong>Saya menyetujui Syarat & Ketentuan dan Kebijakan Privasi EcoEats</strong>
+            <strong>Saya menyetujui Syarat &amp; Ketentuan dan Kebijakan Privasi EcoEats</strong>
             <small>Termasuk ketentuan menjadi merchant dan pengelolaan data pribadi</small>
           </div>
         </label>
-        <span class="field-error" id="err-agree_tos" style="margin-top:4px">Kamu harus menyetujui syarat & ketentuan</span>
+        <span class="field-error" id="err-agree_tos" style="margin-top:4px">Kamu harus menyetujui syarat &amp; ketentuan</span>
 
         <div style="margin-top:12px">
           <label class="check-group">
@@ -973,23 +1050,12 @@
         </div>
       </div>
 
-      <!-- ══ SUCCESS ══ -->
-      <div class="success-screen" id="success-screen">
-        <div class="success-icon">✓</div>
-        <h2>Pendaftaran Berhasil! 🎉</h2>
-        <p>
-          Terima kasih sudah bergabung dengan EcoEats.<br>
-          Tim kami akan memverifikasi dokumen kamu dalam <strong>1×24 jam</strong>.
-          Kamu akan mendapat notifikasi melalui email setelah akun aktif.
-        </p>
-        <a href="login.html" class="btn btn-primary" style="text-decoration:none; max-width:260px; margin:0 auto">
-          Masuk ke Dashboard →
-        </a>
-      </div>
-
     </div><!-- card-body -->
   </div><!-- card -->
 </main>
+
+<!-- Leaflet JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 <script>
   /* ──────────────────────────────────────────
@@ -999,6 +1065,13 @@
   const totalSteps = 4;
   const uploadedFiles = {};
 
+  // Map state
+  let map = null;
+  let marker = null;
+  let mapInitialized = false;
+  let selectedLat = null;
+  let selectedLng = null;
+
   /* ──────────────────────────────────────────
      STEP NAVIGATION
   ────────────────────────────────────────── */
@@ -1006,10 +1079,8 @@
     if (target > currentStep && !validateStep(currentStep)) return;
     if (target === totalSteps) buildReview();
 
-    // hide current
     document.getElementById(`panel-${currentStep}`).classList.remove('active');
 
-    // update dots & lines
     for (let i = 1; i <= totalSteps; i++) {
       const dot = document.getElementById(`dot-${i}`);
       const lbl = document.getElementById(`lbl-${i}`);
@@ -1024,10 +1095,173 @@
       }
     }
 
-    // show target
     currentStep = target;
     document.getElementById(`panel-${currentStep}`).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Init map when arriving at step 2
+    if (target === 2) {
+      setTimeout(initMap, 100);
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     MAP FUNCTIONS
+  ────────────────────────────────────────── */
+  function initMap() {
+    if (mapInitialized) return;
+    mapInitialized = true;
+
+    // Default center: Surakarta
+    const defaultLat = -7.5561;
+    const defaultLng = 110.8317;
+
+    map = L.map('map-container', {
+      center: [defaultLat, defaultLng],
+      zoom: 14,
+      zoomControl: true,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Custom green marker icon
+    const greenIcon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:36px; height:36px;
+        background: linear-gradient(135deg, #2d6a4f, #52b788);
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        border: 3px solid white;
+        box-shadow: 0 3px 12px rgba(45,106,79,.5);
+        display:flex; align-items:center; justify-content:center;
+      ">
+        <span style="transform:rotate(45deg); font-size:14px; display:block; margin-top:2px; margin-left:1px;">🏪</span>
+      </div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -36],
+    });
+
+    // Click to place marker
+    map.on('click', function(e) {
+      placePin(e.latlng.lat, e.latlng.lng);
+    });
+
+    // If previously set, restore pin
+    if (selectedLat && selectedLng) {
+      placePin(selectedLat, selectedLng);
+    }
+
+    // Store icon ref
+    map._greenIcon = greenIcon;
+  }
+
+  function placePin(lat, lng) {
+    selectedLat = lat;
+    selectedLng = lng;
+
+    document.getElementById('lat').value = lat;
+    document.getElementById('lng').value = lng;
+
+    if (marker) {
+      marker.setLatLng([lat, lng]);
+    } else {
+      marker = L.marker([lat, lng], { icon: map._greenIcon, draggable: true }).addTo(map);
+      marker.bindPopup('<b>📍 Lokasi Toko</b><br>Drag untuk memindahkan').openPopup();
+
+      // Allow dragging
+      marker.on('dragend', function(e) {
+        const pos = marker.getLatLng();
+        selectedLat = pos.lat;
+        selectedLng = pos.lng;
+        document.getElementById('lat').value = pos.lat;
+        document.getElementById('lng').value = pos.lng;
+        updateCoordsStrip(pos.lat, pos.lng);
+      });
+    }
+
+    updateCoordsStrip(lat, lng);
+    document.getElementById('map-section').classList.add('has-pin');
+  }
+
+  function updateCoordsStrip(lat, lng) {
+    const label = document.getElementById('coords-label');
+    label.innerHTML = `Pin: <span class="coords-val">${lat.toFixed(6)}, ${lng.toFixed(6)}</span>`;
+    document.getElementById('clear-pin-btn').classList.add('show');
+  }
+
+  function clearPin() {
+    if (marker) { map.removeLayer(marker); marker = null; }
+    selectedLat = null;
+    selectedLng = null;
+    document.getElementById('lat').value = '';
+    document.getElementById('lng').value = '';
+    document.getElementById('coords-label').textContent = 'Titik belum dipilih';
+    document.getElementById('clear-pin-btn').classList.remove('show');
+    document.getElementById('map-section').classList.remove('has-pin');
+  }
+
+  function useMyLocation() {
+    if (!navigator.geolocation) {
+      alert('Browser kamu tidak mendukung geolokasi.');
+      return;
+    }
+    const btn = document.querySelector('.btn-my-loc');
+    btn.textContent = '⏳ Mencari...';
+    btn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        if (map) {
+          map.setView([lat, lng], 17);
+          placePin(lat, lng);
+        }
+        btn.textContent = '📍 Lokasiku';
+        btn.disabled = false;
+      },
+      function(err) {
+        alert('Tidak bisa mendapatkan lokasi. Pastikan izin lokasi diaktifkan.');
+        btn.textContent = '📍 Lokasiku';
+        btn.disabled = false;
+      },
+      { timeout: 8000 }
+    );
+  }
+
+  function searchMap() {
+    const query = document.getElementById('map-search-input').value.trim();
+    if (!query) return;
+
+    const btn = document.querySelector('.btn-map-search');
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    // Nominatim geocoding (OpenStreetMap) - free, no key needed
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Surakarta')}&limit=1&countrycodes=id`)
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lng = parseFloat(data[0].lon);
+          map.setView([lat, lng], 17);
+          placePin(lat, lng);
+        } else {
+          alert('Lokasi tidak ditemukan. Coba kata kunci lain atau klik langsung di peta.');
+        }
+      })
+      .catch(() => {
+        alert('Gagal mencari lokasi. Periksa koneksi internet kamu.');
+      })
+      .finally(() => {
+        btn.textContent = '🔍 Cari';
+        btn.disabled = false;
+      });
   }
 
   /* ──────────────────────────────────────────
@@ -1053,6 +1287,7 @@
       ok &= req('alamat_jalan', v => v.trim().length > 0);
       ok &= req('kelurahan', v => v.trim().length > 0);
       ok &= req('kecamatan', v => v !== '');
+      // Map pin: opsional tapi disarankan (tidak wajib agar tidak memblokir)
     }
     if (step === 3) {
       ok &= req('status_halal', v => v !== '');
@@ -1143,17 +1378,6 @@
     });
   }
 
-  function previewLogo(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const prev = document.getElementById('logoPreview');
-      prev.innerHTML = `<img src="${e.target.result}" alt="logo">`;
-    };
-    reader.readAsDataURL(file);
-  }
-
   function dragOver(e, zone) { e.preventDefault(); zone.classList.add('drag'); }
   function dragLeave(zone) { zone.classList.remove('drag'); }
   function dropFile(e, key, zone) {
@@ -1186,6 +1410,11 @@
   ────────────────────────────────────────── */
   function buildReview() {
     const g = id => document.getElementById(id)?.value || '—';
+
+    const mapInfo = selectedLat && selectedLng
+      ? `${selectedLat.toFixed(6)}, ${selectedLng.toFixed(6)}`
+      : '—';
+
     const sections = [
       { title: '👤 Akun', rows: [
         ['Nama', g('nama_lengkap')],
@@ -1197,6 +1426,7 @@
         ['Kategori', g('kategori')],
         ['Jam Operasional', g('jam_operasional')],
         ['Alamat', `${g('alamat_jalan')}, ${g('kelurahan')}, Kec. ${g('kecamatan')}, Surakarta`],
+        ['Koordinat Peta', mapInfo],
         ['Deskripsi', g('deskripsi_toko') || '—'],
       ]},
       { title: '📄 Dokumen', rows: [
@@ -1229,7 +1459,7 @@
   }
 
   /* ──────────────────────────────────────────
-     SUBMIT
+     SUBMIT — redirect to waiting-space.html
   ────────────────────────────────────────── */
   function submitForm() {
     if (!document.getElementById('agree_tos').checked) {
@@ -1242,12 +1472,29 @@
     btn.disabled = true;
     btn.textContent = '⏳ Memproses...';
 
-    // Simulate API call
+    // Simpan data registrasi ke localStorage agar waiting-space.html bisa membacanya
+    const now = new Date();
+    const regData = {
+      nama:     document.getElementById('nama_lengkap').value,
+      email:    document.getElementById('email').value,
+      hp:       document.getElementById('no_hp').value,
+      toko:     document.getElementById('nama_toko').value,
+      kategori: document.getElementById('kategori').value,
+      alamat:   `${document.getElementById('alamat_jalan').value}, ${document.getElementById('kelurahan').value}, Kec. ${document.getElementById('kecamatan').value}, Surakarta`,
+      lat:      selectedLat,
+      lng:      selectedLng,
+      waktu:    now.toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric' })
+                + ', ' + now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' }) + ' WIB',
+      deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      ref:      'ECO-' + Date.now().toString(36).toUpperCase(),
+    };
+
+    try { localStorage.setItem('ecoeats_reg', JSON.stringify(regData)); } catch(e) {}
+
+    // Simulate API call then redirect
     setTimeout(() => {
-      document.getElementById(`panel-4`).classList.remove('active');
-      document.getElementById('success-screen').classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1800);
+      window.location.href = 'waiting-space.html';
+    }, 1500);
   }
 
   /* ──────────────────────────────────────────
