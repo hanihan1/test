@@ -31,11 +31,8 @@ const MENUS = {
     { section: 'Manajemen' },
     { id: 'users',           icon: 'users',   label: 'Kelola Pengguna' },
     { id: 'admin-merchants', icon: 'store',   label: 'Kelola Merchant' },
-    { id: 'admin-listings',  icon: 'box',     label: 'Kelola Listing' },
-    { id: 'admin-orders',    icon: 'cart',    label: 'Kelola Pesanan' },
-    { section: 'Verifikasi & Laporan' },
+    { section: 'Verifikasi' },
     { id: 'verifikasi',      icon: 'check',   label: 'Verifikasi Merchant', badge: '5' },
-    { id: 'laporan',         icon: 'alert',   label: 'Laporan Pelanggaran', badge: '2' },
   ],
   customer: [
     { section: 'Belanja' },
@@ -68,10 +65,7 @@ const TOPBAR = {
     'analytics':        ['Analitik Platform',     'Data dan dampak keseluruhan'],
     'users':            ['Kelola Pengguna',       'Manajemen akun pengguna'],
     'admin-merchants':  ['Kelola Merchant',       'Daftar seluruh merchant terdaftar'],
-    'admin-listings':   ['Kelola Listing',        'Pantau semua listing aktif'],
-    'admin-orders':     ['Kelola Pesanan',        'Monitor semua transaksi'],
     'verifikasi':       ['Verifikasi Merchant',   'Tinjau pengajuan merchant baru'],
-    'laporan':          ['Laporan Pelanggaran',   'Tinjau laporan pengguna'],
   },
   customer: {
     'listings':         ['Jelajahi Menu',         'Cari makanan surplus berkualitas'],
@@ -101,6 +95,6 @@ const ICONS = {
   user:   `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
 };
 
-/** Shared helpers — defined once here to avoid "already declared" errors */
+/** Shared helpers — defined once here to avoid 'already declared' errors */
 const formatRp   = n => 'Rp ' + Number(n).toLocaleString('id-ID');
 const formatDate = d => new Date(d).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' });

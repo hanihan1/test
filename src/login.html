@@ -14,15 +14,7 @@
 
   <!-- Logo -->
   <div class="logo-area">
-    <div class="logo-icon">
-      <!-- Leaf icon -->
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
-        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
-      </svg>
-    </div>
-    <div class="logo-word">EcoEats</div>
+    <div class="logo-word" style="color:#5F6F52; font-size:36px; text-shadow:0 2px 12px rgba(0,0,0,.35);">EcoEats</div>
     <div class="logo-tag">Makan Murah Penting Kenyang</div>
   </div>
 
@@ -32,8 +24,8 @@
     <!-- Merchant login form -->
     <div id="auth-merchant">
       <span class="role-pill">Portal Mitra Merchant</span>
-      <h1>Portal Mitra Merchant</h1>
-      <!-- <p>Kelola makanan surplus dan pesanan dari pelanggan Anda.</p> -->
+      <h1>Portal Merchant</h1>
+      <br>
       <form class="auth-form" onsubmit="handleMerchantLogin(event)">
         <label for="merchant-email">Email</label>
         <input type="email" id="merchant-email" placeholder="username@gmail.com" required>
@@ -47,30 +39,32 @@
       </form>
       <div class="info-box">
         <strong>Belum terdaftar sebagai mitra?</strong>
-        Hubungi tim EcoEats untuk mendaftarkan usaha Anda sebagai mitra merchant.
-         <br><br>
-  <a href="register-merchant.html" 
-     style="color:inherit; font-weight:700; text-decoration:underline;">
-    → Daftar sebagai Merchant
-  </a>
+        <br>
+        <a href="register-merchant.html" style="color:inherit; font-weight:700; text-decoration:underline;">
+          → Daftar sebagai Merchant
+        </a>
       </div>
     </div>
 
     <!-- Admin login form -->
     <div id="auth-admin" class="hide">
-      <span class="role-pill admin">Portal Admin</span>
+      <span class="role-pill">Portal Admin</span>
       <h1>Portal Admin</h1>
-      <p>Masuk ke panel administrator untuk mengelola platform EcoEats.</p>
+      <br>
       <form class="auth-form" onsubmit="handleAdminLogin(event)">
-        <label for="admin-email">Email Admin</label>
+        <label for="admin-email">Email</label>
         <input type="email" id="admin-email" placeholder="admin@ecoeats.id" required>
         <label for="admin-pass">Password</label>
         <input type="password" id="admin-pass" placeholder="••••••••" required>
-        <button type="submit" class="auth-btn blu">Masuk ke Portal Admin</button>
+        <div class="check-wrap">
+          <input type="checkbox" id="rem-admin">
+          <label for="rem-admin">Ingat saya</label>
+        </div>
+        <button type="submit" class="auth-btn">Masuk</button>
       </form>
-      <div class="info-box admin-info">
+      <div class="info-box">
         <strong>Akses terbatas</strong>
-        Hanya akun administrator resmi yang dapat mengakses panel ini.
+        Hanya akun administrator resmi yang dapat mengakses page ini.
       </div>
     </div>
   </div>
@@ -87,26 +81,22 @@
 </div>
 
 <script>
-  /** Switch between merchant and admin login forms */
   function switchRole(role, btn) {
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('auth-merchant').classList.toggle('hide', role !== 'merchant');
     document.getElementById('auth-admin').classList.toggle('hide',    role !== 'admin');
-    // Subtle scale animation on card switch
     const card = document.getElementById('auth-card');
     card.style.transform = 'scale(.985)';
     setTimeout(() => { card.style.transform = 'scale(1)'; }, 150);
   }
 
-  /** Merchant login — TODO: replace with POST /api/auth/login */
   function handleMerchantLogin(event) {
     event.preventDefault();
     localStorage.setItem('userRole', 'merchant');
     window.location.href = 'dashboard.html';
   }
 
-  /** Admin login — TODO: replace with POST /api/auth/login */
   function handleAdminLogin(event) {
     event.preventDefault();
     localStorage.setItem('userRole', 'admin');

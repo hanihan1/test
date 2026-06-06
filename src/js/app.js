@@ -50,7 +50,7 @@ function navigate(page) {
 
   // Show/hide contextual topbar action button
   const action = document.getElementById('topbar-action');
-  if (page === 'listings' || page === 'admin-listings') {
+  if (page === 'listings') {
     action.textContent = 'Tambah Listing';
     action.classList.remove('hide');
   } else if (page === 'users') {
@@ -70,7 +70,7 @@ function navigate(page) {
 
 /** Handle topbar action button click */
 function topbarAction() {
-  if (APP.page === 'listings' || APP.page === 'admin-listings') {
+  if (APP.page === 'listings') {
     navigate('add-listing');
   } else if (APP.page === 'users') {
     // TODO: connect to CSV export endpoint
@@ -97,9 +97,6 @@ function render(page) {
     // Admin management pages
     'users':            renderAdminUsers,
     'admin-merchants':  renderAdminMerchants,
-    'admin-listings':   renderAdminListingsManagement,
-    'admin-orders':     renderAdminOrdersManagement,
-    'laporan':          renderAdminViolations,
     // User/Customer pages
     'cart':             renderCart,
     'checkout':         renderCheckout,

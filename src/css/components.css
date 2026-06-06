@@ -19,7 +19,7 @@
 .btn:hover  { opacity: .85; }
 .btn:active { transform: scale(.97); }
 .btn-grn { background: var(--grn); color: white; }
-.btn-brn { background: var(--btn); color: white; box-shadow: 0 2px 8px rgba(160,120,80,.25); }
+.btn-brn { background: var(--btn); color: white; box-shadow: 0 2px 8px rgba(185,148,112,.28); }
 .btn-blu { background: var(--blu); color: white; }
 .btn-out { background: transparent; border: 1.5px solid var(--brd); color: var(--lbl); }
 .btn-red { background: #FDE8E8; color: var(--red); border: 1px solid #F5C6C2; }
@@ -56,10 +56,10 @@
 
 /* ── Badges ── */
 .badge { display: inline-flex; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-.badge-grn  { background: #E0F4E8; color: #1A6040; }
-.badge-org  { background: #FEF0E0; color: #8A4800; }
-.badge-red  { background: #FDE8E8; color: #802020; }
-.badge-blu  { background: #E8EDFC; color: #1A3F8A; }
+.badge-grn  { background: #E4ECD8; color: #3A4D2A; }
+.badge-org  { background: #F8EDD8; color: #7A4E00; }
+.badge-red  { background: #F8E0E0; color: #742020; }
+.badge-blu  { background: #E8EDE8; color: #3A4D38; }  /* sage-toned info */
 .badge-gray { background: var(--inp); color: var(--sub); }
 
 /* ── Tables ── */
@@ -73,11 +73,11 @@
   text-transform: uppercase;
   color: var(--sub);
   border-bottom: 1px solid var(--brd);
-  background: #FAFAF5;
+  background: #F8F4D8;          /* light cream tint */
 }
-.tbl td { padding: 11px 12px; border-bottom: 1px solid #F0EBE0; color: var(--lbl); }
+.tbl td { padding: 11px 12px; border-bottom: 1px solid #E8E2C0; color: var(--lbl); }
 .tbl tr:last-child td { border-bottom: none; }
-.tbl tr:hover td { background: #FAFAF5; }
+.tbl tr:hover td { background: #F8F4D8; }
 
 /* ── Form elements ── */
 .form-group    { margin-bottom: 14px; }
@@ -108,7 +108,7 @@
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--btn);
-  box-shadow: 0 0 0 3px rgba(160,120,80,.12);
+  box-shadow: 0 0 0 3px rgba(185,148,112,.16);
 }
 /* Custom dropdown arrow */
 .form-select {
@@ -132,7 +132,7 @@
   font-size: 13px;
   transition: all .2s;
 }
-.upload-box:hover { border-color: var(--grn); color: var(--grn); background: #F0F8EC; }
+.upload-box:hover { border-color: var(--grn); color: var(--grn); background: #EEF0E8; }
 
 /* ── Alert banners ── */
 .alert {
@@ -144,10 +144,10 @@
   align-items: center;
   gap: 8px;
 }
-.alert-org { background: #FEF3E0; border: 1px solid #F8D8A0; color: #6A3800; }
-.alert-grn { background: #E8F5E0; border: 1px solid #98D898; color: #1A5020; }
-.alert-red { background: #FDE8E8; border: 1px solid #F5B8B8; color: #6A1818; }
-.alert-blu { background: #E8EDFC; border: 1px solid #B8C8F5; color: #1A2F8A; }
+.alert-org { background: #F8EDD8; border: 1px solid #E8C880; color: #6A3800; }
+.alert-grn { background: #E4ECD8; border: 1px solid #A9B388; color: #2E4020; }
+.alert-red { background: #F8E0E0; border: 1px solid #E8A8A8; color: #6A1818; }
+.alert-blu { background: #EBF0E8; border: 1px solid #A9B388; color: #303D28; }
 
 /* ── Inner tabs (within a page) ── */
 .inner-tabs {
@@ -190,8 +190,8 @@
   cursor: pointer;
 }
 .chart-bar:hover { opacity: .8; }
-.chart-bar.hi { background: var(--grn); border-top: 2px solid #3A7A4A; }
-.chart-bar.lo { background: #B0D4C0; border-top: 2px solid #8AB8A0; }
+.chart-bar.hi { background: var(--grn); border-top: 2px solid #4A5840; }
+.chart-bar.lo { background: #A9B388; border-top: 2px solid #8A9870; }  /* sage-green lo bar */
 .chart-labels { display: flex; gap: 6px; margin-top: 4px; }
 .chart-labels span { flex: 1; text-align: center; font-size: 10px; color: var(--sub); }
 
@@ -201,7 +201,7 @@
 
 /* ── Balance card (saldo) ── */
 .saldo-card {
-  background: linear-gradient(135deg, #2A5A3A, #1A4A2A);
+  background: linear-gradient(135deg, #5F6F52, #4A5840); /* dark-olive */
   border-radius: 14px;
   padding: 20px 22px;
   color: white;
@@ -240,7 +240,7 @@
   outline: none;
   transition: all .2s;
 }
-.search-wrap input:focus { border-color: var(--btn); box-shadow: 0 0 0 3px rgba(160,120,80,.12); }
+.search-wrap input:focus { border-color: var(--btn); box-shadow: 0 0 0 3px rgba(185,148,112,.16); }
 .search-wrap::before {
   content: '';
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238C7B6A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat center;
@@ -254,7 +254,7 @@
 }
 
 /* ── Profile info rows ── */
-.info-row  { display: flex; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid #F0EBE0; font-size: 13px; }
+.info-row  { display: flex; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid #E8E2C0; font-size: 13px; }
 .info-row:last-child { border-bottom: none; }
 .info-icon  { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; }
 .info-label { color: var(--sub); width: 110px; flex-shrink: 0; font-size: 12px; font-weight: 500; }
@@ -265,7 +265,7 @@
   width: 70px;
   height: 70px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #2A5A3A, #1A4A2A);
+  background: linear-gradient(135deg, #5F6F52, #4A5840); /* dark-olive */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,7 +275,7 @@
 
 /* ── Map placeholder ── */
 .map-placeholder {
-  background: linear-gradient(135deg, #E0EDD8, #D4E4CC);
+  background: linear-gradient(135deg, #E4ECD8, #D4E0C4); /* sage-green tint */
   border-radius: 8px;
   height: 160px;
   display: flex;
@@ -321,116 +321,9 @@
 .mb-20 { margin-bottom: 20px; }
 .mt-16 { margin-top: 16px; }
 
-/* ── Text utilities ──
+/* ── Text utilities ── */
 .text-sm   { font-size: 12px; }
 .text-xs   { font-size: 11px; }
 .color-sub { color: var(--sub); }
 .color-grn { color: var(--grn); }
-<<<<<<< HEAD
-.color-red { color: var(--red); } */
-
-/* ── Text utilities ── */
-.text-sm { font-size: 12px; }
-.text-xs { font-size: 11px; }
-
-.color-sub {
-  color: var(--tan);
-}
-
-.color-grn {
-  color: var(--sage-green);
-}
-
-.color-primary {
-  color: var(--dark-olive);
-}
-
-.color-title {
-  color: var(--dark-brown);
-}
-
-.color-cream {
-  color: var(--cream);
-}
-=======
 .color-red { color: var(--red); }
-
-/* ── Shopping Cart & Checkout ── */
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: var(--lbl);
-}
-.summary-row .lbl { font-weight: 500; }
-.summary-row .val { text-align: right; }
-
-/* ── Payment Methods ── */
-.payment-methods { display: flex; flex-direction: column; gap: 10px; }
-.payment-method-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 14px;
-  border: 1.5px solid var(--brd);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all .2s;
-}
-.payment-method-item:hover { border-color: var(--btn); background: #FAFAF5; }
-.payment-method-item input[type="radio"] {
-  width: 16px;
-  height: 16px;
-  margin-right: 12px;
-  cursor: pointer;
-  accent-color: var(--btn);
-}
-.payment-method-item input[type="radio"]:checked ~ .pmi-content {
-  color: var(--btn);
-}
-.pmi-content { flex: 1; }
-.pmi-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
-.pmi-sub { font-size: 11px; color: var(--sub); }
-
-/* ── User Addresses ── */
-.address-modal-item {
-  padding: 12px 14px;
-  border: 1px solid var(--brd);
-  border-radius: 8px;
-  margin-bottom: 12px;
-  transition: all .2s;
-}
-.address-modal-item:hover { border-color: var(--btn); background: #FAFAF5; }
-.address-modal-item input[type="radio"] {
-  margin-right: 8px;
-  accent-color: var(--btn);
-  cursor: pointer;
-}
-
-/* ── Modal overlay ── */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  backdrop-filter: blur(2px);
-}
-.modal-overlay.hide { display: none; }
-.modal-overlay .card2 {
-  background: white;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0,0,0,.15);
-}
-
-/* ── Info rows in detail view ── */
-.info-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
-.info-row .lbl { color: var(--sub); font-weight: 500; }
-.info-row .val { font-weight: 600; color: var(--lbl); text-align: right; }
->>>>>>> 05aff6651c18ae1884fe67e7196426feb9db8709
