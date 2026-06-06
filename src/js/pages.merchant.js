@@ -3,7 +3,6 @@
    ============================================================ */
 
 /** Helper: format rupiah */
-const formatRp = n => 'Rp ' + Number(n).toLocaleString('id-ID');
 
 /* ── Dashboard ── */
 function renderMerchantDashboard() {

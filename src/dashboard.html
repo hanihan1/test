@@ -61,14 +61,17 @@
 
 </div>
 
-<!-- App scripts (order matters) -->
+<!-- App scripts (urutan penting!) -->
 <script src="js/config.js"></script>
 <script src="js/pages.merchant.js"></script>
+<script src="js/pages.merchant.analytics.js"></script>
 <script src="js/pages.admin.js"></script>
+<script src="js/pages.admin.management.js"></script>
+<script src="js/pages.orders.js"></script>
+<script src="js/pages.user.js"></script>
 <script src="js/app.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Redirect to login if no session
     const savedRole = localStorage.getItem('userRole');
     if (!savedRole) {
       window.location.href = 'login.html';

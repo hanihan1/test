@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoEats — Profil Usaha</title>
+  <title>EcoEats — Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -13,7 +13,7 @@
 
 <div id="page-app">
 
-  <!-- Sidebar (shared structure) -->
+  <!-- Sidebar -->
   <aside id="sidebar">
     <div class="sb-header">
       <div class="sb-logo-icon">
@@ -50,8 +50,8 @@
   <div id="main-area">
     <div class="topbar">
       <div class="topbar-titles">
-        <div id="topbar-title">Profil Usaha</div>
-        <div id="topbar-sub">Informasi lengkap usaha Anda</div>
+        <div id="topbar-title">Dashboard</div>
+        <div id="topbar-sub">Ringkasan aktivitas usaha Anda</div>
       </div>
       <button id="topbar-action" class="hide" onclick="topbarAction()"></button>
       <div class="topbar-avatar" id="topbar-avatar">M</div>
@@ -61,12 +61,14 @@
 
 </div>
 
+<!-- App scripts (order matters) -->
 <script src="js/config.js"></script>
 <script src="js/pages.merchant.js"></script>
 <script src="js/pages.admin.js"></script>
 <script src="js/app.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Redirect to login if no session
     const savedRole = localStorage.getItem('userRole');
     if (!savedRole) {
       window.location.href = 'login.html';
@@ -74,7 +76,7 @@
     }
     APP.role = savedRole;
     buildSidebar();
-    navigate('profile');
+    navigate('dashboard');
   });
 </script>
 

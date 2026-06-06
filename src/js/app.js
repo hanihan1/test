@@ -81,20 +81,27 @@ function topbarAction() {
 /** Route page id to its render function */
 function render(page) {
   const routes = {
-    'dashboard':        () => APP.role === 'merchant' ? renderMerchantDashboard() : renderAdminDashboard(),
+    'dashboard':        () => APP.role === 'merchant' ? renderMerchantDashboard() : (APP.role === 'admin' ? renderAdminDashboard() : renderCart()),
     'add-listing':      renderAddListing,
     'listings':         renderListings,
     'orders':           renderOrders,
+    'order-detail':     () => renderOrderDetail('ORD-20240612-001'),
     'history':          renderHistory,
     'profile':          renderProfile,
     'verif-status':     renderVerifStatus,
     'verifikasi':       renderVerifikasi,
-    'users':            renderUsers,
-    'admin-merchants':  renderMerchants,
-    'admin-listings':   renderAdminListings,
-    'admin-orders':     renderAdminOrders,
-    'laporan':          renderLaporan,
-    'analytics':        renderAnalytics,
+    // Merchant analytics
+    'analytics':        () => APP.role === 'merchant' ? renderMerchantAnalytics() : renderAdminPlatformAnalytics(),
+    // Admin management pages
+    'users':            renderAdminUsers,
+    'admin-merchants':  renderAdminMerchants,
+    'admin-listings':   renderAdminListingsManagement,
+    'admin-orders':     renderAdminOrdersManagement,
+    'laporan':          renderAdminViolations,
+    // User/Customer pages
+    'cart':             renderCart,
+    'checkout':         renderCheckout,
+    'user-addresses':   renderUserAddresses,
   };
   return (routes[page] || (() => `<p class="color-sub">Halaman belum tersedia.</p>`))();
 }
@@ -119,6 +126,26 @@ function bindPageEvents(page) {
   if (page === 'add-listing') {
     const photoInput = document.getElementById('listing-photo');
     if (photoInput) photoInput.addEventListener('change', handlePhotoUpload);
+  }
+
+  // Checkout page: address selection
+  if (page === 'checkout') {
+    const addressSelect = document.getElementById('checkout-address');
+    if (addressSelect) {
+      addressSelect.addEventListener('change', function() {
+        // TODO: fetch address details from API and update preview
+        document.getElementById('checkout-address-preview').textContent = 
+          'Alamat yang dipilih: ' + (this.options[this.selectedIndex].text || 'Pilih alamat');
+      });
+    }
+  }
+
+  // User addresses page: file upload & modal
+  if (page === 'user-addresses') {
+    const modal = document.getElementById('address-modal');
+    if (modal) {
+      modal.addEventListener('click', closeAddressModal);
+    }
   }
 }
 
