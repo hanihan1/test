@@ -245,7 +245,6 @@ function renderOrders() {
   <div class="inner-tabs">
     <button class="inner-tab active" data-tab="pending"   data-group="orders">Pending   <span class="badge badge-org" style="margin-left:4px" id="tab-badge-pending">—</span></button>
     <button class="inner-tab"        data-tab="confirmed" data-group="orders">Dikonfirmasi <span class="badge badge-blu" style="margin-left:4px">—</span></button>
-    <button class="inner-tab"        data-tab="ready"     data-group="orders">Siap Diambil <span class="badge badge-grn" style="margin-left:4px">—</span></button>
     <button class="inner-tab"        data-tab="done"      data-group="orders">Selesai   <span class="badge badge-gray" style="margin-left:4px">—</span></button>
     <button class="inner-tab"        data-tab="rejected"  data-group="orders">Ditolak   <span class="badge badge-red" style="margin-left:4px">—</span></button>
   </div>
@@ -261,7 +260,12 @@ function renderOrders() {
           </tr>
         </thead>
         <tbody id="orders-pending-tbody">
-          <tr><td colspan="7" class="color-sub" style="text-align:center;padding:24px">Memuat pesanan...</td></tr>
+          <tr>
+            <td colspan="7" class="color-sub" style="text-align:center;padding:48px">
+              <div style="margin-bottom:8px">⏳</div>
+              Menghubungkan ke server untuk memuat pesanan...
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -270,19 +274,22 @@ function renderOrders() {
   <!-- Confirmed orders — TODO: /api/orders?status=confirmed -->
   <div id="tab-confirmed" class="hide" data-panel data-group="orders">
     <div class="card2">
-      <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
-        <div style="font-size:32px;margin-bottom:8px">&#10003;</div>
-        <div style="font-weight:600;color:var(--lbl)">Menunggu data pesanan dikonfirmasi</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ready for pickup — TODO: /api/orders?status=ready -->
-  <div id="tab-ready" class="hide" data-panel data-group="orders">
-    <div class="card2">
-      <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
-        <div style="font-weight:600;color:var(--lbl)">Menunggu data pesanan siap diambil</div>
-      </div>
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Kode Pickup</th><th>Pembeli</th><th>Item</th>
+            <th>Total</th><th>Status Bayar</th><th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="orders-confirmed-tbody">
+          <tr>
+            <td colspan="6" class="color-sub" style="text-align:center;padding:48px">
+              <div style="margin-bottom:8px">⏳</div>
+              Memuat pesanan yang dikonfirmasi...
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -298,17 +305,49 @@ function renderOrders() {
   <!-- Rejected orders -->
   <div id="tab-rejected" class="hide" data-panel data-group="orders">
     <div class="card2">
-      <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
-        <div style="font-weight:600;color:var(--lbl)">Pesanan yang ditolak</div>
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Kode Pickup</th><th>Pembeli</th><th>Item</th>
+            <th>Total</th><th>Alasan</th><th>Tanggal Ditolak</th>
+          </tr>
+        </thead>
+        <tbody id="orders-rejected-tbody">
+          <tr>
+            <td colspan="6" class="color-sub" style="text-align:center;padding:48px">
+              <div style="margin-bottom:8px">⏳</div>
+              Memuat pesanan yang ditolak...
+            </td>
+          </tr>
+        </tbody>
       </div>
     </div>
   </div>`;
 }
 
-/** Confirm order action — TODO: PATCH /api/orders/:id { status: 'confirmed'|'rejected' } */
+/** Confirm order action — TODO: PATCH /api/orders/:id { status: 'confirmed'|'rejected'|'ready'|'paid' } */
 function orderAction(orderId, action) {
   // TODO: call API, then refresh order list
-  alert(`Pesanan #${orderId} ${action === 'confirm' ? 'dikonfirmasi' : 'ditolak'}.`);
+  let message = '';
+  switch (action) {
+    case 'confirm':
+      message = `Pesanan #${orderId} dikonfirmasi.`;
+      break;
+    case 'reject':
+      message = `Pesanan #${orderId} ditolak.`;
+      break;
+    case 'ready':
+      message = `Pesanan #${orderId} siap diambil.`;
+      break;
+    case 'togglePaymentStatus':
+      // Ini akan membutuhkan logika untuk mengetahui status pembayaran saat ini
+      // dan mengubahnya (misal: dari 'belum lunas' menjadi 'lunas' atau sebaliknya)
+      message = `Status pembayaran pesanan #${orderId} diubah.`;
+      break;
+    default:
+      message = `Aksi tidak dikenal untuk pesanan #${orderId}.`;
+  }
+  alert(message);
 }
 
 /* ── Riwayat Pesanan ── */

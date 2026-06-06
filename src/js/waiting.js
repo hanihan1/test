@@ -29,7 +29,7 @@ function setStatus(status) {
   // Safety check: pastikan elemen ada sebelum diakses
   if (!badgeDot || !badgeText || !heroTitle || !heroSubtitle) { console.error("Elemen status tidak ditemukan"); return; }
 
-  if (status === 'waiting') {
+  if (status === 'pending') {
     badgeDot.style.background = '#ffd166';
     badgeDot.style.animation  = 'pulse 1.8s ease-in-out infinite';
     badgeText.textContent     = 'Menunggu Verifikasi';
@@ -38,7 +38,7 @@ function setStatus(status) {
       'Dokumen kamu sedang ditinjau oleh tim EcoEats. Kami akan menghubungi lewat email setelah proses selesai.';
   }
 
-  else if (status === 'verified') {
+  else if (status === 'approved') {
     badgeDot.style.background = '#27ae60';
     badgeDot.style.animation  = 'none';
     badgeText.textContent     = 'Terverifikasi ✓';
@@ -77,7 +77,10 @@ function setRegistrationMeta() {
 ──────────────────────────────── */
 loadData();
 setRegistrationMeta();
-setStatus('waiting');
+
+// Ambil status dari localStorage untuk menentukan state tampilan (default ke 'pending')
+const currentReg = JSON.parse(localStorage.getItem('ecoeats_reg') || '{}');
+setStatus(currentReg.status || 'pending');
 
 // Gunakan pengecekan agar tidak error jika fungsi sidebar belum diload
 if (typeof buildSidebar === 'function') {
