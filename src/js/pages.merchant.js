@@ -7,16 +7,10 @@
 /* ── Dashboard ── */
 function renderMerchantDashboard() {
   const chartData = [45, 60, 38, 80, 55, 75, 92];
-  const days      = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-  const bars      = chartData.map(v =>
-    `<div class="chart-bar ${v >= 80 ? 'hi' : 'lo'}" style="height:${v}%"></div>`
-  ).join('');
-  const labels = days.map(d => `<span>${d}</span>`).join('');
 
   return `
   <!-- Alert: pending orders -->
-  <div class="alert alert-org mb-16">
-    <strong>3 pesanan baru</strong> menunggu konfirmasi —
+  <div class="alert alert-org mb-16" id="pending-orders-alert" style="display:none">
     <a href="#" onclick="navigate('orders');return false;" style="color:inherit;font-weight:600">Lihat sekarang &rarr;</a>
   </div>
 
@@ -44,19 +38,10 @@ function renderMerchantDashboard() {
     <div class="card2">
       <div class="card-head">
         Pesanan Masuk
-        <span class="badge badge-org" id="pending-badge">3 Pending</span>
+        <span class="badge badge-org" id="pending-badge" style="display:none">0 Pending</span>
       </div>
       <div class="card-body" style="padding:0" id="pending-orders-list">
-        <table class="tbl" style="margin:0">
-          <tbody id="orders-pending-tbody">
-            <tr>
-              <td style="padding:16px">
-                <div style="font-weight:600">ORD-20240612-001</div>
-                <div style="font-size:12px;color:var(--sub)">Budi Santoso • 2 Items</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <table class="tbl" style="margin:0"><tbody id="orders-pending-tbody"></tbody></table>
       </div>
     </div>
 
@@ -64,9 +49,9 @@ function renderMerchantDashboard() {
     <div class="card2">
       <div class="card-head">Penjualan 7 Hari</div>
       <div class="card-body">
-        <div class="chart-wrap">${bars}</div>
-        <div class="chart-labels">${labels}</div>
-        <div style="margin-top:16px" id="top-products-chart">
+        <div class="chart-wrap" id="sales-chart-bars"></div>
+        <div class="chart-labels" id="sales-chart-labels"></div>
+        <div style="margin-top:16px" id="top-products-chart" class="color-sub" style="text-align:center">
           <!-- Top products progress bars, populated from API -->
         </div>
       </div>
@@ -249,7 +234,7 @@ function renderOrders(targetTab = 'pending') {
   <div class="inner-tabs">
     <button class="inner-tab ${targetTab === 'pending' ? 'active' : ''}"   data-tab="pending"   data-group="orders">Pending   <span class="badge badge-org" style="margin-left:4px" id="tab-badge-pending">—</span></button>
     <button class="inner-tab ${targetTab === 'confirmed' ? 'active' : ''}" data-tab="confirmed" data-group="orders">Dikonfirmasi <span class="badge badge-blu" style="margin-left:4px">—</span></button>
-    <button class="inner-tab ${targetTab === 'ready' ? 'active' : ''}"     data-tab="ready"     data-group="orders">Siap Diambil <span class="badge badge-grn" style="margin-left:4px">—</span></button>
+    <!-- <button class="inner-tab ${targetTab === 'ready' ? 'active' : ''}"     data-tab="ready"     data-group="orders">Siap Diambil <span class="badge badge-grn" style="margin-left:4px">—</span></button> -->
     <button class="inner-tab ${targetTab === 'done' ? 'active' : ''}"      data-tab="done"      data-group="orders">Selesai   <span class="badge badge-gray" style="margin-left:4px">—</span></button>
     <button class="inner-tab ${targetTab === 'rejected' ? 'active' : ''}"  data-tab="rejected"  data-group="orders">Ditolak   <span class="badge badge-red" style="margin-left:4px">—</span></button>
   </div>
@@ -265,18 +250,7 @@ function renderOrders(targetTab = 'pending') {
           </tr>
         </thead>
         <tbody id="orders-pending-tbody">
-          <tr>
-            <td>#ORD-001</td>
-            <td>Budi Santoso</td>
-            <td>Nasi Kotak Ayam...</td>
-            <td>Rp 40.000</td>
-            <td>14:30</td>
-            <td>20:00</td>
-            <td style="display:flex;gap:6px">
-              <button class="btn btn-grn btn-sm" onclick="orderAction('ORD-001', 'accept')">Accept</button>
-              <button class="btn btn-red btn-sm" onclick="orderAction('ORD-001', 'reject')">Reject</button>
-            </td>
-          </tr>
+          <tr><td colspan="7" class="color-sub" style="text-align:center;padding:24px">Memuat pesanan...</td></tr>
         </tbody>
       </table>
     </div>
@@ -286,20 +260,13 @@ function renderOrders(targetTab = 'pending') {
   <div id="tab-confirmed" class="${targetTab === 'confirmed' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
-        <div style="font-size:32px;margin-bottom:8px">&#10003;</div>
         <div style="font-weight:600;color:var(--lbl)">Menunggu data pesanan dikonfirmasi</div>
       </div>
     </div>
   </div>
 
   <!-- Ready for pickup — TODO: /api/orders?status=ready -->
-  <div id="tab-ready" class="${targetTab === 'ready' ? '' : 'hide'}" data-panel data-group="orders">
-    <div class="card2">
-      <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
-        <div style="font-weight:600;color:var(--lbl)">Menunggu data pesanan siap diambil</div>
-      </div>
-    </div>
-  </div>
+  <!-- Dihapus -->
 
   <!-- Completed orders -->
   <div id="tab-done" class="${targetTab === 'done' ? '' : 'hide'}" data-panel data-group="orders">
@@ -323,9 +290,11 @@ function renderOrders(targetTab = 'pending') {
 /** Confirm order action — TODO: PATCH /api/orders/:id { status: 'confirmed'|'rejected' } */
 function orderAction(orderId, action) {
   if (action === 'accept') {
+    // TODO: Call API to update order status to 'confirmed'
     navigate('order-detail');
   } else {
-    alert(`Pesanan #${orderId} telah ditolak.`);
+    // TODO: Call API to update order status to 'rejected'
+    navigate('orders', 'rejected'); // Navigate to rejected tab after rejection
   }
 }
 
@@ -352,7 +321,7 @@ function renderHistory() {
           <th>Total</th><th>Pembayaran</th><th>Status</th><th>Tanggal</th>
         </tr>
       </thead>
-      <tbody id="history-tbody">
+      <tbody id="history-tbody" class="color-sub" style="text-align:center;padding:24px">
         <tr><td colspan="7" class="color-sub" style="text-align:center;padding:24px">Memuat riwayat...</td></tr>
       </tbody>
     </table>
@@ -426,7 +395,7 @@ let _profileMap   = null;   // Leaflet map instance
 let _profileMarker = null;  // current pin
 
 function initProfileMap(savedLat = -7.5755, savedLng = 110.8243) {
-  // Jangan init ulang jika sudah ada
+  // Jangan init ulang jika sudah ada, atau gunakan koordinat tersimpan dari API
   if (_profileMap) { _profileMap.remove(); _profileMap = null; }
 
   // Muat Leaflet CSS + JS jika belum ada

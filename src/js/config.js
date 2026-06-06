@@ -3,7 +3,7 @@
    ============================================================ */
 
 /** Global app state — role and active page */
-const APP = { role: 'merchant', page: 'dashboard' };
+const APP = { role: 'merchant', page: 'dashboard', activeOrderId: null };
 
 /** Sidebar menu definitions per role.
  *  icon: SVG icon name (mapped in buildSidebar via ICONS), label: display text */
@@ -16,9 +16,9 @@ const MENUS = {
     { id: 'add-listing',  icon: 'plus',     label: 'Tambah Listing' },
     { id: 'listings',     icon: 'box',      label: 'Kelola Listing' },
     { section: 'Pesanan' },
-    { id: 'orders',       icon: 'cart',     label: 'Pesanan Masuk', badge: '3', badgeClass: 'org' },
+    { id: 'orders',       icon: 'cart',     label: 'Pesanan Masuk' },
     { id: 'orders-confirmed', icon: 'check', label: 'Sedang Diproses' },
-    { id: 'orders-ready', icon: 'box',      label: 'Siap Diambil' },
+    // { id: 'orders-ready', icon: 'box',      label: 'Siap Diambil' }, // Dihapus
     { id: 'history',      icon: 'list',     label: 'Riwayat Pesanan' },
     { section: 'Akun' },
     { id: 'profile',      icon: 'store',    label: 'Profil Usaha' },
@@ -54,8 +54,8 @@ const TOPBAR = {
     'add-listing':  ['Tambah Listing',          'Daftarkan makanan surplus baru'],
     'listings':     ['Kelola Listing',          'Kelola menu surplus Anda'],
     'orders':       ['Pesanan Masuk',           'Pesanan yang perlu dikonfirmasi'],
-    'orders-confirmed': ['Sedang Diproses',     'Pesanan yang sedang disiapkan/dibayar'],
-    'orders-ready':     ['Siap Diambil',        'Pesanan yang menunggu diambil pelanggan'],
+    'orders-confirmed': ['Sedang Diproses',     'Pesanan yang sedang disiapkan/dibayar'], // Tetap ada
+    // 'orders-ready':     ['Siap Diambil',        'Pesanan yang menunggu diambil pelanggan'], // Dihapus
     'history':      ['Riwayat Pesanan',         'Semua transaksi yang telah selesai'],
     'profile':      ['Profil Usaha',            'Informasi lengkap usaha Anda'],
     // 'verif-status': ['Status Verifikasi',    'Status pendaftaran mitra merchant'],

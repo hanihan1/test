@@ -85,9 +85,9 @@ function render(page) {
     'add-listing':      renderAddListing,
     'listings':         renderListings,
     'orders':           () => renderOrders('pending'),
-    'orders-confirmed': () => renderOrders('confirmed'),
-    'orders-ready':     () => renderOrders('ready'),
-    'order-detail':     () => APP.pages.orderDetail.render({ orderId: 'ORD-20240612-001' }),
+    'orders-confirmed': () => renderOrders('confirmed'), // Tetap ada
+    // 'orders-ready':     () => renderOrders('ready'), // Dihapus
+    'order-detail':     () => renderOrderDetail(APP.activeOrderId),
     'history':          renderHistory,
     'profile':          renderProfile,
     // 'verif-status':  renderVerifStatus,

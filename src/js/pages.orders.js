@@ -1,150 +1,96 @@
 /* ============================================================
-   pages.orders.js — Order detail and item display functions
+   pages.orders.js — Detail Pesanan & Manajemen Pembayaran
    ============================================================ */
 
-/** Helper: format rupiah */
+/** 
+ * Render halaman detail pesanan setelah merchant klik "Accept".
+ * Menampilkan daftar makanan, total, kode pickup, dan toggle status uang.
+ */
+function renderOrderDetail(orderId, isPaid = false) {
+  // Mock data - Di aplikasi nyata, data ini diambil dari API berdasarkan orderId
+  const order = {
+    id: orderId || APP.activeOrderId || 'ORD-001',
+    items: ["Nasi Kotak Ayam Geprek", "Es Teh Manis"],
+    total: 57500,
+    statusBayar: isPaid ? "Sudah Bayar" : "Belum Bayar",
+    kodePickup: "PK-88291",
+    metode: "Transfer Bank (BCA)",
+    uangDiterima: isPaid
+  };
 
-/* ── Order Detail with Items ── */
-function renderOrderDetail(orderId) {
   return `
-  <div style="max-width:800px;margin:0 auto">
-    <!-- Order header -->
-    <div class="card2 mb-16">
-      <div class="card-head">
-        Pesanan #${orderId}
-        <span class="badge badge-grn" style="float:right">Selesai</span>
+  <div style="max-width:600px; margin: 0 auto;">
+    <div class="card2">
+      <div class="card-head" style="background: var(--grn); color: white;">
+        Pesanan Berhasil Diterima
+        <span style="float:right">#${order.id}</span>
       </div>
       <div class="card-body">
-        <div class="grid-2 mb-16">
+        <!-- Daftar Makanan -->
+        <div style="margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid var(--brd)">
+          <label class="form-label" style="color:var(--sub)">Daftar Makanan</label>
+          <ul style="list-style:none; padding-left:0; font-weight:600; font-size:15px; margin-top:8px">
+            ${order.items.map(it => `<li style="margin-bottom:4px">• ${it}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Ringkasan Harga & Bayar -->
+        <div class="grid-2 mb-20">
           <div>
-            <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Status Pesanan</div>
-            <div style="font-weight:600;font-size:14px">Siap Diambil</div>
+            <label class="form-label" style="color:var(--sub)">Total Harga</label>
+            <div style="font-size:18px; font-weight:700; color:var(--btn)">${formatRp(order.total)}</div>
           </div>
           <div>
-            <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Waktu Pemesanan</div>
-            <div style="font-weight:600;font-size:14px">12 Juni 2024, 14:30</div>
-          </div>
-          <div>
-            <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Batas Pickup</div>
-            <div style="font-weight:600;font-size:14px">12 Juni 2024, 20:00</div>
-          </div>
-          <div>
-            <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Total Pembayaran</div>
-            <div style="font-weight:600;font-size:14px;color:var(--btn)">Rp 57.500</div>
+            <label class="form-label" style="color:var(--sub)">Status Bayar</label>
+            <div style="font-weight:600">${order.statusBayar}</div>
+            <div style="font-size:11px; color:var(--sub)">${order.metode}</div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Order items detail -->
-    <div class="card2 mb-16">
-      <div class="card-head">Detail Item</div>
-      <table class="tbl" style="margin:0">
-        <thead>
-          <tr>
-            <th>Produk</th>
-            <th style="text-align:center">Qty</th>
-            <th style="text-align:right">Harga Satuan</th>
-            <th style="text-align:right">Total</th>
-          </tr>
-        </thead>
-        <tbody id="order-items-tbody">
-          <tr>
-            <td>
-              <div style="font-weight:600;margin-bottom:4px">Nasi Kotak Ayam Geprek</div>
-              <div style="font-size:12px;color:var(--sub)">dari Warung Makan Sukabumi</div>
-            </td>
-            <td style="text-align:center">2</td>
-            <td style="text-align:right">Rp 20.000</td>
-            <td style="text-align:right;font-weight:600">Rp 40.000</td>
-          </tr>
-          <tr>
-            <td>
-              <div style="font-weight:600;margin-bottom:4px">Es Teh Manis</div>
-              <div style="font-size:12px;color:var(--sub)">dari Warung Makan Sukabumi</div>
-            </td>
-            <td style="text-align:center">2</td>
-            <td style="text-align:right">Rp 8.500</td>
-            <td style="text-align:right;font-weight:600">Rp 17.000</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Payment & Shipping info -->
-    <div class="grid-2 mb-16">
-      <!-- Payment info -->
-      <div class="card2">
-        <div class="card-head">Informasi Pembayaran</div>
-        <div class="card-body">
-          <div class="info-row mb-12">
-            <span class="lbl">Subtotal</span>
-            <span class="val">Rp 57.000</span>
-          </div>
-          <div class="info-row mb-12">
-            <span class="lbl">Biaya Layanan</span>
-            <span class="val">Rp 2.500</span>
-          </div>
-          <div class="info-row mb-12">
-            <span class="lbl">Potongan (Surplus)</span>
-            <span class="val" style="color:var(--grn)">-Rp 2.000</span>
-          </div>
-          <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-          <div class="info-row" style="font-weight:600;color:var(--btn);font-size:16px">
-            <span class="lbl">Total</span>
-            <span class="val">Rp 57.500</span>
-          </div>
-          <div style="margin-top:16px;padding:12px;background:var(--bg2);border-radius:6px;font-size:12px;color:var(--sub)">
-            <strong>Metode:</strong> Transfer Bank (BCA)<br>
-            <strong>Status:</strong> ✓ Sudah Dibayar (12 Juni, 14:45)
-          </div>
+        <!-- Kode Pickup -->
+        <div class="alert alert-grn mb-20" style="text-align:center; padding:20px">
+          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px">Kode Pickup</div>
+          <div style="font-size:28px; font-weight:800; font-family:'DM Mono', monospace;">${order.kodePickup}</div>
         </div>
-      </div>
 
-      <!-- Shipping info -->
-      <div class="card2">
-        <div class="card-head">Alamat Pengiriman</div>
-        <div class="card-body">
-          <div style="margin-bottom:12px">
-            <div style="font-weight:600;margin-bottom:4px">Jl. Merdeka No.10</div>
-            <div style="font-size:13px;color:var(--sub);margin-bottom:8px">
-              RT 05 RW 03, Jakarta Pusat<br>
-              DKI Jakarta 12130
-            </div>
-            <div style="font-size:12px;color:var(--sub)">
-              <strong>No. Telp:</strong> 081234567890
-            </div>
+        <!-- Status Uang (Manual Edit oleh Merchant) -->
+        <div id="payment-status-container">
+          <div class="flex-row" style="justify-content:space-between; align-items:center; padding:12px; background:var(--bg2); border-radius:8px">
+            <span style="font-weight:600">Uang Diterima:</span>
+            <span class="badge ${order.uangDiterima ? 'badge-grn' : 'badge-org'}" id="payment-badge">
+              ${order.uangDiterima ? "✓ Sudah Diterima" : "⏳ Belum Diterima"}
+            </span>
           </div>
-          <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-          <div style="font-size:12px;color:var(--sub)">
-            <strong>Catatan Pengiriman:</strong><br>
-            Pesanan boleh ditinggal di depan pintu jika tidak ada yang menjawab
-          </div>
+
+          ${!order.uangDiterima ? `
+            <button class="btn btn-grn" style="width:100%; margin-top:12px; justify-content:center" 
+                    onclick="updatePaymentStatus('${order.id}', true)">
+              Konfirmasi Uang Sudah Diterima
+            </button>
+          ` : `
+            <button class="btn btn-out" style="width:100%; margin-top:12px; justify-content:center" 
+                    onclick="updatePaymentStatus('${order.id}', false)">
+              Batalkan Status Diterima
+            </button>
+          `}
         </div>
-      </div>
-    </div>
 
-    <!-- Action buttons -->
-    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
-      <button class="btn btn-out" onclick="history.back()">Kembali</button>
-      <button class="btn btn-grn" onclick="alert('Mencetak invoice...')">Print Invoice</button>
+        <button class="btn btn-out" style="width:100%; margin-top:20px; border:none; justify-content:center" 
+                onclick="navigate('orders')">
+          Kembali ke Daftar Pesanan
+        </button>
+      </div>
     </div>
   </div>`;
 }
 
-/* ── Order Items Partial (for tables) ── */
-function renderOrderItemsRow(items) {
-  if (!items || items.length === 0) return '<td colspan="4" class="color-sub">Tidak ada item</td>';
-  return items.map(item => `
-    <tr class="order-item-row">
-      <td style="font-size:13px">
-        <strong>${item.name}</strong><br>
-        <span class="color-sub">${item.merchant}</span>
-      </td>
-      <td style="text-align:center">${item.quantity}</td>
-      <td style="text-align:right">${formatRp(item.price)}</td>
-      <td style="text-align:right;font-weight:600">${formatRp(item.quantity * item.price)}</td>
-    </tr>
-  `).join('');
+/** Update status pembayaran secara lokal dan render ulang */
+function updatePaymentStatus(orderId, status) {
+  const msg = status ? 'Konfirmasi bahwa uang telah diterima?' : 'Batalkan status penerimaan uang?';
+  if (confirm(msg)) {
+    // TODO: PATCH /api/orders/:id { payment_received: status }
+    const scroll = document.getElementById('main-scroll');
+    scroll.innerHTML = renderOrderDetail(orderId, status);
+    alert(status ? 'Pembayaran berhasil dikonfirmasi!' : 'Status pembayaran dibatalkan.');
+  }
 }
-
