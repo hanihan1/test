@@ -9,23 +9,33 @@
   padding: 0;
 }
 
-/* Design tokens */
+/* Design tokens — palette: sage-green #A9B388, dark-olive #5F6F52, cream #FEFAE0, tan #B99470, dark-brown #503321 */
 :root {
-  --bg:      #F5F0DC;
-  --card:    #fff;
-  --lbl:     #3D3025;
-  --sub:     #8C7B6A;
-  --inp:     #F0EBD8;
-  --brd:     #E0D8C4;
-  --btn:     #A07850;
-  --bth:     #8A6640;
-  --grn:     #5A8A4A;
-  --blu:     #4A6A8A;
-  --red:     #C04040;
-  --org:     #C4781A;
-  --shadow:  0 2px 4px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.07);
-  --inf:     #F8F4EB;
-  --ibd:     #E8DFC8;
+  /* Base surfaces */
+  --bg:      #FEFAE0;           /* cream — page background */
+  --card:    #ffffff;
+  --lbl:     #503321;           /* dark-brown — primary text */
+  --sub:     #8A7560;           /* warm mid — secondary text */
+  --inp:     #F5F0CE;           /* light cream — input backgrounds */
+  --brd:     #DDD8B0;           /* muted cream-tan — borders */
+
+  /* Brand actions */
+  --btn:     #B99470;           /* tan — primary CTA */
+  --bth:     #9A7A58;           /* tan darker — hover */
+  --grn:     #5F6F52;           /* dark-olive — success/positive */
+  --grnh:    #4A5840;           /* dark-olive hover */
+
+  /* Semantic */
+  --blu:     #6A7F8A;           /* muted slate — info / admin */
+  --red:     #B84040;           /* error / danger */
+  --org:     #B87820;           /* warning / pending */
+
+  /* Surface tints */
+  --inf:     #F8F5DC;           /* cream info box bg */
+  --ibd:     #E4DDB0;           /* cream info box border */
+
+  /* Shadow */
+  --shadow:  0 2px 4px rgba(80,51,33,.04), 0 8px 24px rgba(80,51,33,.09);
 }
 
 /* Body */

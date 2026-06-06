@@ -13,37 +13,37 @@
 #sidebar {
   width: 228px;
   flex-shrink: 0;
-  background: #5F6F52;
-  border-right: 1px solid var(--brd);
+  background: #5F6F52;          /* dark-olive */
+  border-right: none;
   display: flex;
   flex-direction: column;
 }
 
 .sb-header {
-  padding: 18px 16px 14px;
-  border-bottom: 1px solid var(--brd);
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
   display: flex;
   align-items: center;
   gap: 10px;
 }
+/* Logo icon hidden — keep element in DOM so JS/HTML stays untouched */
 .sb-logo-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, #2A5A3A, #1A4A2A);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
+  display: none;
 }
 .sb-header-text .sb-name {
   font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  color: var(--dark-brown);
+  font-size: 18px;
+  color: #ffffff;
   line-height: 1.2;
+  letter-spacing: .01em;
 }
-.sb-header-text #sb-role-label { font-size: 10px; color: var(--tan); margin-top: 2px; }
+.sb-header-text #sb-role-label {
+  font-size: 10px;
+  color: rgba(255,255,255,.45);
+  margin-top: 3px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
 
 /* Sidebar nav */
 .sb-nav {
@@ -54,10 +54,10 @@
 .sb-section {
   font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--sub);
-  padding: 12px 10px 5px;
+  color: rgba(255,255,255,.30);
+  padding: 14px 10px 5px;
 }
 .sb-item {
   display: flex;
@@ -72,15 +72,18 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 13.5px;
   font-weight: 500;
-  color: var(--sub);
+  color: rgba(255,255,255,.55);
   transition: all .15s;
   text-align: left;
   position: relative;
 }
-.sb-item:hover { background: var(--inp); color: var(--lbl); }
+.sb-item:hover {
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.90);
+}
 .sb-item.active {
-  background: linear-gradient(135deg, rgba(160,120,80,.12), rgba(160,120,80,.06));
-  color: var(--dark-brown);
+  background: rgba(255,255,255,.12);
+  color: #ffffff;
   font-weight: 600;
 }
 /* Active indicator bar on left edge */
@@ -91,21 +94,24 @@
   top: 20%;
   height: 60%;
   width: 3px;
-  background: var(--tan);
+  background: #FEFAE0;          /* cream — high contrast on olive bg */
   border-radius: 0 2px 2px 0;
 }
 .sb-item-icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
 .sb-badge {
   margin-left: auto;
-  background: var(--btn);
-  color: white;
+  background: rgba(255,255,255,.15);
+  color: #ffffff;
   font-size: 9px;
   font-weight: 700;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 10px;
 }
-.sb-badge.grn { background: var(--grn); }
-.sb-footer { padding: 12px 8px; border-top: 1px solid var(--brd); }
+.sb-badge.grn { background: #B99470; }  /* tan — accent badge on olive */
+.sb-footer {
+  padding: 12px 8px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
 
 /* ── Topbar ── */
 #main-area {
@@ -115,7 +121,7 @@
   overflow: hidden;
 }
 .topbar {
-  background: var(--dark-olive);
+  background: white;
   border-bottom: 1px solid var(--brd);
   padding: 14px 24px;
   display: flex;
@@ -126,10 +132,10 @@
 #topbar-title {
   font-family: 'Playfair Display', serif;
   font-size: 20px;
-  color: var(--dark-brown);
+  color: var(--lbl);
   line-height: 1.1;
 }
-#topbar-sub { font-size: 12px; color: rgba(254,250,224,.75);; margin-top: 2px; }
+#topbar-sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
 #topbar-action {
   padding: 9px 16px;
   border-radius: 8px;
@@ -147,8 +153,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--cream);
-  color: var(--dark-brown);
+  background: var(--inp);
   border: 1.5px solid var(--brd);
   display: flex;
   align-items: center;
