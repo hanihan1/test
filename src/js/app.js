@@ -84,8 +84,10 @@ function render(page) {
     'dashboard':        () => APP.role === 'merchant' ? renderMerchantDashboard() : (APP.role === 'admin' ? renderAdminDashboard() : renderCart()),
     'add-listing':      renderAddListing,
     'listings':         renderListings,
-    'orders':           renderOrders,
-    'order-detail':     () => renderOrderDetail('ORD-20240612-001'),
+    'orders':           () => renderOrders('pending'),
+    'orders-confirmed': () => renderOrders('confirmed'),
+    'orders-ready':     () => renderOrders('ready'),
+    'order-detail':     () => APP.pages.orderDetail.render({ orderId: 'ORD-20240612-001' }),
     'history':          renderHistory,
     'profile':          renderProfile,
     'verif-status':     renderVerifStatus,
@@ -146,6 +148,10 @@ function bindPageEvents(page) {
     if (modal) {
       modal.addEventListener('click', closeAddressModal);
     }
+  }
+
+  if (page === 'profile') {
+    initProfileMap();
   }
 }
 

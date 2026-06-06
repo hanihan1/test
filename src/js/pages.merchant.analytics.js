@@ -75,24 +75,6 @@ function renderMerchantAnalytics() {
     </div>
   </div>
 
-  <!-- Food waste & environmental impact -->
-  <div class="grid-2 mb-20">
-    <div class="card2">
-      <div class="card-head">Dampak Lingkungan Anda</div>
-      <div class="card-body">
-        <div class="mb-16">
-          <div style="font-size:12px;color:var(--sub);margin-bottom:4px">MAKANAN DICEGAH TERBUANG</div>
-          <div class="impact-num">127 porsi</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara dengan 24 kg sampah organik</div>
-        </div>
-        <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-        <div>
-          <div style="font-size:12px;color:var(--sub);margin-bottom:4px">CO₂ YANG DICEGAH</div>
-          <div class="impact-num" style="font-size:24px">54 kg</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara perjalanan mobil 135 km</div>
-        </div>
-      </div>
-    </div>
 
     <!-- Sales by category -->
     <div class="card2">
@@ -196,32 +178,13 @@ function renderAdminPlatformAnalytics() {
       </div>
     </div>
 
-    <!-- Environmental impact -->
-    <div class="card2">
-      <div class="card-head">Dampak Platform Keseluruhan</div>
-      <div class="card-body">
-        <div class="mb-16">
-          <div style="font-size:12px;color:var(--sub);margin-bottom:4px">MAKANAN DICEGAH TERBUANG</div>
-          <div class="impact-num" style="font-size:28px">42.8K porsi</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:4px">≈ 8.1 ton sampah organik</div>
-        </div>
-        <hr style="margin:12px 0;border:none;border-top:1px solid var(--brd)">
-        <div>
-          <div style="font-size:12px;color:var(--sub);margin-bottom:4px">CO₂ YANG DICEGAH</div>
-          <div class="impact-num" style="font-size:28px;color:var(--grn)">18.2 ton</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:4px">Setara 45,500 km berkendara</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Top metrics -->
   <div class="grid-3">
     <div class="card2">
       <div class="card-head">Merchant Terbaik</div>
       <div class="card-body">
         <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--brd)">
-          <div style="font-weight:600;font-size:13px;margin-bottom:2px">Warung Makan Sukabumi</div>
+          <div style="font-weight:600;font-size:13px;margin-bottom:2px">Warung Makan Surakarta</div>
           <div style="font-size:12px;color:var(--sub)">Rp 12.5M revenue • 245 pesanan</div>
         </div>
         <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--brd)">

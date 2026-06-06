@@ -37,11 +37,6 @@ function renderMerchantDashboard() {
       <div class="st-val" style="font-size:20px" id="stat-revenue">—</div>
       <div class="st-delta d-org" id="stat-revenue-period">—</div>
     </div>
-    <div class="stat-card" style="border-top-color:var(--grn)">
-      <div class="st-label">Food Waste Dicegah</div>
-      <div class="st-val" id="stat-foodwaste">—</div>
-      <div class="st-delta d-grn">Dampak positif</div>
-    </div>
   </div>
 
   <div class="grid-2 mb-20">
@@ -52,7 +47,16 @@ function renderMerchantDashboard() {
         <span class="badge badge-org" id="pending-badge">3 Pending</span>
       </div>
       <div class="card-body" style="padding:0" id="pending-orders-list">
-        <!-- Populated from API -->
+        <table class="tbl" style="margin:0">
+          <tbody id="orders-pending-tbody">
+            <tr>
+              <td style="padding:16px">
+                <div style="font-weight:600">ORD-20240612-001</div>
+                <div style="font-size:12px;color:var(--sub)">Budi Santoso • 2 Items</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -240,18 +244,18 @@ function renderListings() {
 }
 
 /* ── Pesanan Masuk ── */
-function renderOrders() {
+function renderOrders(targetTab = 'pending') {
   return `
   <div class="inner-tabs">
-    <button class="inner-tab active" data-tab="pending"   data-group="orders">Pending   <span class="badge badge-org" style="margin-left:4px" id="tab-badge-pending">—</span></button>
-    <button class="inner-tab"        data-tab="confirmed" data-group="orders">Dikonfirmasi <span class="badge badge-blu" style="margin-left:4px">—</span></button>
-    <button class="inner-tab"        data-tab="ready"     data-group="orders">Siap Diambil <span class="badge badge-grn" style="margin-left:4px">—</span></button>
-    <button class="inner-tab"        data-tab="done"      data-group="orders">Selesai   <span class="badge badge-gray" style="margin-left:4px">—</span></button>
-    <button class="inner-tab"        data-tab="rejected"  data-group="orders">Ditolak   <span class="badge badge-red" style="margin-left:4px">—</span></button>
+    <button class="inner-tab ${targetTab === 'pending' ? 'active' : ''}"   data-tab="pending"   data-group="orders">Pending   <span class="badge badge-org" style="margin-left:4px" id="tab-badge-pending">—</span></button>
+    <button class="inner-tab ${targetTab === 'confirmed' ? 'active' : ''}" data-tab="confirmed" data-group="orders">Dikonfirmasi <span class="badge badge-blu" style="margin-left:4px">—</span></button>
+    <button class="inner-tab ${targetTab === 'ready' ? 'active' : ''}"     data-tab="ready"     data-group="orders">Siap Diambil <span class="badge badge-grn" style="margin-left:4px">—</span></button>
+    <button class="inner-tab ${targetTab === 'done' ? 'active' : ''}"      data-tab="done"      data-group="orders">Selesai   <span class="badge badge-gray" style="margin-left:4px">—</span></button>
+    <button class="inner-tab ${targetTab === 'rejected' ? 'active' : ''}"  data-tab="rejected"  data-group="orders">Ditolak   <span class="badge badge-red" style="margin-left:4px">—</span></button>
   </div>
 
   <!-- Pending orders table — TODO: populate from /api/orders?status=pending -->
-  <div id="tab-pending" data-panel data-group="orders">
+  <div id="tab-pending" class="${targetTab === 'pending' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <table class="tbl">
         <thead>
@@ -261,14 +265,25 @@ function renderOrders() {
           </tr>
         </thead>
         <tbody id="orders-pending-tbody">
-          <tr><td colspan="7" class="color-sub" style="text-align:center;padding:24px">Memuat pesanan...</td></tr>
+          <tr>
+            <td>#ORD-001</td>
+            <td>Budi Santoso</td>
+            <td>Nasi Kotak Ayam...</td>
+            <td>Rp 40.000</td>
+            <td>14:30</td>
+            <td>20:00</td>
+            <td style="display:flex;gap:6px">
+              <button class="btn btn-grn btn-sm" onclick="orderAction('ORD-001', 'accept')">Accept</button>
+              <button class="btn btn-red btn-sm" onclick="orderAction('ORD-001', 'reject')">Reject</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 
   <!-- Confirmed orders — TODO: /api/orders?status=confirmed -->
-  <div id="tab-confirmed" class="hide" data-panel data-group="orders">
+  <div id="tab-confirmed" class="${targetTab === 'confirmed' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
         <div style="font-size:32px;margin-bottom:8px">&#10003;</div>
@@ -278,7 +293,7 @@ function renderOrders() {
   </div>
 
   <!-- Ready for pickup — TODO: /api/orders?status=ready -->
-  <div id="tab-ready" class="hide" data-panel data-group="orders">
+  <div id="tab-ready" class="${targetTab === 'ready' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
         <div style="font-weight:600;color:var(--lbl)">Menunggu data pesanan siap diambil</div>
@@ -287,7 +302,7 @@ function renderOrders() {
   </div>
 
   <!-- Completed orders -->
-  <div id="tab-done" class="hide" data-panel data-group="orders">
+  <div id="tab-done" class="${targetTab === 'done' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
         <div style="font-weight:600;color:var(--lbl)">Riwayat pesanan selesai</div>
@@ -296,7 +311,7 @@ function renderOrders() {
   </div>
 
   <!-- Rejected orders -->
-  <div id="tab-rejected" class="hide" data-panel data-group="orders">
+  <div id="tab-rejected" class="${targetTab === 'rejected' ? '' : 'hide'}" data-panel data-group="orders">
     <div class="card2">
       <div class="card-body" style="text-align:center;color:var(--sub);padding:32px">
         <div style="font-weight:600;color:var(--lbl)">Pesanan yang ditolak</div>
@@ -307,8 +322,11 @@ function renderOrders() {
 
 /** Confirm order action — TODO: PATCH /api/orders/:id { status: 'confirmed'|'rejected' } */
 function orderAction(orderId, action) {
-  // TODO: call API, then refresh order list
-  alert(`Pesanan #${orderId} ${action === 'confirm' ? 'dikonfirmasi' : 'ditolak'}.`);
+  if (action === 'accept') {
+    navigate('order-detail');
+  } else {
+    alert(`Pesanan #${orderId} telah ditolak.`);
+  }
 }
 
 /* ── Riwayat Pesanan ── */
@@ -345,8 +363,8 @@ function renderHistory() {
 function renderProfile() {
   return `
   <div class="grid-2">
+    <!-- Kiri: kartu identitas merchant -->
     <div>
-      <!-- Merchant identity card — TODO: populate from /api/merchant-profiles/:id -->
       <div class="card2 mb-16">
         <div class="card-body" style="text-align:center;padding-top:24px">
           <div class="merchant-avatar" id="profile-avatar"></div>
@@ -354,46 +372,161 @@ function renderProfile() {
           <div style="margin:6px 0"><span class="badge badge-grn" id="profile-verif-badge">Memuat...</span></div>
           <div style="font-size:12px;color:var(--sub)" id="profile-joined">—</div>
         </div>
-        <div style="padding:0 18px 18px" id="profile-info-rows">
-          <!-- Info rows injected here -->
-        </div>
         <div style="padding:0 18px 18px">
-          <!-- TODO: open edit profile modal / form -->
           <button class="btn btn-brn" style="width:100%;justify-content:center"
                   onclick="alert('Form edit profil akan tersedia.')">Edit Profil</button>
         </div>
       </div>
     </div>
 
+    <!-- Kanan: titik lokasi di peta (Leaflet) -->
     <div>
-      <!-- Environmental impact stats -->
-      <div class="card2 mb-16">
-        <div class="card-head">Dampak Lingkungan</div>
-        <div class="card-body">
-          <div class="grid-2" id="profile-impact-grid">
-            <!-- Populated from API -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Store location map placeholder -->
       <div class="card2">
-        <div class="card-head">Lokasi Usaha</div>
-        <div class="card-body">
-          <!-- TODO: embed real map with merchant's lat/lon -->
-          <div class="map-placeholder" id="profile-map">
-            <div style="font-size:28px">&#128506;</div>
-            <div id="profile-address">Memuat alamat...</div>
+        <div class="card-head" style="text-transform:uppercase;font-size:12px;letter-spacing:.08em">
+          Titik Lokasi di Peta
+        </div>
+        <div class="card-body" style="padding-top:0">
+
+          <!-- Info banner -->
+          <div class="alert alert-grn mb-12" style="font-size:13px">
+            📍 Tandai lokasi toko kamu di peta agar pembeli bisa menemukan kamu dengan mudah.
+            Klik di peta atau gunakan tombol "Lokasiku" untuk titik GPS.
           </div>
+
+          <!-- Search bar + Lokasiku -->
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <input class="form-input" id="map-search-input"
+                   placeholder="Cari alamat atau nama tempat..."
+                   style="flex:1"
+                   onkeydown="if(event.key==='Enter')searchMapLocation()">
+            <button class="btn btn-grn btn-sm" onclick="searchMapLocation()">🔍 Cari</button>
+            <button class="btn btn-brn btn-sm" onclick="useMyLocation()">📍 Lokasiku</button>
+          </div>
+
+          <!-- Leaflet map container -->
+          <div id="profile-leaflet-map"
+               style="width:100%;height:300px;border-radius:8px;border:1px solid var(--brd);z-index:0">
+          </div>
+
+          <!-- Status bawah map -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div style="font-size:12px;color:var(--sub)" id="map-coord-label">Titik belum dipilih</div>
+            <button class="btn btn-grn btn-sm" id="save-location-btn"
+                    style="display:none" onclick="saveLocationPin()">Simpan Lokasi</button>
+          </div>
+
         </div>
       </div>
     </div>
   </div>`;
 }
 
-/* ── Status Verifikasi Merchant ── */
+/* ── Leaflet map init — panggil setelah renderProfile() di-inject ke DOM ── */
+let _profileMap   = null;   // Leaflet map instance
+let _profileMarker = null;  // current pin
+
+function initProfileMap(savedLat = -7.5755, savedLng = 110.8243) {
+  // Jangan init ulang jika sudah ada
+  if (_profileMap) { _profileMap.remove(); _profileMap = null; }
+
+  // Muat Leaflet CSS + JS jika belum ada
+  if (!document.getElementById('leaflet-css')) {
+    const link = document.createElement('link');
+    link.id   = 'leaflet-css';
+    link.rel  = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+  }
+
+  function _createMap() {
+    _profileMap = L.map('profile-leaflet-map').setView([savedLat, savedLng], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(_profileMap);
+
+    // Pasang marker jika sudah ada koordinat tersimpan
+    if (savedLat && savedLng) _setProfilePin(savedLat, savedLng, false);
+
+    // Klik peta → pindah pin
+    _profileMap.on('click', function(e) {
+      _setProfilePin(e.latlng.lat, e.latlng.lng, true);
+    });
+  }
+
+  if (typeof L !== 'undefined') {
+    _createMap();
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = _createMap;
+    document.head.appendChild(script);
+  }
+}
+
+function _setProfilePin(lat, lng, showSave) {
+  const icon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:28px;height:28px;background:var(--btn,#e07b54);
+      border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+      border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)">
+    </div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28]
+  });
+
+  if (_profileMarker) _profileMarker.remove();
+  _profileMarker = L.marker([lat, lng], { icon }).addTo(_profileMap);
+
+  // Update label koordinat
+  const label = document.getElementById('map-coord-label');
+  if (label) label.textContent = `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`;
+
+  // Tampilkan tombol simpan
+  const btn = document.getElementById('save-location-btn');
+  if (btn && showSave) btn.style.display = 'inline-flex';
+}
+
+/** Cari lokasi via Nominatim */
+function searchMapLocation() {
+  const q = document.getElementById('map-search-input').value.trim();
+  if (!q) return;
+
+  fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&countrycodes=id`)
+    .then(r => r.json())
+    .then(results => {
+      if (!results.length) { alert('Lokasi tidak ditemukan.'); return; }
+      const { lat, lon } = results[0];
+      _profileMap.setView([+lat, +lon], 16);
+      _setProfilePin(+lat, +lon, true);
+    })
+    .catch(() => alert('Gagal mencari lokasi.'));
+}
+
+/** Gunakan GPS browser */
+function useMyLocation() {
+  if (!navigator.geolocation) { alert('Browser tidak mendukung GPS.'); return; }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      _profileMap.setView([lat, lng], 16);
+      _setProfilePin(lat, lng, true);
+    },
+    () => alert('Tidak dapat mengakses lokasi. Pastikan izin GPS diberikan.')
+  );
+}
+
+/** Simpan koordinat pin ke backend — TODO: PATCH /api/merchant-profiles/:id */
+function saveLocationPin() {
+  if (!_profileMarker) return;
+  const { lat, lng } = _profileMarker.getLatLng();
+  // TODO: kirim ke API
+  alert(`Lokasi tersimpan!\nLat: ${lat.toFixed(6)}\nLng: ${lng.toFixed(6)}`);
+  document.getElementById('save-location-btn').style.display = 'none';
+}
+
 function renderVerifStatus() {
-  // Timeline steps — status fetched from /api/merchant-verifications?merchant_id=:id
   const steps = [
     { type: 'g', title: 'Dokumen diunggah',  sub: 'Semua dokumen telah kami terima' },
     { type: 'g', title: 'Validasi awal',     sub: 'Dokumen lolos filter otomatis' },
