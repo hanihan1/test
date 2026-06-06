@@ -321,9 +321,33 @@
 .mb-20 { margin-bottom: 20px; }
 .mt-16 { margin-top: 16px; }
 
-/* ── Text utilities ── */
+/* ── Text utilities ──
 .text-sm   { font-size: 12px; }
 .text-xs   { font-size: 11px; }
 .color-sub { color: var(--sub); }
 .color-grn { color: var(--grn); }
-.color-red { color: var(--red); }
+.color-red { color: var(--red); } */
+
+/* ── Text utilities ── */
+.text-sm { font-size: 12px; }
+.text-xs { font-size: 11px; }
+
+.color-sub {
+  color: var(--tan);
+}
+
+.color-grn {
+  color: var(--sage-green);
+}
+
+.color-primary {
+  color: var(--dark-olive);
+}
+
+.color-title {
+  color: var(--dark-brown);
+}
+
+.color-cream {
+  color: var(--cream);
+}

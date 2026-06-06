@@ -13,7 +13,7 @@
 #sidebar {
   width: 228px;
   flex-shrink: 0;
-  background: #FAFAF5;
+  background: #5F6F52;
   border-right: 1px solid var(--brd);
   display: flex;
   flex-direction: column;
@@ -40,10 +40,10 @@
 .sb-header-text .sb-name {
   font-family: 'Playfair Display', serif;
   font-size: 16px;
-  color: var(--lbl);
+  color: var(--dark-brown);
   line-height: 1.2;
 }
-.sb-header-text #sb-role-label { font-size: 10px; color: var(--sub); margin-top: 2px; }
+.sb-header-text #sb-role-label { font-size: 10px; color: var(--tan); margin-top: 2px; }
 
 /* Sidebar nav */
 .sb-nav {
@@ -80,7 +80,7 @@
 .sb-item:hover { background: var(--inp); color: var(--lbl); }
 .sb-item.active {
   background: linear-gradient(135deg, rgba(160,120,80,.12), rgba(160,120,80,.06));
-  color: var(--btn);
+  color: var(--dark-brown);
   font-weight: 600;
 }
 /* Active indicator bar on left edge */
@@ -91,7 +91,7 @@
   top: 20%;
   height: 60%;
   width: 3px;
-  background: var(--btn);
+  background: var(--tan);
   border-radius: 0 2px 2px 0;
 }
 .sb-item-icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
@@ -115,7 +115,7 @@
   overflow: hidden;
 }
 .topbar {
-  background: white;
+  background: var(--dark-olive);
   border-bottom: 1px solid var(--brd);
   padding: 14px 24px;
   display: flex;
@@ -126,10 +126,10 @@
 #topbar-title {
   font-family: 'Playfair Display', serif;
   font-size: 20px;
-  color: var(--lbl);
+  color: var(--dark-brown);
   line-height: 1.1;
 }
-#topbar-sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
+#topbar-sub { font-size: 12px; color: rgba(254,250,224,.75);; margin-top: 2px; }
 #topbar-action {
   padding: 9px 16px;
   border-radius: 8px;
@@ -147,7 +147,8 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--inp);
+  background: var(--cream);
+  color: var(--dark-brown);
   border: 1.5px solid var(--brd);
   display: flex;
   align-items: center;
