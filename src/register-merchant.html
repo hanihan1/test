@@ -15,10 +15,9 @@
 
 <body>
 
-  <!-- ════════ TOPBAR ════════ -->
+  <!-- TopBar -->
   <header class="topbar">
     <a href="index.html" class="logo">
-      <div class="logo-icon">🌱</div>
       <span class="logo-text">EcoEats</span>
     </a>
     <div class="topbar-right">
@@ -26,17 +25,17 @@
     </div>
   </header>
 
-  <!-- ════════ MAIN ════════ -->
+ <!-- Main  -->
   <main class="main">
     <div class="card">
 
-      <!-- CARD HEADER -->
+      <!-- Header -->
       <div class="card-header">
         <h1>Daftar sebagai Merchant</h1>
-        <p>Bergabung dengan EcoEats dan kurangi food waste bersama kami 🌍</p>
+        <p>Bergabung dengan EcoEats dan bantu selamatkan lingkungan!</p>
       </div>
 
-      <!-- STEP BAR -->
+      <!-- Tampilan Step -->
       <div class="step-bar">
         <div class="step-wrapper">
           <div class="step-dot active" id="dot-1">1</div>
@@ -62,10 +61,10 @@
         </div>
       </div>
 
-      <!-- FORM BODY -->
+      <!-- Form -->
       <div class="card-body">
 
-        <!-- ══════ STEP 1: AKUN ══════ -->
+        <!-- Step 1: Akun -->
         <div class="step-panel active" id="panel-1">
           <div class="step-title">Informasi Akun</div>
           <div class="step-subtitle">Email dan password untuk masuk ke dashboard merchant</div>
@@ -74,7 +73,7 @@
 
             <div class="form-group">
               <label for="nama_lengkap">Nama Lengkap <span class="req">*</span></label>
-              <input type="text" id="nama_lengkap" placeholder="contoh: Budi Santoso" autocomplete="name">
+              <input type="text" id="nama_lengkap" placeholder="contoh: Issac Newton" autocomplete="name">
               <span class="field-error" id="err-nama_lengkap">Nama lengkap wajib diisi</span>
             </div>
 
@@ -120,12 +119,11 @@
 
           <div class="form-nav">
             <span></span>
-            <button class="btn btn-primary" onclick="goStep(2)">Lanjut →</button>
+            <button class="btn btn-primary" onclick="goStep(2)">Lanjut</button>
           </div>
-        </div><!-- /panel-1 -->
+        </div>
 
-
-        <!-- ══════ STEP 2: TOKO ══════ -->
+        <!-- Step 2 : Toko -->
         <div class="step-panel" id="panel-2">
           <div class="step-title">Informasi Toko</div>
           <div class="step-subtitle">Ceritakan tentang usaha kuliner kamu</div>
@@ -155,7 +153,7 @@
                 <option value="katering">Katering</option>
                 <option value="bakery">Bakery / Toko Roti</option>
                 <option value="kantin">Kantin</option>
-                <option value="food_truck">Food Truck / Gerobak</option>
+                <option value="food_truck">Food Truck</option>
                 <option value="toko_oleh_oleh">Toko Oleh-oleh</option>
                 <option value="lainnya">Lainnya</option>
               </select>
@@ -245,13 +243,13 @@
           <input type="hidden" id="lng">
 
           <div class="form-nav">
-            <button class="btn btn-ghost" onclick="goStep(1)">← Kembali</button>
+            <button class="btn btn-ghost" onclick="goStep(1)">Kembali</button>
             <button class="btn btn-primary" onclick="goStep(3)">Lanjut →</button>
           </div>
-        </div><!-- /panel-2 -->
+        </div>
 
 
-        <!-- ══════ STEP 3: DOKUMEN ══════ -->
+        <!-- STEP 3: Dokumen  -->
         <div class="step-panel" id="panel-3">
           <div class="step-title">Verifikasi &amp; Dokumen Legal</div>
           <div class="step-subtitle">Diperlukan untuk memverifikasi legalitas usaha kamu</div>
@@ -347,10 +345,10 @@
             <button class="btn btn-ghost" onclick="goStep(2)">← Kembali</button>
             <button class="btn btn-primary" onclick="goStep(4)">Lanjut →</button>
           </div>
-        </div><!-- /panel-3 -->
+        </div>
 
 
-        <!-- ══════ STEP 4: REVIEW ══════ -->
+        <!-- STEP 4: Revuew  -->
         <div class="step-panel" id="panel-4">
           <div class="step-title">Review &amp; Konfirmasi</div>
           <div class="step-subtitle">Periksa kembali data yang kamu masukkan sebelum mendaftar</div>
@@ -382,15 +380,15 @@
           </div>
 
           <div class="form-nav">
-            <button class="btn btn-ghost" onclick="goStep(3)">← Kembali</button>
+            <button class="btn btn-ghost" onclick="goStep(3)"> Kembali</button>
             <button class="btn btn-success" id="submitBtn" onclick="submitForm()">
-              ✓ Daftar Sekarang
+              Daftar Sekarang
             </button>
           </div>
-        </div><!-- /panel-4 -->
+        </div>
 
-      </div><!-- /card-body -->
-    </div><!-- /card -->
+      </div>
+    </div>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>

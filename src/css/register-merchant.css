@@ -11,11 +11,11 @@
 
 :root {
   /* Brand palette */
-  --sage:         #A9B388;
-  --olive:        #5F6F52;
-  --cream:        #FEFAE0;
-  --tan:          #B99470;
-  --brown:        #503321;
+ --sage: #A9B388;
+  --olive: #5F6F52;
+  --cream: #FEFAE0;
+  --tan: #B99470;
+  --brown: #503321;
 
   /* Derived tints */
   --sage-light:   #CDD8B8;
@@ -48,7 +48,7 @@
 /* ── BODY ── */
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--cream);
+  background-image: url(Bg\ login.jpg);
   color: var(--text-dark);
   min-height: 100vh;
   display: flex;
@@ -67,7 +67,7 @@ body::before {
   z-index: 0;
 }
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .topbar {
   position: sticky;
   top: 0;
@@ -112,7 +112,7 @@ body::before {
 .topbar-right a { color: var(--olive); font-weight: 600; text-decoration: none; }
 .topbar-right a:hover { text-decoration: underline; }
 
-/* ── MAIN ── */
+/* MAIN  */
 .main {
   flex: 1;
   display: flex;
