@@ -112,3 +112,85 @@ function renderVerifikasi() {
     <p class="color-sub">Memuat antrian verifikasi...</p>
   </div>`;
 }
+
+/** Render detail pengajuan merchant untuk ditinjau Admin */
+function renderVerifDetail(merchantId = 'M-MOCK') {
+  // Data simulasi (dalam realita diambil dari API berdasarkan merchantId)
+  const m = {
+    name: 'Warung Makan Sukabumi',
+    owner: 'Budi Santoso',
+    email: 'budi@sukabumi.com',
+    phone: '081234567890',
+    category: 'Warung Makan',
+    description: 'Menyediakan masakan rumahan khas Sunda. Kami ingin mengurangi limbah makanan dengan menjual porsi surplus.',
+    address: 'Jl. Slamet Riyadi No. 123, Surakarta',
+    halal_status: 'bersertifikat',
+    halal_no: 'ID00110000XXXXX',
+    license_type: 'NIB (Nomor Induk Berusaha)',
+    license_no: '9120001234567',
+  };
+
+  return `
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center">
+      <button class="btn btn-out btn-sm" onclick="navigate('verifikasi')">← Kembali</button>
+      <h2 style="font-family:'Playfair Display',serif">Tinjau: ${m.name}</h2>
+    </div>
+
+    <div class="grid-2">
+      <!-- Sisi Kiri: Profil Bisnis -->
+      <div class="flex-col" style="gap:16px">
+        <div class="card2">
+          <div class="card-head">Profil Merchant</div>
+          <div class="card-body">
+            <div class="info-row mb-12"><span class="lbl">Pemilik</span><span class="val">${m.owner}</span></div>
+            <div class="info-row mb-12"><span class="lbl">Kontak</span><span class="val">${m.email} / ${m.phone}</span></div>
+            <div class="info-row mb-12"><span class="lbl">Jenis</span><span class="val"><span class="badge badge-blu">${m.category}</span></span></div>
+            <div class="info-row mb-12"><span class="lbl">Deskripsi</span><span class="val">${m.description}</span></div>
+            <div class="info-row"><span class="lbl">Alamat</span><span class="val">${m.address}</span></div>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div class="card-head">Keputusan</div>
+          <div class="card-body">
+            <p style="font-size:13px;color:var(--sub);margin-bottom:16px">Tinjau dokumen di samping sebelum mengambil keputusan.</p>
+            <div style="display:flex;gap:12px">
+              <button class="btn btn-grn" style="flex:1" onclick="verifAction('${merchantId}', 'approve')">Setujui</button>
+              <button class="btn btn-red" style="flex:1" onclick="verifAction('${merchantId}', 'reject')">Tolak</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sisi Kanan: Dokumen Legal -->
+      <div class="flex-col" style="gap:16px">
+        <div class="card2">
+          <div class="card-head">Izin Usaha</div>
+          <div class="card-body">
+            <div class="info-row mb-12"><span class="lbl">Jenis</span><span class="val">${m.license_type}</span></div>
+            <div class="info-row mb-12"><span class="lbl">Nomor</span><span class="val"><code>${m.license_no}</code></span></div>
+            <div style="background:var(--bg2);padding:20px;border-radius:8px;text-align:center;border:2px dashed var(--brd)">
+              <span style="font-size:32px">📄</span>
+              <div style="font-size:12px;margin:8px 0">izin_usaha.pdf</div>
+              <button class="btn btn-sm btn-out" onclick="alert('Buka preview PDF')">Lihat File</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div class="card-head">Sertifikasi Halal</div>
+          <div class="card-body">
+            <div class="info-row mb-12"><span class="lbl">Status</span><span class="val">${m.halal_status}</span></div>
+            <div class="info-row mb-12"><span class="lbl">Nomor</span><span class="val">${m.halal_no}</span></div>
+            <div style="background:var(--bg2);padding:20px;border-radius:8px;text-align:center;border:2px dashed var(--brd)">
+              <span style="font-size:32px">📜</span>
+              <div style="font-size:12px;margin:8px 0">sertifikat_halal.jpg</div>
+              <button class="btn btn-sm btn-out" onclick="alert('Buka preview Gambar')">Lihat File</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}

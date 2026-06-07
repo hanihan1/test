@@ -91,6 +91,7 @@ function render(page) {
     // 'verif-status':  renderVerifStatus,
 
     'verifikasi':       renderVerifikasi,
+    'verif-detail':     renderVerifDetail,
     // Merchant analytics
     'analytics':        () => APP.role === 'merchant' ? renderMerchantAnalytics() : renderAdminPlatformAnalytics(),
     // Admin management pages

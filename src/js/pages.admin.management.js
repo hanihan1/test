@@ -112,8 +112,8 @@ function renderMerchantCard(merchant) {
           <div>📞 ${merchant.phone}</div>
         </div>
         <div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--brd)">
-          <button class="btn btn-sm btn-out" style="flex:1" onclick="alert('View detail merchant')">Detail</button>
-          <button class="btn btn-sm btn-grn" style="flex:1" onclick="alert('Approve merchant')">Approve</button>
+          <button class="btn btn-sm btn-out" style="flex:1" onclick="navigate('verif-detail')">Tinjau Dokumen</button>
+          <button class="btn btn-sm btn-grn" style="flex:1" onclick="verifAction('${merchant.id}', 'approve')">Approve</button>
         </div>
       </div>
     </div>`;
