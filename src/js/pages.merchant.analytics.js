@@ -15,7 +15,7 @@ function renderMerchantAnalytics() {
   return `
   <div class="grid-4 mb-20">
     <div class="stat-card" style="border-top-color:var(--btn)">
-      <div class="st-label">Total Revenue</div>
+      <div class="st-label">Total Pendapatan</div>
       <div class="st-val">Rp 4.5M</div>
       <div class="st-delta d-grn">↑ 12% bulan ini</div>
     </div>
