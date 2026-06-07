@@ -11,30 +11,18 @@ function renderAdminUsers() {
     <div class="search-wrap">
       <input id="admin-users-search" placeholder="Cari pengguna...">
     </div>
-    <select class="form-select" style="width:auto" id="admin-users-filter">
-      <option value="">Semua Role</option>
-      <option value="customer">Customer</option>
-      <option value="merchant">Merchant</option>
-      <option value="admin">Admin</option>
-    </select>
-    <select class="form-select" style="width:auto" id="admin-users-status-filter">
-      <option value="">Semua Status</option>
-      <option value="active">Aktif</option>
-      <option value="suspended">Tersuspend</option>
-      <option value="banned">Dibanned</option>
-    </select>
   </div>
 
   <div class="card2">
     <table class="tbl">
       <thead>
         <tr>
-          <th>Nama</th><th>Email</th><th>Role</th>
-          <th>Status</th><th>Join Date</th><th>Aksi</th>
+          <th>Nama</th><th>Email</th>
+          <th>Join Date</th><th>Aksi</th>
         </tr>
       </thead>
       <tbody id="admin-users-tbody">
-        <tr><td colspan="6" class="color-sub" style="text-align:center;padding:24px">Memuat pengguna...</td></tr>
+        <tr><td colspan="4" class="color-sub" style="text-align:center;padding:24px">Memuat pengguna...</td></tr>
       </tbody>
     </table>
   </div>`;
@@ -106,13 +94,13 @@ function renderMerchantCard(merchant) {
           <div style="font-weight:600">${merchant.name}</div>
           <span class="badge ${merchant.status === 'approved' ? 'badge-grn' : 'badge-org'}">${merchant.status}</span>
         </div>
-        <div style="font-size:12px;color:var(--sub);margin-bottom:8px">${merchant.category || 'Multi-kategori'}</div>
+        <div style="font-size:12px;color:var(--sub);margin-bottom:8px">${merchant.business_type || '—'}</div>
         <div style="font-size:12px;margin-bottom:12px">
           <div>📍 ${merchant.address}</div>
           <div>📞 ${merchant.phone}</div>
         </div>
         <div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--brd)">
-          <button class="btn btn-sm btn-out" style="flex:1" onclick="navigate('verif-detail')">Tinjau Dokumen</button>
+          <button class="btn btn-sm btn-out" style="flex:1" onclick="navigate('verif-detail')">Detail</button>
           <button class="btn btn-sm btn-grn" style="flex:1" onclick="verifAction('${merchant.id}', 'approve')">Approve</button>
         </div>
       </div>

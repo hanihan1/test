@@ -6,13 +6,6 @@
 
 /* ── Dashboard ── */
 function renderMerchantDashboard() {
-  const chartData = [45, 60, 38, 80, 55, 75, 92];
-  const days      = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-  const bars      = chartData.map(v =>
-    `<div class="chart-bar ${v >= 80 ? 'hi' : 'lo'}" style="height:${v}%"></div>`
-  ).join('');
-  const labels = days.map(d => `<span>${d}</span>`).join('');
-
   return `
   <!-- Alert: pending orders -->
   <div class="alert alert-org mb-16">
@@ -60,8 +53,10 @@ function renderMerchantDashboard() {
     <div class="card2">
       <div class="card-head">Penjualan 7 Hari</div>
       <div class="card-body">
-        <div class="chart-wrap">${bars}</div>
-        <div class="chart-labels">${labels}</div>
+        <div class="chart-wrap" id="merchant-sales-chart">
+          <p class="color-sub" style="font-size:12px;text-align:center;padding-top:40px">Memuat grafik...</p>
+        </div>
+        <div class="chart-labels" id="merchant-sales-labels"></div>
         <div style="margin-top:16px" id="top-products-chart">
           <!-- Top products progress bars, populated from API -->
         </div>
@@ -262,6 +257,7 @@ function renderOrders() {
         <tbody id="orders-pending-tbody">
           <tr>
             <td colspan="7" class="color-sub" style="text-align:center;padding:48px">
+              <div style="margin-bottom:8px">⏳</div>
               Menghubungkan ke server untuk memuat pesanan...
             </td>
           </tr>

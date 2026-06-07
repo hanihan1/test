@@ -3,14 +3,6 @@
    ============================================================ */
 
 function renderAdminDashboard() {
-  const chartData = [180, 220, 165, 310, 205, 280, 340];
-  const days      = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-  const maxV      = Math.max(...chartData);
-  const bars      = chartData.map(v =>
-    `<div class="chart-bar ${v >= maxV * .8 ? 'hi' : 'lo'}" style="height:${Math.round(v / maxV * 100)}%"></div>`
-  ).join('');
-  const labels = days.map(d => `<span>${d}</span>`).join('');
-
   return `
   <div class="grid-4 mb-20">
     <div class="stat-card" style="border-top-color:var(--blu)">
@@ -39,8 +31,10 @@ function renderAdminDashboard() {
     <div class="card2">
       <div class="card-head">Pesanan 7 Hari Terakhir</div>
       <div class="card-body">
-        <div class="chart-wrap" style="height:120px">${bars}</div>
-        <div class="chart-labels">${labels}</div>
+        <div class="chart-wrap" style="height:120px" id="admin-main-chart">
+          <p class="color-sub" style="font-size:12px;text-align:center;padding-top:40px">Memuat data grafik...</p>
+        </div>
+        <div class="chart-labels" id="admin-main-labels"></div>
         <div style="margin-top:12px;font-size:12px;color:var(--sub)" id="admin-orders-summary">—</div>
       </div>
     </div>
@@ -64,22 +58,6 @@ function renderAdminDashboard() {
     </div>
   </div>
   `;
-}
-
-function toggleUser(userId, action) {
-  const statusEl = document.getElementById('ustatus-' + userId);
-  const btnEl    = document.getElementById('ubtn-' + userId);
-  if (action === 'block') {
-    statusEl.innerHTML = '<span class="badge badge-red">Diblokir</span>';
-    btnEl.className    = 'btn btn-grn btn-sm';
-    btnEl.textContent  = 'Pulihkan';
-    btnEl.setAttribute('onclick', `toggleUser('${userId}','restore')`);
-  } else {
-    statusEl.innerHTML = '<span class="badge badge-grn">Aktif</span>';
-    btnEl.className    = 'btn btn-red btn-sm';
-    btnEl.textContent  = 'Blokir';
-    btnEl.setAttribute('onclick', `toggleUser('${userId}','block')`);
-  }
 }
 
 function verifAction(verifId, action) {
@@ -114,21 +92,8 @@ function renderVerifikasi() {
 }
 
 /** Render detail pengajuan merchant untuk ditinjau Admin */
-function renderVerifDetail(merchantId = 'M-MOCK') {
-  // Data simulasi (dalam realita diambil dari API berdasarkan merchantId)
-  const m = {
-    name: 'Warung Makan Sukabumi',
-    owner: 'Budi Santoso',
-    email: 'budi@sukabumi.com',
-    phone: '081234567890',
-    category: 'Warung Makan',
-    description: 'Menyediakan masakan rumahan khas Sunda. Kami ingin mengurangi limbah makanan dengan menjual porsi surplus.',
-    address: 'Jl. Slamet Riyadi No. 123, Surakarta',
-    halal_status: 'bersertifikat',
-    halal_no: 'ID00110000XXXXX',
-    license_type: 'NIB (Nomor Induk Berusaha)',
-    license_no: '9120001234567',
-  };
+function renderVerifDetail(m) {
+  if (!m) return `<div class="alert alert-red">Data merchant tidak ditemukan atau gagal dimuat.</div>`;
 
   return `
   <div style="max-width:900px;margin:0 auto">

@@ -5,17 +5,10 @@
 
 /* ── Merchant: Analytics Dashboard ── */
 function renderMerchantAnalytics() {
-  const chartData = [45, 60, 38, 80, 55, 75, 92];
-  const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-  const bars = chartData.map(v =>
-    `<div class="chart-bar ${v >= 80 ? 'hi' : 'lo'}" style="height:${v}%"></div>`
-  ).join('');
-  const labels = days.map(d => `<span>${d}</span>`).join('');
-
   return `
   <div class="grid-4 mb-20">
     <div class="stat-card" style="border-top-color:var(--btn)">
-      <div class="st-label">Total Pendapatan</div>
+      <div class="st-label">Total Revenue</div>
       <div class="st-val">Rp 4.5M</div>
       <div class="st-delta d-grn">↑ 12% bulan ini</div>
     </div>
@@ -41,36 +34,16 @@ function renderMerchantAnalytics() {
     <div class="card2">
       <div class="card-head">Pendapatan 7 Hari</div>
       <div class="card-body">
-        <div class="chart-wrap">${bars}</div>
-        <div class="chart-labels">${labels}</div>
+        <div class="chart-wrap" id="analytics-revenue-chart"></div>
+        <div class="chart-labels" id="analytics-revenue-labels"></div>
       </div>
     </div>
 
     <!-- Top products -->
     <div class="card2">
       <div class="card-head">Produk Terlaris</div>
-      <div class="card-body">
-        <div style="margin-bottom:16px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px">
-            <span>Nasi Kotak Ayam Geprek</span>
-            <strong>145 terjual</strong>
-          </div>
-          <div class="prog-wrap"><div class="prog-fill" style="width:100%"></div></div>
-        </div>
-        <div style="margin-bottom:16px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px">
-            <span>Es Teh Manis</span>
-            <strong>98 terjual</strong>
-          </div>
-          <div class="prog-wrap"><div class="prog-fill" style="width:67%"></div></div>
-        </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px">
-            <span>Roti Bakar Cokelat</span>
-            <strong>62 terjual</strong>
-          </div>
-          <div class="prog-wrap"><div class="prog-fill" style="width:42%"></div></div>
-        </div>
+      <div class="card-body" id="analytics-top-products">
+        <p class="color-sub" style="font-size:12px">Memuat data...</p>
       </div>
     </div>
   </div>
@@ -117,11 +90,11 @@ function renderAdminPlatformAnalytics() {
   const labels = days.map(d => `<span>${d}</span>`).join('');
 
   return `
-  <div class="grid-4 mb-20">
+  <div class="grid-3 mb-20">
     <div class="stat-card" style="border-top-color:var(--blu)">
-      <div class="st-label">Platform Revenue</div>
-      <div class="st-val">Rp 142.5M</div>
-      <div class="st-delta d-grn">↑ 18% bulan ini</div>
+      <div class="st-label">Total Pendapatan Merchant</div>
+      <div class="st-val" id="stat-total-revenue">—</div>
+      <div class="st-delta d-grn" id="stat-revenue-delta">—</div>
     </div>
     <div class="stat-card" style="border-top-color:var(--grn)">
       <div class="st-label">Total Transaksi</div>
@@ -132,11 +105,6 @@ function renderAdminPlatformAnalytics() {
       <div class="st-label">Merchant Aktif</div>
       <div class="st-val">287</div>
       <div class="st-delta d-grn">+34 baru</div>
-    </div>
-    <div class="stat-card" style="border-top-color:var(--red)">
-      <div class="st-label">Pelanggaran</div>
-      <div class="st-val">12</div>
-      <div class="st-delta d-red">Perlu ditangani</div>
     </div>
   </div>
 
@@ -156,24 +124,7 @@ function renderAdminPlatformAnalytics() {
   </div>
 
   <!-- Top metrics -->
-  <div class="grid-3">
-    <div class="card2">
-      <div class="card-head">Merchant Terbaik</div>
-      <div class="card-body">
-        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--brd)">
-          <div style="font-weight:600;font-size:13px;margin-bottom:2px">Warung Makan Sukabumi</div>
-          <div style="font-size:12px;color:var(--sub)">Rp 12.5M revenue • 245 pesanan</div>
-        </div>
-        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--brd)">
-          <div style="font-weight:600;font-size:13px;margin-bottom:2px">Toko Kue Ibu Siti</div>
-          <div style="font-size:12px;color:var(--sub)">Rp 8.2M revenue • 156 pesanan</div>
-        </div>
-        <div>
-          <div style="font-weight:600;font-size:13px;margin-bottom:2px">Bakery Plus</div>
-          <div style="font-size:12px;color:var(--sub)">Rp 6.8M revenue • 134 pesanan</div>
-        </div>
-      </div>
-    </div>
+  <div class="grid-2">
 
     <div class="card2">
       <div class="card-head">Kategori Populer</div>

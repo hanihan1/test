@@ -6,31 +6,41 @@
 
 /* ── Order Detail with Items ── */
 function renderOrderDetail(orderId) {
+  // Catatan: Fungsi ini harus menerima objek 'order' dari pemanggil setelah fetch
   return `
   <div style="max-width:800px;margin:0 auto">
+    <div id="order-detail-content">
+      <p class="color-sub" style="text-align:center;padding:40px">Memuat detail pesanan #${orderId}...</p>
+    </div>
+  </div>`;
+}
+
+/** Fungsi pembantu untuk mengisi template detail pesanan */
+function buildOrderDetailHTML(order) {
+  return `
     <!-- Order header -->
     <div class="card2 mb-16">
       <div class="card-head">
-        Pesanan #${orderId}
-        <span class="badge badge-grn" style="float:right">Selesai</span>
+        Pesanan #${order.id}
+        <span class="badge badge-grn" style="float:right">${order.status}</span>
       </div>
       <div class="card-body">
         <div class="grid-2 mb-16">
           <div>
             <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Status Pesanan</div>
-            <div style="font-weight:600;font-size:14px">Siap Diambil</div>
+            <div style="font-weight:600;font-size:14px">${order.status_text}</div>
           </div>
           <div>
             <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Waktu Pemesanan</div>
-            <div style="font-weight:600;font-size:14px">12 Juni 2024, 14:30</div>
+            <div style="font-weight:600;font-size:14px">${order.created_at}</div>
           </div>
           <div>
             <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Batas Pickup</div>
-            <div style="font-weight:600;font-size:14px">12 Juni 2024, 20:00</div>
+            <div style="font-weight:600;font-size:14px">${order.pickup_limit}</div>
           </div>
           <div>
             <div style="font-size:12px;color:var(--sub);margin-bottom:4px">Total Pembayaran</div>
-            <div style="font-weight:600;font-size:14px;color:var(--btn)">Rp 57.500</div>
+            <div style="font-weight:600;font-size:14px;color:var(--btn)">${formatRp(order.total)}</div>
           </div>
         </div>
       </div>
@@ -49,24 +59,7 @@ function renderOrderDetail(orderId) {
           </tr>
         </thead>
         <tbody id="order-items-tbody">
-          <tr>
-            <td>
-              <div style="font-weight:600;margin-bottom:4px">Nasi Kotak Ayam Geprek</div>
-              <div style="font-size:12px;color:var(--sub)">dari Warung Makan Sukabumi</div>
-            </td>
-            <td style="text-align:center">2</td>
-            <td style="text-align:right">Rp 20.000</td>
-            <td style="text-align:right;font-weight:600">Rp 40.000</td>
-          </tr>
-          <tr>
-            <td>
-              <div style="font-weight:600;margin-bottom:4px">Es Teh Manis</div>
-              <div style="font-size:12px;color:var(--sub)">dari Warung Makan Sukabumi</div>
-            </td>
-            <td style="text-align:center">2</td>
-            <td style="text-align:right">Rp 8.500</td>
-            <td style="text-align:right;font-weight:600">Rp 17.000</td>
-          </tr>
+          ${renderOrderItemsRow(order.items)}
         </tbody>
       </table>
     </div>

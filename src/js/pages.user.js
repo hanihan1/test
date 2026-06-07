@@ -182,45 +182,7 @@ function renderUserAddresses() {
 
     <!-- Address list -->
     <div id="addresses-list">
-      <!-- TODO: populate from /api/user-addresses -->
-      <div class="card2 mb-12">
-        <div class="card-body">
-          <div class="flex-row" style="justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-            <div>
-              <div style="font-weight:600;margin-bottom:4px">Rumah</div>
-              <div style="font-size:13px;color:var(--sub);margin-bottom:8px">
-                Jl. Merdeka No.10, RT 05 RW 03<br>
-                Jakarta Pusat, DKI Jakarta 12130
-              </div>
-              <div style="font-size:12px">
-                <span class="badge badge-grn">Alamat Utama</span>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn btn-sm btn-out" onclick="editAddress('addr-1')">Edit</button>
-              <button class="btn btn-sm btn-red" onclick="deleteAddress('addr-1')">Hapus</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card2 mb-12">
-        <div class="card-body">
-          <div class="flex-row" style="justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-            <div>
-              <div style="font-weight:600;margin-bottom:4px">Kantor</div>
-              <div style="font-size:13px;color:var(--sub);margin-bottom:8px">
-                Jl. Gatot Subroto No.5, Lantai 10<br>
-                Jakarta Selatan, DKI Jakarta 12950
-              </div>
-            </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn btn-sm btn-out" onclick="editAddress('addr-2')">Edit</button>
-              <button class="btn btn-sm btn-red" onclick="deleteAddress('addr-2')">Hapus</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p class="color-sub" style="text-align:center;padding:32px">Memuat daftar alamat...</p>
     </div>
 
     <!-- Add/Edit address modal overlay (hidden by default) -->
