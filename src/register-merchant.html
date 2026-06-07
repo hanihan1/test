@@ -988,28 +988,6 @@
           </div>
         </div>
 
-        <!-- KTP -->
-        <div class="divider"></div>
-        <div class="section-label">Identitas Pemilik</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="nik">NIK (KTP) <span class="req">*</span></label>
-            <input type="text" id="nik" placeholder="16 digit NIK" maxlength="16">
-            <span class="field-error" id="err-nik">NIK harus 16 digit</span>
-          </div>
-          <div class="form-group">
-            <label>Upload KTP Pemilik <span class="req">*</span></label>
-            <div class="upload-zone" style="padding:12px" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)" ondrop="dropFile(event,'ktp',this)">
-              <input type="file" id="ktp" accept=".pdf,.jpg,.jpeg,.png" onchange="addFile(this,'ktp')">
-              <div class="upload-icon" style="font-size:24px;margin-bottom:4px">🪪</div>
-              <p style="font-size:12.5px">Upload foto/scan KTP</p>
-              <small>JPG, PNG • Maks. 5 MB</small>
-            </div>
-            <div class="upload-preview" id="preview-ktp"></div>
-            <span class="field-error" id="err-ktp">KTP wajib diupload</span>
-          </div>
-        </div>
-
         <div class="form-nav">
           <button class="btn btn-ghost" onclick="goStep(2)">← Kembali</button>
           <button class="btn btn-primary" onclick="goStep(4)">Lanjut →</button>
@@ -1294,8 +1272,6 @@
       ok &= req('jenis_izin', v => v !== '');
       ok &= req('no_izin_usaha', v => v.trim().length > 0);
       ok &= reqFile('izin_usaha', 'Dokumen izin usaha wajib diupload');
-      ok &= req('nik', v => /^\d{16}$/.test(v));
-      ok &= reqFile('ktp', 'KTP wajib diupload');
 
       const statusHalal = document.getElementById('status_halal').value;
       if (statusHalal === 'bersertifikat') {
