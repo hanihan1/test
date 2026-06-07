@@ -815,19 +815,21 @@
             <textarea id="deskripsi_toko" placeholder="Ceritakan keunikan toko kamu, jenis makanan, dll."></textarea>
           </div>
           <div class="form-group">
-            <label for="kategori">Kategori Utama <span class="req">*</span></label>
+            <label for="kategori">Jenis Usaha <span class="req">*</span></label>
             <select id="kategori">
-              <option value="" disabled selected>Pilih kategori</option>
-              <option>Makanan Berat</option>
-              <option>Makanan Ringan &amp; Snack</option>
-              <option>Kue &amp; Roti</option>
-              <option>Minuman</option>
-              <option>Makanan Sehat</option>
-              <option>Makanan Tradisional</option>
-              <option>Fast Food</option>
-              <option>Lainnya</option>
+              <option value="" disabled selected>Pilih jenis usaha</option>
+              <option value="warung">Warung Makan</option>
+              <option value="rumah_makan">Rumah Makan / Restoran</option>
+              <option value="kafe">Kafe / Coffee Shop</option>
+              <option value="hotel">Hotel / Penginapan</option>
+              <option value="katering">Katering</option>
+              <option value="bakery">Bakery / Toko Roti</option>
+              <option value="kantin">Kantin</option>
+              <option value="food_truck">Food Truck / Gerobak</option>
+              <option value="toko_oleh_oleh">Toko Oleh-oleh</option>
+              <option value="lainnya">Lainnya</option>
             </select>
-            <span class="field-error" id="err-kategori">Pilih kategori toko</span>
+            <span class="field-error" id="err-kategori">Pilih jenis usaha</span>
           </div>
           <div class="form-group">
             <label for="jam_operasional">Jam Operasional <span class="req">*</span></label>
