@@ -63,25 +63,7 @@ function renderAdminDashboard() {
       </div>
     </div>
   </div>
-
-  <div class="grid-2">
-    <div class="card2">
-      <div class="card-head">Dampak Lingkungan Platform</div>
-      <div class="card-body">
-        <div class="grid-2" id="admin-impact-grid"></div>
-      </div>
-    </div>
-    <div class="card2">
-      <div class="card-head">
-        Laporan Pelanggaran
-        <span class="badge badge-red" id="laporan-count-badge">—</span>
-      </div>
-      <div class="card-body">
-        <div class="alert alert-red mb-16" id="laporan-alert">Memuat laporan...</div>
-        <div id="laporan-preview"></div>
-      </div>
-    </div>
-  </div>`;
+  `;
 }
 
 function toggleUser(userId, action) {

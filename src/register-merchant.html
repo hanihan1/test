@@ -1410,9 +1410,7 @@
         ['No. Sertifikat Halal', g('no_sertifikat_halal') || '—'],
         ['Jenis Izin Usaha', g('jenis_izin')],
         ['No. Izin Usaha', g('no_izin_usaha')],
-        ['NIK', g('nik').replace(/(\d{4})(?=\d)/g,'$1 ')],
         ['File Izin Usaha', (uploadedFiles['izin_usaha']||[]).map(f=>f.name).join(', ') || '—'],
-        ['File KTP', (uploadedFiles['ktp']||[]).map(f=>f.name).join(', ') || '—'],
         ['File Halal', (uploadedFiles['halal_cert']||[]).map(f=>f.name).join(', ') || '—'],
       ]},
     ];
