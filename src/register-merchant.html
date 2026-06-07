@@ -1,399 +1,361 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Merchant – EcoEats</title>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="css/register-merchant.css">
 </head>
-
 <body>
 
-  <!-- TopBar -->
-  <header class="topbar">
-    <a href="index.html" class="logo">
-      <span class="logo-text">EcoEats</span>
-    </a>
-    <div class="topbar-right">
-      Sudah punya akun? <a href="login.html">Masuk</a>
+<header class="topbar">
+  <a href="index.html" class="logo">
+    <span class="logo-text">EcoEats</span>
+  </a>
+  <div class="topbar-right">
+    Sudah punya akun? <a href="login.html">Masuk</a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="card">
+
+    <div class="card-header">
+      <h1>Daftar sebagai Merchant</h1>
+      <p>Bergabung dengan EcoEats dan bantu selamatkan lingkungan!</p>
     </div>
-  </header>
 
- <!-- Main  -->
-  <main class="main">
-    <div class="card">
+    <div class="step-bar">
+      <div class="step-wrapper">
+        <div class="step-dot active" id="dot-1">1</div>
+        <div class="step-label active" id="lbl-1">Akun</div>
+      </div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-wrapper">
+        <div class="step-dot" id="dot-2">2</div>
+        <div class="step-label" id="lbl-2">Toko</div>
+      </div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-wrapper">
+        <div class="step-dot" id="dot-3">3</div>
+        <div class="step-label" id="lbl-3">Dokumen</div>
+      </div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-wrapper">
+        <div class="step-dot" id="dot-4">4</div>
+        <div class="step-label" id="lbl-4">Review</div>
+      </div>
+    </div>
 
-      <!-- Header -->
-      <div class="card-header">
-        <h1>Daftar sebagai Merchant</h1>
-        <p>Bergabung dengan EcoEats dan bantu selamatkan lingkungan!</p>
+    <div class="card-body">
+
+      <!-- Step 1: Akun -->
+      <div class="step-panel active" id="panel-1">
+        <div class="step-title">Informasi Akun</div>
+        <div class="step-subtitle">Email dan password untuk masuk ke dashboard merchant</div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nama_lengkap">Nama Lengkap <span class="req">*</span></label>
+            <input type="text" id="nama_lengkap" placeholder="contoh: Issac Newton" autocomplete="name">
+            <span class="field-error" id="err-nama_lengkap">Nama lengkap wajib diisi</span>
+          </div>
+
+          <div class="form-group">
+            <label for="no_hp">No. HP / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="no_hp" placeholder="08xxxxxxxxxx" autocomplete="tel">
+            <span class="field-error" id="err-no_hp">Nomor HP tidak valid (awali 08)</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="email@merchant.com" autocomplete="email">
+            <span class="field-error" id="err-email">Email tidak valid</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="password">Password <span class="req">*</span></label>
+            <div class="pw-wrap">
+              <input type="password" id="password" placeholder="Min. 8 karakter"
+                     oninput="checkPw(this.value)" autocomplete="new-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('password', this)">Lihat</button>
+            </div>
+            <div class="pw-strength">
+              <div class="pw-bar" id="bar1"></div>
+              <div class="pw-bar" id="bar2"></div>
+              <div class="pw-bar" id="bar3"></div>
+            </div>
+            <div class="pw-hint" id="pw-hint">Gunakan huruf besar, angka, dan simbol</div>
+            <span class="field-error" id="err-password">Password min. 8 karakter</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="konfirmasi_password">Konfirmasi Password <span class="req">*</span></label>
+            <div class="pw-wrap">
+              <input type="password" id="konfirmasi_password" placeholder="Ulangi password"
+                     autocomplete="new-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('konfirmasi_password', this)">Lihat</button>
+            </div>
+            <span class="field-error" id="err-konfirmasi_password">Password tidak cocok</span>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="goStep(2)">Lanjut</button>
+        </div>
       </div>
 
-      <!-- Tampilan Step -->
-      <div class="step-bar">
-        <div class="step-wrapper">
-          <div class="step-dot active" id="dot-1">1</div>
-          <div class="step-label active" id="lbl-1">Akun</div>
-        </div>
-        <div class="step-line" id="line-1"></div>
+      <!-- Step 2: Toko -->
+      <div class="step-panel" id="panel-2">
+        <div class="step-title">Informasi Toko</div>
+        <div class="step-subtitle">Ceritakan tentang usaha kuliner kamu</div>
 
-        <div class="step-wrapper">
-          <div class="step-dot" id="dot-2">2</div>
-          <div class="step-label" id="lbl-2">Toko</div>
-        </div>
-        <div class="step-line" id="line-2"></div>
+        <div class="section-label">Identitas Toko</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="nama_toko">Nama Toko <span class="req">*</span></label>
+            <input type="text" id="nama_toko" placeholder="contoh: Warung Bu Sri">
+            <span class="field-error" id="err-nama_toko">Nama toko wajib diisi</span>
+          </div>
 
-        <div class="step-wrapper">
-          <div class="step-dot" id="dot-3">3</div>
-          <div class="step-label" id="lbl-3">Dokumen</div>
-        </div>
-        <div class="step-line" id="line-3"></div>
+          <div class="form-group full">
+            <label for="deskripsi_toko">Deskripsi Toko <span class="opt">(opsional)</span></label>
+            <textarea id="deskripsi_toko" placeholder="Ceritakan keunikan toko kamu, jenis makanan, dll."></textarea>
+          </div>
 
-        <div class="step-wrapper">
-          <div class="step-dot" id="dot-4">4</div>
-          <div class="step-label" id="lbl-4">Review</div>
+          <div class="form-group">
+            <label for="kategori">Jenis Usaha <span class="req">*</span></label>
+            <select id="kategori">
+              <option value="" disabled selected>Pilih jenis usaha</option>
+              <option value="warung">Warung Makan</option>
+              <option value="rumah_makan">Rumah Makan / Restoran</option>
+              <option value="kafe">Kafe / Coffee Shop</option>
+              <option value="hotel">Hotel / Penginapan</option>
+              <option value="katering">Katering</option>
+              <option value="bakery">Bakery / Toko Roti</option>
+              <option value="kantin">Kantin</option>
+              <option value="food_truck">Food Truck</option>
+              <option value="toko_oleh_oleh">Toko Oleh-oleh</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+            <span class="field-error" id="err-kategori">Pilih jenis usaha</span>
+          </div>
+
+          <div class="form-group">
+            <label for="jam_operasional">Jam Operasional <span class="req">*</span></label>
+            <input type="text" id="jam_operasional" placeholder="contoh: 07.00–21.00">
+            <span class="field-error" id="err-jam_operasional">Jam operasional wajib diisi</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Alamat Toko</div>
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="alamat_jalan">Alamat Lengkap <span class="req">*</span></label>
+            <textarea id="alamat_jalan" placeholder="Nama jalan, nomor, RT/RW" style="min-height:72px"></textarea>
+            <span class="field-error" id="err-alamat_jalan">Alamat wajib diisi</span>
+          </div>
+
+          <div class="form-group">
+            <label for="kelurahan">Kelurahan <span class="req">*</span></label>
+            <input type="text" id="kelurahan" placeholder="contoh: Jebres">
+            <span class="field-error" id="err-kelurahan">Kelurahan wajib diisi</span>
+          </div>
+
+          <div class="form-group">
+            <label for="kecamatan">Kecamatan <span class="req">*</span></label>
+            <select id="kecamatan">
+              <option value="" disabled selected>Pilih kecamatan</option>
+              <option>Banjarsari</option>
+              <option>Jebres</option>
+              <option>Laweyan</option>
+              <option>Pasar Kliwon</option>
+              <option>Serengan</option>
+            </select>
+            <span class="field-error" id="err-kecamatan">Pilih kecamatan</span>
+          </div>
+
+          <div class="form-group">
+            <label for="kota">Kota</label>
+            <input type="text" id="kota" value="Surakarta" readonly style="opacity:.7;cursor:not-allowed">
+          </div>
+
+          <div class="form-group">
+            <label for="kode_pos">Kode Pos <span class="opt">(opsional)</span></label>
+            <input type="text" id="kode_pos" placeholder="57xxx">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Lokasi di Peta</div>
+
+        <div class="info-box" style="margin-bottom:14px">
+          <span>Tandai lokasi toko kamu di peta agar pembeli bisa menemukan kamu dengan mudah. Klik di peta atau gunakan tombol "Lokasiku" untuk titik GPS.</span>
+        </div>
+
+        <div class="map-section" id="map-section">
+          <div class="map-toolbar">
+            <div class="map-search-wrap">
+              <input type="text" id="map-search-input" placeholder="Cari alamat atau nama tempat..."
+                     onkeydown="if(event.key==='Enter') searchMap()">
+              <button class="btn-map-search" onclick="searchMap()">Cari</button>
+            </div>
+            <button class="btn-my-loc" onclick="useMyLocation()">Lokasiku</button>
+          </div>
+          <div id="map-container"></div>
+          <div class="map-hint">Klik di peta untuk menentukan titik lokasi toko kamu</div>
+          <div class="map-coords-strip">
+            <span id="coords-label">Titik belum dipilih</span>
+            <button class="clear-pin" id="clear-pin-btn" onclick="clearPin()">Hapus pin</button>
+          </div>
+        </div>
+
+        <input type="hidden" id="lat">
+        <input type="hidden" id="lng">
+
+        <div class="form-nav">
+          <button class="btn btn-ghost" onclick="goStep(1)">Kembali</button>
+          <button class="btn btn-primary" onclick="goStep(3)">Lanjut →</button>
         </div>
       </div>
 
-      <!-- Form -->
-      <div class="card-body">
+      <!-- Step 3: Dokumen -->
+      <div class="step-panel" id="panel-3">
+        <div class="step-title">Verifikasi &amp; Dokumen Legal</div>
+        <div class="step-subtitle">Diperlukan untuk memverifikasi legalitas usaha kamu</div>
 
-        <!-- Step 1: Akun -->
-        <div class="step-panel active" id="panel-1">
-          <div class="step-title">Informasi Akun</div>
-          <div class="step-subtitle">Email dan password untuk masuk ke dashboard merchant</div>
+        <div class="info-box" style="margin-bottom:20px">
+          <span>Dokumen akan diverifikasi oleh tim EcoEats dalam 1×24 jam. Akun kamu bisa mulai aktif setelah terverifikasi.</span>
+        </div>
 
-          <div class="form-grid">
-
-            <div class="form-group">
-              <label for="nama_lengkap">Nama Lengkap <span class="req">*</span></label>
-              <input type="text" id="nama_lengkap" placeholder="contoh: Issac Newton" autocomplete="name">
-              <span class="field-error" id="err-nama_lengkap">Nama lengkap wajib diisi</span>
-            </div>
-
-            <div class="form-group">
-              <label for="no_hp">No. HP / WhatsApp <span class="req">*</span></label>
-              <input type="tel" id="no_hp" placeholder="08xxxxxxxxxx" autocomplete="tel">
-              <span class="field-error" id="err-no_hp">Nomor HP tidak valid (awali 08)</span>
-            </div>
-
-            <div class="form-group full">
-              <label for="email">Email <span class="req">*</span></label>
-              <input type="email" id="email" placeholder="email@merchant.com" autocomplete="email">
-              <span class="field-error" id="err-email">Email tidak valid</span>
-            </div>
-
-            <div class="form-group full">
-              <label for="password">Password <span class="req">*</span></label>
-              <div class="pw-wrap">
-                <input type="password" id="password" placeholder="Min. 8 karakter" oninput="checkPw(this.value)"
-                  autocomplete="new-password">
-                <button type="button" class="pw-toggle" onclick="togglePw('password', this)">👁</button>
-              </div>
-              <div class="pw-strength">
-                <div class="pw-bar" id="bar1"></div>
-                <div class="pw-bar" id="bar2"></div>
-                <div class="pw-bar" id="bar3"></div>
-              </div>
-              <div class="pw-hint" id="pw-hint">Gunakan huruf besar, angka, dan simbol</div>
-              <span class="field-error" id="err-password">Password min. 8 karakter</span>
-            </div>
-
-            <div class="form-group full">
-              <label for="konfirmasi_password">Konfirmasi Password <span class="req">*</span></label>
-              <div class="pw-wrap">
-                <input type="password" id="konfirmasi_password" placeholder="Ulangi password"
-                  autocomplete="new-password">
-                <button type="button" class="pw-toggle" onclick="togglePw('konfirmasi_password', this)">👁</button>
-              </div>
-              <span class="field-error" id="err-konfirmasi_password">Password tidak cocok</span>
-            </div>
-
+        <div class="section-label">Dokumen Halal</div>
+        <div class="form-grid" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="status_halal">Status Halal <span class="req">*</span></label>
+            <select id="status_halal" onchange="toggleHalalUpload(this.value)">
+              <option value="" disabled selected>Pilih status</option>
+              <option value="bersertifikat">Bersertifikat MUI / BPJPH</option>
+              <option value="proses">Sedang dalam proses sertifikasi</option>
+              <option value="self_declare">Self-declare halal (belum bersertifikat)</option>
+            </select>
+            <span class="field-error" id="err-status_halal">Pilih status halal</span>
           </div>
 
-          <div class="form-nav">
-            <span></span>
-            <button class="btn btn-primary" onclick="goStep(2)">Lanjut</button>
+          <div class="form-group">
+            <label for="no_sertifikat_halal">
+              No. Sertifikat Halal
+              <span class="opt" id="lbl-no-halal">(opsional)</span>
+            </label>
+            <input type="text" id="no_sertifikat_halal" placeholder="contoh: ID00110000XXXXX">
+          </div>
+
+          <div class="form-group full">
+            <label>
+              Upload Sertifikat Halal
+              <span class="opt" id="lbl-up-halal">(opsional)</span>
+            </label>
+            <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)"
+                 ondrop="dropFile(event,'halal_cert',this)">
+              <input type="file" id="halal_cert" accept=".pdf,.jpg,.jpeg,.png"
+                     onchange="addFile(this,'halal_cert')">
+              
+              <p>Drag &amp; drop atau klik untuk upload</p>
+              <small>PDF, JPG, PNG &bull; Maks. 10 MB</small>
+            </div>
+            <div class="upload-preview" id="preview-halal_cert"></div>
+            <span class="field-error" id="err-halal_cert"></span>
           </div>
         </div>
 
-        <!-- Step 2 : Toko -->
-        <div class="step-panel" id="panel-2">
-          <div class="step-title">Informasi Toko</div>
-          <div class="step-subtitle">Ceritakan tentang usaha kuliner kamu</div>
-
-          <div class="section-label">Identitas Toko</div>
-          <div class="form-grid">
-
-            <div class="form-group full">
-              <label for="nama_toko">Nama Toko <span class="req">*</span></label>
-              <input type="text" id="nama_toko" placeholder="contoh: Warung Bu Sri">
-              <span class="field-error" id="err-nama_toko">Nama toko wajib diisi</span>
-            </div>
-
-            <div class="form-group full">
-              <label for="deskripsi_toko">Deskripsi Toko <span class="opt">(opsional)</span></label>
-              <textarea id="deskripsi_toko" placeholder="Ceritakan keunikan toko kamu, jenis makanan, dll."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="kategori">Jenis Usaha <span class="req">*</span></label>
-              <select id="kategori">
-                <option value="" disabled selected>Pilih jenis usaha</option>
-                <option value="warung">Warung Makan</option>
-                <option value="rumah_makan">Rumah Makan / Restoran</option>
-                <option value="kafe">Kafe / Coffee Shop</option>
-                <option value="hotel">Hotel / Penginapan</option>
-                <option value="katering">Katering</option>
-                <option value="bakery">Bakery / Toko Roti</option>
-                <option value="kantin">Kantin</option>
-                <option value="food_truck">Food Truck</option>
-                <option value="toko_oleh_oleh">Toko Oleh-oleh</option>
-                <option value="lainnya">Lainnya</option>
-              </select>
-              <span class="field-error" id="err-kategori">Pilih jenis usaha</span>
-            </div>
-
-            <div class="form-group">
-              <label for="jam_operasional">Jam Operasional <span class="req">*</span></label>
-              <input type="text" id="jam_operasional" placeholder="contoh: 07.00–21.00">
-              <span class="field-error" id="err-jam_operasional">Jam operasional wajib diisi</span>
-            </div>
-
+        <div class="divider"></div>
+        <div class="section-label">Izin Usaha</div>
+        <div class="form-grid" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="jenis_izin">Jenis Izin Usaha <span class="req">*</span></label>
+            <select id="jenis_izin">
+              <option value="" disabled selected>Pilih jenis izin</option>
+              <option>NIB (Nomor Induk Berusaha)</option>
+              <option>SIUP (Surat Izin Usaha Perdagangan)</option>
+              <option>TDP (Tanda Daftar Perusahaan)</option>
+              <option>Izin PIRT</option>
+              <option>Lainnya</option>
+            </select>
+            <span class="field-error" id="err-jenis_izin">Pilih jenis izin usaha</span>
           </div>
 
-          <div class="divider"></div>
-          <div class="section-label">Alamat Toko</div>
-
-          <div class="form-grid">
-
-            <div class="form-group full">
-              <label for="alamat_jalan">Alamat Lengkap <span class="req">*</span></label>
-              <textarea id="alamat_jalan" placeholder="Nama jalan, nomor, RT/RW" style="min-height:72px"></textarea>
-              <span class="field-error" id="err-alamat_jalan">Alamat wajib diisi</span>
-            </div>
-
-            <div class="form-group">
-              <label for="kelurahan">Kelurahan <span class="req">*</span></label>
-              <input type="text" id="kelurahan" placeholder="contoh: Jebres">
-              <span class="field-error" id="err-kelurahan">Kelurahan wajib diisi</span>
-            </div>
-
-            <div class="form-group">
-              <label for="kecamatan">Kecamatan <span class="req">*</span></label>
-              <select id="kecamatan">
-                <option value="" disabled selected>Pilih kecamatan</option>
-                <option>Banjarsari</option>
-                <option>Jebres</option>
-                <option>Laweyan</option>
-                <option>Pasar Kliwon</option>
-                <option>Serengan</option>
-              </select>
-              <span class="field-error" id="err-kecamatan">Pilih kecamatan</span>
-            </div>
-
-            <div class="form-group">
-              <label for="kota">Kota</label>
-              <input type="text" id="kota" value="Surakarta" readonly style="opacity:.7;cursor:not-allowed;">
-            </div>
-
-            <div class="form-group">
-              <label for="kode_pos">Kode Pos <span class="opt">(opsional)</span></label>
-              <input type="text" id="kode_pos" placeholder="57xxx">
-            </div>
-
+          <div class="form-group">
+            <label for="no_izin_usaha">Nomor Izin Usaha <span class="req">*</span></label>
+            <input type="text" id="no_izin_usaha" placeholder="Nomor dokumen izin">
+            <span class="field-error" id="err-no_izin_usaha">Nomor izin usaha wajib diisi</span>
           </div>
 
-          <div class="divider"></div>
-          <div class="section-label">Titik Lokasi di Peta</div>
-
-          <div class="info-box" style="margin-bottom:14px">
-            <span class="icon">📍</span>
-            <span>Tandai lokasi toko kamu di peta agar pembeli bisa menemukan kamu dengan mudah. Klik di peta atau
-              gunakan tombol "Lokasiku" untuk titik GPS.</span>
-          </div>
-
-          <div class="map-section" id="map-section">
-            <div class="map-toolbar">
-              <div class="map-search-wrap">
-                <input type="text" id="map-search-input" placeholder="Cari alamat atau nama tempat..."
-                  onkeydown="if(event.key==='Enter') searchMap()">
-                <button class="btn-map-search" onclick="searchMap()">🔍 Cari</button>
-              </div>
-              <button class="btn-my-loc" onclick="useMyLocation()">📍 Lokasiku</button>
+          <div class="form-group full">
+            <label>Upload Dokumen Izin Usaha <span class="req">*</span></label>
+            <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)"
+                 ondrop="dropFile(event,'izin_usaha',this)">
+              <input type="file" id="izin_usaha" accept=".pdf,.jpg,.jpeg,.png"
+                     onchange="addFile(this,'izin_usaha')">
+              
+              <p>Drag &amp; drop atau klik untuk upload</p>
+              <small>PDF, JPG, PNG &bull; Maks. 10 MB</small>
             </div>
-
-            <div id="map-container"></div>
-            <div class="map-hint">Klik di peta untuk menentukan titik lokasi toko kamu</div>
-
-            <div class="map-coords-strip">
-              <span id="coords-label">Titik belum dipilih</span>
-              <button class="clear-pin" id="clear-pin-btn" onclick="clearPin()">✕ Hapus pin</button>
-            </div>
-          </div>
-
-          <!-- lat & lng dikirim ke API sebagai merchant_profiles.latitude / longitude -->
-          <input type="hidden" id="lat">
-          <input type="hidden" id="lng">
-
-          <div class="form-nav">
-            <button class="btn btn-ghost" onclick="goStep(1)">Kembali</button>
-            <button class="btn btn-primary" onclick="goStep(3)">Lanjut →</button>
+            <div class="upload-preview" id="preview-izin_usaha"></div>
+            <span class="field-error" id="err-izin_usaha">Dokumen izin usaha wajib diupload</span>
           </div>
         </div>
 
-
-        <!-- STEP 3: Dokumen  -->
-        <div class="step-panel" id="panel-3">
-          <div class="step-title">Verifikasi &amp; Dokumen Legal</div>
-          <div class="step-subtitle">Diperlukan untuk memverifikasi legalitas usaha kamu</div>
-
-          <div class="info-box" style="margin-bottom:20px">
-            <span class="icon">ℹ️</span>
-            <span>Dokumen akan diverifikasi oleh tim EcoEats dalam 1×24 jam. Akun kamu bisa mulai aktif setelah
-              terverifikasi.</span>
-          </div>
-
-          <!-- merchant_profiles.halal_cert_url -->
-          <div class="section-label">Dokumen Halal</div>
-          <div class="form-grid" style="margin-bottom:20px">
-
-            <div class="form-group">
-              <label for="status_halal">Status Halal <span class="req">*</span></label>
-              <select id="status_halal" onchange="toggleHalalUpload(this.value)">
-                <option value="" disabled selected>Pilih status</option>
-                <option value="bersertifikat">Bersertifikat MUI / BPJPH</option>
-                <option value="proses">Sedang dalam proses sertifikasi</option>
-                <option value="self_declare">Self-declare halal (belum bersertifikat)</option>
-              </select>
-              <span class="field-error" id="err-status_halal">Pilih status halal</span>
-            </div>
-
-            <div class="form-group">
-              <label for="no_sertifikat_halal">
-                No. Sertifikat Halal
-                <span class="opt" id="lbl-no-halal">(opsional)</span>
-              </label>
-              <input type="text" id="no_sertifikat_halal" placeholder="contoh: ID00110000XXXXX">
-            </div>
-
-            <div class="form-group full">
-              <label>
-                Upload Sertifikat Halal
-                <span class="opt" id="lbl-up-halal">(opsional)</span>
-              </label>
-              <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)"
-                ondrop="dropFile(event,'halal_cert',this)">
-                <input type="file" id="halal_cert" accept=".pdf,.jpg,.jpeg,.png" onchange="addFile(this,'halal_cert')">
-                <div class="upload-icon">📄</div>
-                <p>Drag &amp; drop atau klik untuk upload</p>
-                <small>PDF, JPG, PNG &bull; Maks. 10 MB</small>
-              </div>
-              <div class="upload-preview" id="preview-halal_cert"></div>
-              <span class="field-error" id="err-halal_cert"></span>
-            </div>
-
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- merchant_profiles.business_license_url -->
-          <div class="section-label">Izin Usaha</div>
-          <div class="form-grid" style="margin-bottom:20px">
-
-            <div class="form-group">
-              <label for="jenis_izin">Jenis Izin Usaha <span class="req">*</span></label>
-              <select id="jenis_izin">
-                <option value="" disabled selected>Pilih jenis izin</option>
-                <option>NIB (Nomor Induk Berusaha)</option>
-                <option>SIUP (Surat Izin Usaha Perdagangan)</option>
-                <option>TDP (Tanda Daftar Perusahaan)</option>
-                <option>Izin PIRT</option>
-                <option>Lainnya</option>
-              </select>
-              <span class="field-error" id="err-jenis_izin">Pilih jenis izin usaha</span>
-            </div>
-
-            <div class="form-group">
-              <label for="no_izin_usaha">Nomor Izin Usaha <span class="req">*</span></label>
-              <input type="text" id="no_izin_usaha" placeholder="Nomor dokumen izin">
-              <span class="field-error" id="err-no_izin_usaha">Nomor izin usaha wajib diisi</span>
-            </div>
-
-            <div class="form-group full">
-              <label>Upload Dokumen Izin Usaha <span class="req">*</span></label>
-              <div class="upload-zone" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)"
-                ondrop="dropFile(event,'izin_usaha',this)">
-                <input type="file" id="izin_usaha" accept=".pdf,.jpg,.jpeg,.png" onchange="addFile(this,'izin_usaha')">
-                <div class="upload-icon">📋</div>
-                <p>Drag &amp; drop atau klik untuk upload</p>
-                <small>PDF, JPG, PNG &bull; Maks. 10 MB</small>
-              </div>
-              <div class="upload-preview" id="preview-izin_usaha"></div>
-              <span class="field-error" id="err-izin_usaha">Dokumen izin usaha wajib diupload</span>
-            </div>
-
-          </div>
-
-          <div class="form-nav">
-            <button class="btn btn-ghost" onclick="goStep(2)">← Kembali</button>
-            <button class="btn btn-primary" onclick="goStep(4)">Lanjut →</button>
-          </div>
+        <div class="form-nav">
+          <button class="btn btn-ghost" onclick="goStep(2)">Kembali</button>
+          <button class="btn btn-primary" onclick="goStep(4)">Lanjut →</button>
         </div>
+      </div>
 
+      <!-- Step 4: Review -->
+      <div class="step-panel" id="panel-4">
+        <div class="step-title">Review &amp; Konfirmasi</div>
+        <div class="step-subtitle">Periksa kembali data yang kamu masukkan sebelum mendaftar</div>
 
-        <!-- STEP 4: Revuew  -->
-        <div class="step-panel" id="panel-4">
-          <div class="step-title">Review &amp; Konfirmasi</div>
-          <div class="step-subtitle">Periksa kembali data yang kamu masukkan sebelum mendaftar</div>
+        <div id="review-content" style="margin-bottom:24px"></div>
 
-          <!-- Diisi buildReview() dari JS -->
-          <div id="review-content" style="margin-bottom:24px"></div>
+        <div class="divider"></div>
 
-          <div class="divider"></div>
+        <label class="check-group">
+          <input type="checkbox" id="agree_tos">
+          <div class="check-group-label">
+            <strong>Saya menyetujui Syarat &amp; Ketentuan dan Kebijakan Privasi EcoEats</strong>
+            <small>Termasuk ketentuan menjadi merchant dan pengelolaan data pribadi</small>
+          </div>
+        </label>
+        <span class="field-error" id="err-agree_tos" style="margin-top:4px">
+          Kamu harus menyetujui syarat &amp; ketentuan
+        </span>
 
+        <div style="margin-top:12px">
           <label class="check-group">
-            <input type="checkbox" id="agree_tos">
+            <input type="checkbox" id="agree_halal">
             <div class="check-group-label">
-              <strong>Saya menyetujui Syarat &amp; Ketentuan dan Kebijakan Privasi EcoEats</strong>
-              <small>Termasuk ketentuan menjadi merchant dan pengelolaan data pribadi</small>
+              <strong>Saya menyatakan bahwa semua informasi dan dokumen yang saya berikan adalah benar</strong>
+              <small>Data palsu dapat berakibat pemblokiran akun</small>
             </div>
           </label>
-          <span class="field-error" id="err-agree_tos" style="margin-top:4px">
-            Kamu harus menyetujui syarat &amp; ketentuan
-          </span>
-
-          <div style="margin-top:12px">
-            <label class="check-group">
-              <input type="checkbox" id="agree_halal">
-              <div class="check-group-label">
-                <strong>Saya menyatakan bahwa semua informasi dan dokumen yang saya berikan adalah benar</strong>
-                <small>Data palsu dapat berakibat pemblokiran akun</small>
-              </div>
-            </label>
-          </div>
-
-          <div class="form-nav">
-            <button class="btn btn-ghost" onclick="goStep(3)"> Kembali</button>
-            <button class="btn btn-success" id="submitBtn" onclick="submitForm()">
-              Daftar Sekarang
-            </button>
-          </div>
         </div>
 
+        <div class="form-nav">
+          <button class="btn btn-ghost" onclick="goStep(3)">Kembali</button>
+          <button class="btn btn-success" id="submitBtn" onclick="submitForm()">Daftar Sekarang</button>
+        </div>
       </div>
+
     </div>
-  </main>
+  </div>
+</main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  <script src="js/register-merchant.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/register-merchant.js"></script>
 </body>
-
 </html>

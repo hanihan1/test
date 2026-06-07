@@ -262,7 +262,6 @@ function renderOrders() {
         <tbody id="orders-pending-tbody">
           <tr>
             <td colspan="7" class="color-sub" style="text-align:center;padding:48px">
-              <div style="margin-bottom:8px">⏳</div>
               Menghubungkan ke server untuk memuat pesanan...
             </td>
           </tr>

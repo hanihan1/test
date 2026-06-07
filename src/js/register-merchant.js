@@ -1,12 +1,6 @@
-/* ============================================================
-   register-merchant.js
-   Handles: step navigation, validation, map (Leaflet),
-            file upload, password strength, review, submit
-   ============================================================ */
-
-/* ── STATE ── */
-let currentStep    = 1;
-const TOTAL_STEPS  = 4;
+// State
+let currentStep     = 1;
+const TOTAL_STEPS   = 4;
 const uploadedFiles = {};
 
 let map            = null;
@@ -15,9 +9,7 @@ let mapInitialized = false;
 let selectedLat    = null;
 let selectedLng    = null;
 
-/* ════════════════════════════
-   STEP NAVIGATION
-════════════════════════════ */
+// Step navigation
 function goStep(target) {
   if (target > currentStep && !validateStep(currentStep)) return;
   if (target === TOTAL_STEPS) buildReview();
@@ -33,7 +25,7 @@ function goStep(target) {
 
     if (i < target) {
       dot.classList.add('done');
-      dot.textContent = '✓';
+      dot.textContent = '';
     } else if (i === target) {
       dot.classList.add('active');
       dot.textContent = i;
@@ -54,25 +46,19 @@ function goStep(target) {
   if (target === 2) setTimeout(initMap, 100);
 }
 
-/* ════════════════════════════
-   MAP (Leaflet + Nominatim)
-════════════════════════════ */
+// Map
 function initMap() {
   if (mapInitialized) return;
   mapInitialized = true;
 
-  const defaultLat = -7.5561;
-  const defaultLng = 110.8317;
-
-  map = L.map('map-container', { center: [defaultLat, defaultLng], zoom: 14 });
+  map = L.map('map-container', { center: [-7.5561, 110.8317], zoom: 14 });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 19,
   }).addTo(map);
 
-  /* Custom marker — tan/brown palette */
-  const customIcon = L.divIcon({
+  const pinIcon = L.divIcon({
     className: '',
     html: `<div style="
       width:36px;height:36px;
@@ -82,16 +68,15 @@ function initMap() {
       border:3px solid white;
       box-shadow:0 3px 12px rgba(80,51,33,.45);
       display:flex;align-items:center;justify-content:center;">
-      <span style="transform:rotate(45deg);font-size:14px;display:block;margin-top:2px;margin-left:1px;">🏪</span>
+      <span style="transform:rotate(45deg);font-size:14px;display:block;margin-top:2px;margin-left:1px;"></span>
     </div>`,
-    iconSize:   [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor:[0, -36],
+    iconSize:    [36, 36],
+    iconAnchor:  [18, 36],
+    popupAnchor: [0, -36],
   });
 
-  map._customIcon = customIcon;
-
-  map.on('click', (e) => placePin(e.latlng.lat, e.latlng.lng));
+  map._pinIcon = pinIcon;
+  map.on('click', e => placePin(e.latlng.lat, e.latlng.lng));
 
   if (selectedLat && selectedLng) placePin(selectedLat, selectedLng);
 }
@@ -105,23 +90,23 @@ function placePin(lat, lng) {
   if (marker) {
     marker.setLatLng([lat, lng]);
   } else {
-    marker = L.marker([lat, lng], { icon: map._customIcon, draggable: true }).addTo(map);
-    marker.bindPopup('<b>📍 Lokasi Toko</b><br>Drag untuk memindahkan').openPopup();
+    marker = L.marker([lat, lng], { icon: map._pinIcon, draggable: true }).addTo(map);
+    marker.bindPopup('<b> Lokasi Toko</b><br>Drag untuk memindahkan').openPopup();
     marker.on('dragend', () => {
       const pos = marker.getLatLng();
       selectedLat = pos.lat;
       selectedLng = pos.lng;
       document.getElementById('lat').value = pos.lat;
       document.getElementById('lng').value = pos.lng;
-      updateCoordsStrip(pos.lat, pos.lng);
+      updateCoords(pos.lat, pos.lng);
     });
   }
 
-  updateCoordsStrip(lat, lng);
+  updateCoords(lat, lng);
   document.getElementById('map-section').classList.add('has-pin');
 }
 
-function updateCoordsStrip(lat, lng) {
+function updateCoords(lat, lng) {
   document.getElementById('coords-label').innerHTML =
     `Pin: <span class="coords-val">${lat.toFixed(6)}, ${lng.toFixed(6)}</span>`;
   document.getElementById('clear-pin-btn').classList.add('show');
@@ -142,19 +127,19 @@ function useMyLocation() {
   if (!navigator.geolocation) { alert('Browser tidak mendukung geolokasi.'); return; }
 
   const btn = document.querySelector('.btn-my-loc');
-  btn.textContent = '⏳ Mencari...';
+  btn.textContent = 'Mencari...';
   btn.disabled = true;
 
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      if (map) { map.setView([pos.coords.latitude, pos.coords.longitude], 17); }
+    pos => {
+      map.setView([pos.coords.latitude, pos.coords.longitude], 17);
       placePin(pos.coords.latitude, pos.coords.longitude);
-      btn.textContent = '📍 Lokasiku';
+      btn.textContent = ' Lokasiku';
       btn.disabled = false;
     },
     () => {
       alert('Tidak bisa mendapatkan lokasi. Pastikan izin lokasi diaktifkan.');
-      btn.textContent = '📍 Lokasiku';
+      btn.textContent = ' Lokasiku';
       btn.disabled = false;
     },
     { timeout: 8000 }
@@ -166,13 +151,13 @@ function searchMap() {
   if (!query) return;
 
   const btn = document.querySelector('.btn-map-search');
-  btn.textContent = '⏳';
+  btn.textContent = '';
   btn.disabled = true;
 
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Surakarta')}&limit=1&countrycodes=id`)
     .then(r => r.json())
     .then(data => {
-      if (data && data.length > 0) {
+      if (data && data.length) {
         const lat = parseFloat(data[0].lat);
         const lng = parseFloat(data[0].lon);
         map.setView([lat, lng], 17);
@@ -182,12 +167,10 @@ function searchMap() {
       }
     })
     .catch(() => alert('Gagal mencari lokasi. Periksa koneksi internet.'))
-    .finally(() => { btn.textContent = '🔍 Cari'; btn.disabled = false; });
+    .finally(() => { btn.textContent = 'Cari'; btn.disabled = false; });
 }
 
-/* ════════════════════════════
-   VALIDATION
-════════════════════════════ */
+// Validation
 function validateStep(step) {
   let ok = true;
 
@@ -242,20 +225,18 @@ function reqFile(id, msg) {
   return has;
 }
 
-/* ════════════════════════════
-   PASSWORD
-════════════════════════════ */
+// Password
 function checkPw(val) {
-  const bars  = ['bar1', 'bar2', 'bar3'];
+  const bars = ['bar1', 'bar2', 'bar3'];
   bars.forEach(b => { document.getElementById(b).className = 'pw-bar'; });
 
-  const strength = getStrength(val);
+  const strength = getPwStrength(val);
   const cls   = ['', 'weak', 'medium', 'strong'][strength];
   const hints = [
     '',
     'Password lemah – tambah angka atau simbol',
     'Cukup kuat – bisa lebih baik lagi',
-    'Password kuat! 💪',
+    'Password kuat! ',
   ];
 
   for (let i = 0; i < strength; i++) {
@@ -264,7 +245,7 @@ function checkPw(val) {
   document.getElementById('pw-hint').textContent = hints[strength];
 }
 
-function getStrength(p) {
+function getPwStrength(p) {
   if (p.length < 6) return 0;
   let s = 0;
   if (p.length >= 8) s++;
@@ -276,12 +257,10 @@ function getStrength(p) {
 function togglePw(id, btn) {
   const el  = document.getElementById(id);
   el.type   = el.type === 'password' ? 'text' : 'password';
-  btn.textContent = el.type === 'password' ? '👁' : '🙈';
+  btn.textContent = el.type === 'password' ? 'Lihat' : 'Sembunyikan';
 }
 
-/* ════════════════════════════
-   FILE UPLOAD
-════════════════════════════ */
+// File upload
 function addFile(input, key) {
   if (!uploadedFiles[key]) uploadedFiles[key] = [];
   const file = input.files[0];
@@ -303,14 +282,14 @@ function renderPreviews(key) {
   (uploadedFiles[key] || []).forEach((f, i) => {
     const chip = document.createElement('div');
     chip.className = 'preview-chip';
-    chip.innerHTML = `📎 ${f.name} <button onclick="removeFile('${key}',${i})">×</button>`;
+    chip.innerHTML = `${f.name} <button onclick="removeFile('${key}',${i})">×</button>`;
     wrap.appendChild(chip);
   });
 }
 
-function dragOver(e, zone)          { e.preventDefault(); zone.classList.add('drag'); }
-function dragLeave(zone)            { zone.classList.remove('drag'); }
-function dropFile(e, key, zone)     {
+function dragOver(e, zone)      { e.preventDefault(); zone.classList.add('drag'); }
+function dragLeave(zone)        { zone.classList.remove('drag'); }
+function dropFile(e, key, zone) {
   e.preventDefault();
   zone.classList.remove('drag');
   if (e.dataTransfer.files.length) {
@@ -320,23 +299,18 @@ function dropFile(e, key, zone)     {
   }
 }
 
-/* ════════════════════════════
-   HALAL TOGGLE
-════════════════════════════ */
+// Halal toggle
 function toggleHalalUpload(val) {
   const required = val === 'bersertifikat';
   const lblNo    = document.getElementById('lbl-no-halal');
   const lblUp    = document.getElementById('lbl-up-halal');
-
   lblNo.textContent = required ? '(wajib)' : '(opsional)';
   lblUp.textContent = required ? '(wajib)' : '(opsional)';
   lblNo.style.color = required ? 'var(--error)' : '';
   lblUp.style.color = required ? 'var(--error)' : '';
 }
 
-/* ════════════════════════════
-   REVIEW BUILD
-════════════════════════════ */
+// Review
 function buildReview() {
   const g = id => document.getElementById(id)?.value || '—';
 
@@ -345,55 +319,43 @@ function buildReview() {
     : '—';
 
   const sections = [
-    { title: '👤 Akun', rows: [
+    { title: ' Akun', rows: [
       ['Nama',    g('nama_lengkap')],
       ['No. HP',  g('no_hp')],
       ['Email',   g('email')],
     ]},
-    { title: '🏪 Toko', rows: [
-      ['Nama Toko',       g('nama_toko')],
-      ['Jenis Usaha',     g('kategori')],
-      ['Jam Operasional', g('jam_operasional')],
-      ['Alamat',          `${g('alamat_jalan')}, ${g('kelurahan')}, Kec. ${g('kecamatan')}, Surakarta`],
-      ['Koordinat Peta',  mapInfo],
-      ['Deskripsi',       g('deskripsi_toko') || '—'],
+    { title: ' Toko', rows: [
+      ['Nama Toko',        g('nama_toko')],
+      ['Jenis Usaha',      g('kategori')],
+      ['Jam Operasional',  g('jam_operasional')],
+      ['Alamat',           `${g('alamat_jalan')}, ${g('kelurahan')}, Kec. ${g('kecamatan')}, Surakarta`],
+      ['Koordinat Peta',   mapInfo],
+      ['Deskripsi',        g('deskripsi_toko') || '—'],
     ]},
-    { title: '📄 Dokumen', rows: [
-      ['Status Halal',        g('status_halal').replace(/_/g, ' ')],
-      ['No. Sertifikat Halal', g('no_sertifikat_halal') || '—'],
-      ['Jenis Izin Usaha',    g('jenis_izin')],
-      ['No. Izin Usaha',      g('no_izin_usaha')],
-      ['File Izin Usaha',     (uploadedFiles['izin_usaha'] || []).map(f => f.name).join(', ') || '—'],
-      ['File Halal',          (uploadedFiles['halal_cert'] || []).map(f => f.name).join(', ') || '—'],
+    { title: ' Dokumen', rows: [
+      ['Status Halal',          g('status_halal').replace(/_/g, ' ')],
+      ['No. Sertifikat Halal',  g('no_sertifikat_halal') || '—'],
+      ['Jenis Izin Usaha',      g('jenis_izin')],
+      ['No. Izin Usaha',        g('no_izin_usaha')],
+      ['File Izin Usaha',       (uploadedFiles['izin_usaha'] || []).map(f => f.name).join(', ') || '—'],
+      ['File Halal',            (uploadedFiles['halal_cert'] || []).map(f => f.name).join(', ') || '—'],
     ]},
   ];
 
-  const html = sections.map(s => `
+  document.getElementById('review-content').innerHTML = sections.map(s => `
     <div class="review-section">
       <div class="section-label">${s.title}</div>
       <div class="review-table">
-        ${s.rows.map(([k, v], i) => `
+        ${s.rows.map(([k, v]) => `
           <div class="review-row">
             <span class="review-key">${k}</span>
             <span class="review-val">${v}</span>
           </div>`).join('')}
       </div>
     </div>`).join('');
-
-  document.getElementById('review-content').innerHTML = html;
 }
 
-/* ════════════════════════════
-   SUBMIT
-   TODO: replace setTimeout with real API call
-   POST /api/auth/register/merchant
-   Body fields: nama_lengkap, email, no_hp, password,
-                nama_toko, kategori, jam_operasional,
-                alamat_jalan, kelurahan, kecamatan, lat, lng,
-                status_halal, no_sertifikat_halal,
-                jenis_izin, no_izin_usaha
-   Files: izin_usaha, halal_cert (multipart/form-data)
-════════════════════════════ */
+// Submit
 function submitForm() {
   if (!document.getElementById('agree_tos').checked) {
     document.getElementById('err-agree_tos').classList.add('show');
@@ -403,7 +365,7 @@ function submitForm() {
 
   const btn = document.getElementById('submitBtn');
   btn.disabled    = true;
-  btn.textContent = '⏳ Memproses...';
+  btn.textContent = ' Memproses...';
 
   const now = new Date();
   try {
@@ -422,15 +384,13 @@ function submitForm() {
       status:   'pending',
       ref:      'ECO-' + Date.now().toString(36).toUpperCase(),
     }));
-  } catch (e) { /* localStorage blocked */ }
+  } catch (e) { /* localStorage not available */ }
 
-  // TODO: replace with fetch('/api/auth/register/merchant', { method:'POST', body: formData })
+  // TODO: POST /api/auth/register/merchant (multipart/form-data)
   setTimeout(() => { window.location.href = 'waiting.html'; }, 1500);
 }
 
-/* ════════════════════════════
-   INIT — clear errors on input
-════════════════════════════ */
+// Clear field errors on input
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input, select, textarea').forEach(el => {
     el.addEventListener('input', () => {
